@@ -15,7 +15,7 @@ const Footer = () => {
               <img src={logo} className='h-[35px] w-[35px]' alt="" />
               <h1 className='text-[#2E2E2E] text-[28px] font-bold'>Biding Website</h1>
             </div>
-            <p className='leading-7 w-[70%] text-[18px] font-normal text-[#585858]'>Your Ultimate Destination for Online Auctions – Engage in the Art of Bidding, and Secure Unmatched Deals with Every Win.</p>
+            <p className='leading-7 w-[100%] md:w-[70%] text-[18px] font-normal text-[#585858]'>Your Ultimate Destination for Online Auctions – Engage in the Art of Bidding, and Secure Unmatched Deals with Every Win.</p>
             <div className='mt-5 flex items-center gap-5 text-yellow'>
               <FaFacebookF className='text-yellow' />
               <FaTwitter />
@@ -58,7 +58,7 @@ const Footer = () => {
       </div>
       <div className=' mt-10 '>
         <div className='border-b-[1px] max-w-[90%] mx-auto border-[#DCDCDC] mb-2'></div>
-        <p className='text-center text-[#585858]'>All Rights Reserved. Copyright © 2024 Biding website</p>
+        <p className='text-center text-[#585858] p-2 md:p-0'>All Rights Reserved. Copyright © 2024 Biding website</p>
       </div>
     </div>
   )

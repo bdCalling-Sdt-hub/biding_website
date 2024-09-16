@@ -8,6 +8,5 @@ function App() {
       <MainLayout/>
     </div>
   )
-}
-
+} 
 export default App

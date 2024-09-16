@@ -6,6 +6,8 @@ import Register from "../pages/Register/Register";
 import ForgetPassword from "../pages/ForgetPassword/ForgetPassword";
 import VerificationCode from "../pages/VerificationCode/VerificationCode";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
+import Winner from "../pages/Winner/Winner";
+import Notification from "../pages/Notification/Notification";
 
 const router = createBrowserRouter([
     {
@@ -15,7 +17,15 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />
-            }
+            },
+            {
+                path : '/winner',
+                element: <Winner />
+            },
+            {
+                path : '/notification',
+                element: <Notification />
+            },
         ]
     },
     {

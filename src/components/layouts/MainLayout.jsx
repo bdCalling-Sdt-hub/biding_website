@@ -7,7 +7,11 @@ const MainLayout = () => {
   return (
     <div>
       <NavBar />
-      <Outlet />
+      <div className='bg-[#F9F9F9]'>
+        <div className='max-w-screen-2xl mx-auto py-2 '>
+          <Outlet />
+        </div>
+      </div>
       <Footer />
     </div>
   );
