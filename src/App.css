@@ -1,0 +1,9 @@
+:where(.css-dev-only-do-not-override-qnu6hi).ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #F3A211;
+    border-color: #F3A211;
+}
+.custom-button:hover,
+.custom-button:focus {
+  background-color: #FFC107 !important; 
+  border-color: #FFC107 !important;
+}
