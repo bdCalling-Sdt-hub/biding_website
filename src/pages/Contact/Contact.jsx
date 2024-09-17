@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const Contact = () => {
     return (
-        <div>
+        <div className='mb-10 px-5 md:px-0'>
             <BackButton pageName={'Contact'} />
             <div>
                 <h1 className='text-[20px] font-semibold'>Contact Us:</h1>
@@ -17,7 +17,7 @@ const Contact = () => {
             {/* Customer support */}
             <div className='space-y-3 mt-5'>
                 <p className='font-medium'>1. Customer Support</p>
-                <div className='ml-5'>
+                <div className='ml-5 space-y-2'>
                     <li>Our dedicated support team is available to assist you with any issues related to your account, bidding process, payments, or orders.</li>
                     <li><span className='font-medium'>Email:</span> biddingsupport@website.com</li>
                     <li><span className='font-medium'>Phone:</span>+123-456-7890</li>
@@ -26,7 +26,7 @@ const Contact = () => {
             {/* Business inquiress*/}
             <div className='space-y-3 mt-5' >
                 <p className='font-medium'>2. Business Inquiries</p>
-                <div className='ml-5'>
+                <div className='ml-5 space-y-2'>
                     <li>For partnerships, advertising, or business collaboration, contact our business development team.</li>
                     <li><span className='font-medium'>Email:</span>biddingsupport@website.com</li>
                     <li><span className='font-medium'>Phone:</span>+123-456-7890</li>

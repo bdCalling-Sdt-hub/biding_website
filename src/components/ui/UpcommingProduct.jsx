@@ -4,7 +4,7 @@ import { FaRegStar } from 'react-icons/fa'
 const UpcommingProduct = () => {
     return (
         <div className='rounded-lg bg-white shadow-sm my-4 relative'>
-            <img src={img} className='w-full h-[150px]' alt="" />
+            <img src={img} className='w-full h-[180px]' alt="" />
             <div className=' text-center space-y-1 py-2'>
                 <p className='font-medium'>Sony 32” W8 Smart TV</p>
                 <p className='text-[#338BFF] font-medium '>Today at 02:45 PM</p>

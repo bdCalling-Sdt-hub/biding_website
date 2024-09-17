@@ -16,6 +16,7 @@ import TipsAndTricks from "../pages/FooterPages/TipsAndTricks";
 import Accessibility from "../pages/FooterPages/Accessibility";
 import Contact from "../pages/Contact/Contact";
 import Help from "../pages/Help/Help";
+import UpcomingAuction from "../pages/UpcomingAuction/UpcomingAuction";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             {
                 path : '/help',
                 element: <Help />
+            },
+            {
+                path : '/upcoming-auction',
+                element: <UpcomingAuction />
             },
         ]
     },
