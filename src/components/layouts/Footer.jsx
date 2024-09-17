@@ -4,9 +4,10 @@ import { BsYoutube } from 'react-icons/bs'
 import { AiFillInstagram, AiOutlineMail } from 'react-icons/ai'
 import { FiPhone } from 'react-icons/fi'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
-    <div className='max-w-screen-2xl mx-auto'>
+    <div className='max-w-screen-2xl mx-auto pt-10'>
       <div className='grid grid-cols-1 md:grid-cols-2 justify-between mx-10 md:mx-0 lg:grid-cols-4 gap-5   '>
 
         <div className='flex items-center justify-center '>
@@ -29,7 +30,7 @@ const Footer = () => {
 
         <div className=''>
           <p className='text-[20px] font-semibold  mb-[24px]'>Company</p>
-          <p className='mb-2 text-[#585858]'>About</p>
+          <Link to='/about' className='mb-2 text-[#585858]'>About</Link>
           <p className=' mb-2 text-[#585858]'>Terms and Constitions</p>
           <p className=' mb-2 text-[#585858]'>Privacy Policy</p>
         </div>

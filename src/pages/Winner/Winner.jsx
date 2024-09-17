@@ -1,8 +1,11 @@
 import React from 'react'
+import BackButton from '../../components/ui/BackButton'
 
 const Winner = () => {
   return (
-    <div>Winner page</div>
+    <div>
+      <BackButton pageName={'winner'} />
+    </div>
   )
 }
 

@@ -8,6 +8,7 @@ import VerificationCode from "../pages/VerificationCode/VerificationCode";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import Winner from "../pages/Winner/Winner";
 import Notification from "../pages/Notification/Notification";
+import About from "../pages/FooterPages/About";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path : '/notification',
                 element: <Notification />
+            },
+            {
+                path : '/about',
+                element: <About />
             },
         ]
     },
