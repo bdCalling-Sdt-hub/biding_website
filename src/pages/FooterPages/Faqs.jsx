@@ -34,7 +34,7 @@ const panels = [
     {
         key: '6',
         label: 'Panel Header 6',
-        children: <p>Amphibians are animals that can live both in water and on land. Examples include frogs, toads, and salamanders. They typically have a life cycle that includes both aquatic and terrestrial stages.</p>,
+        children: <p>Amphibians are animals that can live both in water and on land. Examples include frogs, toads, and salamanders. They typically have a life cycle that includes both aquatic and terrestrial stages.</p>, 
     },
     {
         key: '7',
