@@ -17,6 +17,7 @@ import Accessibility from "../pages/FooterPages/Accessibility";
 import Contact from "../pages/Contact/Contact";
 import Help from "../pages/Help/Help";
 import UpcomingAuction from "../pages/UpcomingAuction/UpcomingAuction";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             {
                 path : '/upcoming-auction',
                 element: <UpcomingAuction />
+            },
+            {
+                path : '/product-details/:id',
+                element: <ProductDetails />
             },
         ]
     },
