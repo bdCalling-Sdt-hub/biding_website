@@ -57,7 +57,7 @@ const Faqs = () => {
     // const firstHalf = panels.slice(0, middleIndex);
     // const secondHalf = panels.slice(middleIndex);
     return (
-        <div>
+        <div className='px-5 md:px-0'>
             <BackButton pageName={'FAQs'} />
             {/* FAQs section */}
             <div>

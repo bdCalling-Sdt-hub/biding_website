@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const Accessibility = () => {
     return (
-        <div className='pb-10'>
+        <div className='pb-10 px-5 md:px-0'>
             <BackButton pageName={'Accessibility'} />
             {/* accessibility section */}
             <div>

@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const PrivacyAndPolicy = () => {
   return (
-    <div className='py-2 pb-10'>
+    <div className='py-2 pb-10 px-5 md:px-0'>
             <BackButton pageName={'Privacy Policy'} />
             {/* terms and condtions */}
             <div>

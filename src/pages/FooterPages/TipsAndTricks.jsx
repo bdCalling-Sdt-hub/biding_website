@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const TipsAndTricks = () => {
     return (
-        <div className='pb-10'>
+        <div className='pb-10 px-5 md:px-0'>
             <BackButton pageName={'Tips & Tricks'} />
             <h1 className='py-4 font-semibold'>Tips & tricks: </h1>
 

@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const About = () => {
     return (
-        <div className='pb-5'>
+        <div className='pb-5 px-5 md:px-0'>
             <BackButton pageName={'About'} />
             {/* About us section */}
             <div>

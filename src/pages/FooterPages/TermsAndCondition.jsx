@@ -3,7 +3,7 @@ import BackButton from '../../components/ui/BackButton'
 
 const TermsAndCondition = () => {
     return (
-        <div className='py-2 pb-10'>
+        <div className='py-2 pb-10 px-5 md:px-0'>
             <BackButton pageName={'Terms and Conditions'} />
             {/* terms and condtions */}
             <div>

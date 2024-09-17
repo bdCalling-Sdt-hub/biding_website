@@ -14,6 +14,8 @@ import PrivacyAndPolicy from "../pages/FooterPages/PrivacyAndPolicy";
 import Faqs from "../pages/FooterPages/Faqs";
 import TipsAndTricks from "../pages/FooterPages/TipsAndTricks";
 import Accessibility from "../pages/FooterPages/Accessibility";
+import Contact from "../pages/Contact/Contact";
+import Help from "../pages/Help/Help";
 
 const router = createBrowserRouter([
     {
@@ -55,6 +57,14 @@ const router = createBrowserRouter([
             {
                 path : '/accessibility',
                 element: <Accessibility />
+            },
+            {
+                path : '/contact',
+                element: <Contact />
+            },
+            {
+                path : '/help',
+                element: <Help />
             },
         ]
     },

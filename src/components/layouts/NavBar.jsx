@@ -30,8 +30,8 @@ const NavBar = () => {
               <div className='flex justify-between items-center gap-5 pl-10 mt-2'>
                 <Link className={`${location === '/' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/'>Home</Link>
                 <Link className={`${location === '/winner' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/winner'>Winner</Link>
-                <Link className={`${location === '/help' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/winner'>Help</Link>
-                <Link className={`${location === '/contact' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/winner'>Contact</Link>
+                <Link className={`${location === '/help' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/help'>Help</Link>
+                <Link className={`${location === '/contact' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/contact'>Contact</Link>
 
               </div>
               <div className='flex items-center gap-2 mt-2'>
