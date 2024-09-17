@@ -129,4 +129,20 @@
   line-height: 30px;
 }
 
-/* Navbar End */
+/* collapse design */
+:where(.css-dev-only-do-not-override-qnu6hi).ant-collapse>.ant-collapse-item >.ant-collapse-header {
+  flex-direction: row-reverse;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-arrow {
+  color :#2AB9A4 !important
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-collapse {
+  background-color: white !important;
+  margin-bottom: 20px !important;
+  /* border: none; */
+  /* border-radius: 5px solid gray; */
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-collapse{
+  border :  none
+}
