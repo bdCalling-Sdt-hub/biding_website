@@ -28,17 +28,17 @@ const Footer = () => {
         </div>
 
 
-        <div className=''>
+        <div className='flex flex-col'>
           <p className='text-[20px] font-semibold  mb-[24px]'>Company</p>
           <Link to='/about' className='mb-2 text-[#585858]'>About</Link>
-          <p className=' mb-2 text-[#585858]'>Terms and Constitions</p>
-          <p className=' mb-2 text-[#585858]'>Privacy Policy</p>
+          <Link to='/terms-and-condition' className=' mb-2 text-[#585858]'>Terms and Constitions</Link>
+          <Link to='/privacy-policy' className=' mb-2 text-[#585858]'>Privacy Policy</Link>
         </div>
-        <div className=''>
+        <div className='flex flex-col'>
           <p className='text-[20px] font-semibold  mb-[24px]'>Support</p>
-          <p className=' mb-2 text-[#585858]'>FAQ</p>
-          <p className=' mb-2 text-[#585858]'>Tips & tricks</p>
-          <p className=' mb-2 text-[#585858]'>Accessibility</p>
+          <Link to='/faqs' className=' mb-2 text-[#585858]'>FAQ</Link>
+          <Link to='/tips-and-tricks' className=' mb-2 text-[#585858]'>Tips & tricks</Link>
+          <Link to='/accessibility' className=' mb-2 text-[#585858]'>Accessibility</Link>
         </div>
         <div className='yellow'>
           <p className='text-[20px] font-semibold  mb-[24px]'>Contact Us</p>

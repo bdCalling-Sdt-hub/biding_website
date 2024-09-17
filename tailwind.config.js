@@ -9,7 +9,11 @@ export default {
       'yellow': '#F3A211',
       'white' : 'white'
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

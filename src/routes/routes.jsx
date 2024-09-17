@@ -9,6 +9,11 @@ import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import Winner from "../pages/Winner/Winner";
 import Notification from "../pages/Notification/Notification";
 import About from "../pages/FooterPages/About";
+import TermsAndCondition from "../pages/FooterPages/TermsAndCondition";
+import PrivacyAndPolicy from "../pages/FooterPages/PrivacyAndPolicy";
+import Faqs from "../pages/FooterPages/Faqs";
+import TipsAndTricks from "../pages/FooterPages/TipsAndTricks";
+import Accessibility from "../pages/FooterPages/Accessibility";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +35,26 @@ const router = createBrowserRouter([
             {
                 path : '/about',
                 element: <About />
+            },
+            {
+                path : '/terms-and-condition',
+                element: <TermsAndCondition />
+            },
+            {
+                path : '/privacy-policy',
+                element: <PrivacyAndPolicy />
+            },
+            {
+                path : '/faqs',
+                element: <Faqs />
+            },
+            {
+                path : '/tips-and-tricks',
+                element: <TipsAndTricks />
+            },
+            {
+                path : '/accessibility',
+                element: <Accessibility />
             },
         ]
     },

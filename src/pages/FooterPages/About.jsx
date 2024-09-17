@@ -8,7 +8,7 @@ const About = () => {
             {/* About us section */}
             <div>
                 <h1 className='mb-2 font-semibold'>About Us: </h1>
-                <p className='pb-4 leading-7'>Welcome to Biding Website, your premier destination for dynamic, competitive e-commerce bidding! Our platform is designed to connect buyers and sellers through exciting auctions, offering a wide range of products at unbeatable prices. Whether you're looking for the latest electronics, fashion, home essentials, or rare collectibles, Biding Website provides a transparent and secure environment for everyone to participate in the thrill of online bidding.</p>
+                <p className='pb-4 leading-7  '>Welcome to Biding Website, your premier destination for dynamic, competitive e-commerce bidding! Our platform is designed to connect buyers and sellers through exciting auctions, offering a wide range of products at unbeatable prices. Whether you're looking for the latest electronics, fashion, home essentials, or rare collectibles, Biding Website provides a transparent and secure environment for everyone to participate in the thrill of online bidding.</p>
             </div>
             {/* Our mission section */}
             <div>
