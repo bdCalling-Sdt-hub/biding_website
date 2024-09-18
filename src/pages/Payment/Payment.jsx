@@ -7,9 +7,7 @@ import PaymentStripe from '../../components/ui/PaymentStripe'
 import PaymentPayPal from '../../components/ui/PaymentPayPal'
 
 const Payment = () => {
-    const onFinish = (values) => {
-        console.log(values);
-    }
+  
 
     const items = [
         {

@@ -19,6 +19,7 @@ import Help from "../pages/Help/Help";
 import UpcomingAuction from "../pages/UpcomingAuction/UpcomingAuction";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Payment from "../pages/Payment/Payment";
+import BuyBids from "../pages/BuyBids/BuyBids";
 
 const router = createBrowserRouter([
     {
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
             {
                 path : '/payment',
                 element: <Payment />
+            },
+            {
+                path : '/buy-bids',
+                element: <BuyBids />
             },
         ]
     },
