@@ -18,6 +18,7 @@ import Contact from "../pages/Contact/Contact";
 import Help from "../pages/Help/Help";
 import UpcomingAuction from "../pages/UpcomingAuction/UpcomingAuction";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
+import Payment from "../pages/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
             {
                 path : '/product-details/:id',
                 element: <ProductDetails />
+            },
+            {
+                path : '/payment',
+                element: <Payment />
             },
         ]
     },

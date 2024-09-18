@@ -146,3 +146,27 @@
 :where(.css-dev-only-do-not-override-qnu6hi).ant-collapse{
   border :  none
 }
+
+
+
+/* Tab style */
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs >.ant-tabs-nav .ant-tabs-nav-wrap, :where(.css-dev-only-do-not-override-qnu6hi).ant-tabs >div>.ant-tabs-nav .ant-tabs-nav-wrap {
+  justify-content: space-evenly;
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs-top >.ant-tabs-nav::before, :where(.css-dev-only-do-not-override-qnu6hi).ant-tabs-bottom >.ant-tabs-nav::before, :where(.css-dev-only-do-not-override-qnu6hi).ant-tabs-top >div>.ant-tabs-nav::before, :where(.css-dev-only-do-not-override-qnu6hi).ant-tabs-bottom >div>.ant-tabs-nav::before {
+  border-bottom: none;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color : black;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn:hover {
+  color : black;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs .ant-tabs-ink-bar {
+  background: #F3A211;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-tabs .ant-tabs-tab:hover {
+  color: black;
+}
