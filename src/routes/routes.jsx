@@ -20,6 +20,14 @@ import UpcomingAuction from "../pages/UpcomingAuction/UpcomingAuction";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import Payment from "../pages/Payment/Payment";
 import BuyBids from "../pages/BuyBids/BuyBids";
+import AccountLayout from "../components/layouts/AccountLayout";
+import MyProfile from "../pages/MyAccountPages/MyProfile.jsx";
+import AddressBook from "../pages/MyAccountPages/AddressBook.jsx";
+import ChangePassword from "../pages/MyAccountPages/ChangePassword.jsx";
+import MyOrder from "../pages/MyAccountPages/MyOrder.jsx";
+import Bookmarks from "../pages/MyAccountPages/Bookmarks.jsx";
+import BiddingHistory from "../pages/MyAccountPages/BiddingHistory.jsx";
+import MyBids from "../pages/MyAccountPages/MyBids.jsx";
 
 const router = createBrowserRouter([
     {
@@ -85,6 +93,40 @@ const router = createBrowserRouter([
             {
                 path : '/buy-bids',
                 element: <BuyBids />
+            },
+        ]
+    },
+    {
+        path : '/my-profile',
+        element : <AccountLayout/>,
+        children : [
+            {
+                index : true,
+                element : <MyProfile/>
+            },
+            {
+                path: 'address-book',
+                element : <AddressBook/>
+            },
+            {
+                path: 'change-password',
+                element : <ChangePassword/>
+            },
+            {
+                path: 'my-order',
+                element : <MyOrder/>
+            },
+            {
+                path: 'bookmarks',
+                element : <Bookmarks/>
+            },
+            {
+                path: 'bidding-history',
+                element : <BiddingHistory/>
+            },
+            {
+                path: 'my-bids',
+                element : <MyBids/>
             },
         ]
     },

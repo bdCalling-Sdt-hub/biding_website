@@ -170,3 +170,11 @@
 :where(.css-dev-only-do-not-override-qnu6hi).ant-tabs .ant-tabs-tab:hover {
   color: black;
 }
+.test{
+  min-width: 120px !important;
+}
+
+:where(.css-dev-only-do-not-override-qnu6hi) a:active, :where(.css-dev-only-do-not-override-qnu6hi) a:hover {
+  
+  color: white;
+}

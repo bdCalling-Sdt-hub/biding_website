@@ -143,7 +143,7 @@ const Payment = () => {
                             {
                                 message: 'Please enter phone number',
                             },
-                        ]}
+                        ]} 
                     >
                         <Input placeholder="Enter Phone Number" />
                     </Form.Item>
