@@ -35,6 +35,9 @@ import AdminLogin from "../pages/DahsboardPages/AdminLogin.jsx";
 import AdminForgetPassword from "../pages/DahsboardPages/AdminForgetPassword.jsx";
 import AdminVerificationCode from "../pages/DahsboardPages/AdminVerificationCode.jsx";
 import AdminResetPassword from "../pages/DahsboardPages/AdminResetPassword.jsx";
+import DashboardLayout from "../components/layouts/DashboardLayout.jsx";
+import DashboardHome from "../pages/DahsboardPages/DashboardHome.jsx";
+import AuctionManagment from "../pages/DahsboardPages/AuctionManagment.jsx";
 
 const router = createBrowserRouter([
     {
@@ -100,6 +103,20 @@ const router = createBrowserRouter([
             {
                 path : '/buy-bids',
                 element: <BuyBids />
+            },
+        ]
+    },
+    {
+        path : '/admin',
+        element : <DashboardLayout/>,
+        children :[
+            {
+                index : true,
+                element : <DashboardHome/>
+            },
+            {
+                path : 'autction-managment',
+                element : <AuctionManagment/>
             },
         ]
     },
