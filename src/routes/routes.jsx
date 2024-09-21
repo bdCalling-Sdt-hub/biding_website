@@ -29,6 +29,7 @@ import Bookmarks from "../pages/MyAccountPages/Bookmarks.jsx";
 import BiddingHistory from "../pages/MyAccountPages/BiddingHistory.jsx";
 import MyBids from "../pages/MyAccountPages/MyBids.jsx";
 import EditProfile from "../pages/MyAccountPages/EditProfile.jsx";
+import EditAddAddress from "../components/ui/EditAddAddress.jsx";
 
 const router = createBrowserRouter([
     {
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
             {
                 path: 'edit-profile',
                 element : <EditProfile/>
+            },
+            {
+                path: 'edit-address',
+                element : <EditAddAddress/>
             },
         ]
     },

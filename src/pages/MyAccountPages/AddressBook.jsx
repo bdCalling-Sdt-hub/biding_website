@@ -1,5 +1,6 @@
 import React from 'react'
 import { CiEdit } from 'react-icons/ci'
+import { Link } from 'react-router-dom'
 
 const AddressBook = () => {
   return (
@@ -7,7 +8,7 @@ const AddressBook = () => {
       <h1 className='text-yellow font-medium'>Address Book</h1>
       <div className='flex justify-between items-center mt-5'>
         <p className='font-medium'>Shipping Address</p>
-        <CiEdit className='text-yellow cursor-pointer' size={25} />
+       <Link to='/my-profile/edit-address'> <CiEdit className='text-yellow cursor-pointer'  size={25} /></Link>
       </div>
       <div className='space-y-2 mt-5'>
         <p>Full Name: <span className='font-medium'>Robert Smith</span></p>
@@ -21,4 +22,4 @@ const AddressBook = () => {
   )
 }
 
-export default AddressBook 
+export default AddressBook  

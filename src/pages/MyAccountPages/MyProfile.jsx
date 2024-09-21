@@ -19,7 +19,7 @@ const MyProfile = () => {
           <p>+3489 9999 9778</p>
         </div>
         <div className='flex justify-between items-center'>
-          <p>Date of Birth:</p>
+          <p>Date of Birth:</p> 
           <p>12/04/2002</p>
         </div>
         <div className='flex items-center justify-center pt-10'>
