@@ -178,3 +178,12 @@
   
   color: white;
 }
+
+
+/* progress bar color */
+:where(.css-dev-only-do-not-override-qnu6hi).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-tail::after {
+  background-color:#F3A211 ;
+}
+:where(.css-dev-only-do-not-override-qnu6hi).ant-steps .ant-steps-item-finish .ant-steps-item-icon >.ant-steps-icon .ant-steps-icon-dot {
+  background-color:#F3A211 
+}

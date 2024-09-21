@@ -30,6 +30,7 @@ import BiddingHistory from "../pages/MyAccountPages/BiddingHistory.jsx";
 import MyBids from "../pages/MyAccountPages/MyBids.jsx";
 import EditProfile from "../pages/MyAccountPages/EditProfile.jsx";
 import EditAddAddress from "../components/ui/EditAddAddress.jsx";
+import TrackOrder from "../pages/MyAccountPages/TrackOrder.jsx";
 
 const router = createBrowserRouter([
     {
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
             {
                 path: 'edit-address',
                 element : <EditAddAddress/>
+            },
+            {
+                path: 'track-order/:id',
+                element : <TrackOrder/>
             },
         ]
     },
