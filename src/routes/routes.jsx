@@ -31,6 +31,10 @@ import MyBids from "../pages/MyAccountPages/MyBids.jsx";
 import EditProfile from "../pages/MyAccountPages/EditProfile.jsx";
 import EditAddAddress from "../components/ui/EditAddAddress.jsx";
 import TrackOrder from "../pages/MyAccountPages/TrackOrder.jsx";
+import AdminLogin from "../pages/DahsboardPages/AdminLogin.jsx";
+import AdminForgetPassword from "../pages/DahsboardPages/AdminForgetPassword.jsx";
+import AdminVerificationCode from "../pages/DahsboardPages/AdminVerificationCode.jsx";
+import AdminResetPassword from "../pages/DahsboardPages/AdminResetPassword.jsx";
 
 const router = createBrowserRouter([
     {
@@ -148,6 +152,26 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login />
+    },
+    {
+        path: '/admin-login',
+        element: <AdminLogin />
+    },
+    {
+        path: '/admin-forget-password',
+        element: <AdminForgetPassword />
+    },
+    {
+        path: '/admin-verification-code',
+        element: <AdminVerificationCode />
+    },
+    {
+        path: '/admin-reset-password',
+        element: <AdminResetPassword />
+    },
+    {
+        path: '/admin-reset-password',
+        element: <AdminLogin />
     },
     {
         path: '/register',

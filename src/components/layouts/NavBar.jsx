@@ -39,7 +39,7 @@ const NavBar = () => {
                   <IoIosNotificationsOutline size={22} className='text-yellow' />
                 </Link>
                 <div className='bg-[#FEF6e7] rounded-full p-2'>
-                  <LuUserCircle2 size={22} className='text-yellow' />
+                  <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                 </div>
 
               </div>
