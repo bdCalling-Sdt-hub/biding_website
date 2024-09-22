@@ -7,7 +7,6 @@ import { InboxOutlined } from '@ant-design/icons';
 
 const CategoryModal = ({setOpenAddModal,openAddModal}) => {
     // const [isModalOpen, isModalOpen] = useState(false);
-    console.log(openAddModal);
 
     const props = {
         name: 'file',
