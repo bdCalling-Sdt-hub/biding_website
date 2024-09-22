@@ -113,7 +113,7 @@ const DashboardHome = () => {
 
             <div className='bg-white rounded-md p-5 mt-5'>
                 <div className='flex items-center justify-between my-5 '>
-                    <p className='text-xl font-semibold'>Active Auction</p> <Link to={`/profile-update-request`}>
+                    <p className='text-xl font-semibold'>Active Auction</p> <Link to={`/admin/active-auction`}>
                         View all
                     </Link>
 

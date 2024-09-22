@@ -38,6 +38,7 @@ import AdminResetPassword from "../pages/DahsboardPages/AdminResetPassword.jsx";
 import DashboardLayout from "../components/layouts/DashboardLayout.jsx";
 import DashboardHome from "../pages/DahsboardPages/DashboardHome.jsx";
 import AuctionManagment from "../pages/DahsboardPages/AuctionManagment.jsx";
+import ActiveAuctionPage from "../pages/DahsboardPages/ActiveAuctionPage.jsx";
 
 const router = createBrowserRouter([
     {
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
             {
                 path : 'autction-managment',
                 element : <AuctionManagment/>
+            },
+            {
+                path : 'active-auction',
+                element : <ActiveAuctionPage/>
             },
         ]
     },
