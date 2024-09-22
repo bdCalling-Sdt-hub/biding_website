@@ -49,6 +49,8 @@ import DashboardPrivacyAndPolicy from "../pages/DahsboardPages/DashboardPrivacyA
 import DashboardTermsAndCondition from "../pages/DahsboardPages/DashboardTermsAndCondition.jsx";
 import DashboardAccessibility from "../pages/DahsboardPages/DashboardAccessibility.jsx";
 import Transaction from "../pages/DahsboardPages/Transaction.jsx";
+import DashboardNotification from "../pages/DahsboardPages/DashboardNotification.jsx";
+import CategoryAndBanner from "../pages/DahsboardPages/CategoryAndBanner.jsx";
 
 const router = createBrowserRouter([
     {
@@ -172,6 +174,14 @@ const router = createBrowserRouter([
             {
                 path : 'transaction',
                 element : <Transaction/>
+            },
+            {
+                path : 'notification',
+                element : <DashboardNotification/>
+            },
+            {
+                path : 'category-banner',
+                element : <CategoryAndBanner/>
             },
             
         ]

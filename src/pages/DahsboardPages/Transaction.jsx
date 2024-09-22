@@ -2,8 +2,6 @@ import { Pagination, Table } from 'antd'
 import React, { useState } from 'react'
 import img1 from '../../assets/user.png'
 import img2 from '../../assets/user2.png'
-import { IoEyeOutline } from 'react-icons/io5';
-import { MdBlock } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { CiSearch } from 'react-icons/ci';

@@ -47,7 +47,7 @@ const SideBar = () => {
           sub_menu: false
         },
         {
-          path: '/Category & Banner',
+          path: '/admin/category-banner',
           label: 'Category & Banner',
           icon: <MdOutlineCategory size={25} />, 
           sub_menu: false
