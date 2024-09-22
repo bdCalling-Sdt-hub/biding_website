@@ -41,7 +41,7 @@ const SideBar = () => {
           sub_menu: false
         },
         {
-          path: '/drivers',
+          path: '/admin/transaction',
           label: 'Transaction',
           icon: <MdOutlineTrendingUp size={25} />,
           sub_menu: false
@@ -132,7 +132,7 @@ const SideBar = () => {
               }}> 
               </div>: ""}
               <div onClick={() => toggleAccordion(index)}
-                className={`cursor-pointer flex justify-start  pl-5   gap-2 items-center text-yellow ${isSubMenuActive ? "bg-[#FEF6E7] "  : ""} py-[12px] mb-[1px]`}
+                className={`cursor-pointer flex justify-start  pl-5   gap-2 items-center text-white ${isSubMenuActive ? "bg-[#FEF6E7] text-yellow "  : ""} py-[12px] mb-[1px]`}
               >
                 {item?.icon}
                 {item?.label}

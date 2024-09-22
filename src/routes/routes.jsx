@@ -48,6 +48,7 @@ import DashboardFaqs from "../pages/DahsboardPages/DashboardFaqs.jsx";
 import DashboardPrivacyAndPolicy from "../pages/DahsboardPages/DashboardPrivacyAndPolicy.jsx";
 import DashboardTermsAndCondition from "../pages/DahsboardPages/DashboardTermsAndCondition.jsx";
 import DashboardAccessibility from "../pages/DahsboardPages/DashboardAccessibility.jsx";
+import Transaction from "../pages/DahsboardPages/Transaction.jsx";
 
 const router = createBrowserRouter([
     {
@@ -167,6 +168,10 @@ const router = createBrowserRouter([
             {
                 path : 'accessibility',
                 element : <DashboardAccessibility/>
+            },
+            {
+                path : 'transaction',
+                element : <Transaction/>
             },
             
         ]
