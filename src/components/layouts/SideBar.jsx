@@ -29,7 +29,7 @@ const SideBar = () => {
           sub_menu: false
         },
         {
-          path: '/transaction',
+          path: '/admin/order-managment',
           label: 'Order Managment ',
           icon: <LiaCubeSolid size={25} />,
           sub_menu: false

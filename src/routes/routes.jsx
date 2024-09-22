@@ -39,6 +39,7 @@ import DashboardLayout from "../components/layouts/DashboardLayout.jsx";
 import DashboardHome from "../pages/DahsboardPages/DashboardHome.jsx";
 import AuctionManagment from "../pages/DahsboardPages/AuctionManagment.jsx";
 import ActiveAuctionPage from "../pages/DahsboardPages/ActiveAuctionPage.jsx";
+import OrderManagment from "../pages/DahsboardPages/OrderManagment.jsx";
 
 const router = createBrowserRouter([
     {
@@ -122,6 +123,10 @@ const router = createBrowserRouter([
             {
                 path : 'active-auction',
                 element : <ActiveAuctionPage/>
+            },
+            {
+                path : 'order-managment',
+                element : <OrderManagment/>
             },
         ]
     },

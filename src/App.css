@@ -187,3 +187,26 @@
 :where(.css-dev-only-do-not-override-qnu6hi).ant-steps .ant-steps-item-finish .ant-steps-item-icon >.ant-steps-icon .ant-steps-icon-dot {
   background-color:#F3A211 
 }
+
+
+
+/*  */
+/* ant design  */
+
+:where(.css-dev-only-do-not-override-11lehqq).ant-pagination .ant-pagination-item {
+  border-radius: 20px;
+}
+
+:where(.css-dev-only-do-not-override-11lehqq).ant-pagination .ant-pagination-item-active {
+  font-weight: 600;
+  background-color: #2AB9A4 !important;
+  border-color: #2AB9A4 !important;
+}
+:where(.css-dev-only-do-not-override-11lehqq).ant-pagination .ant-pagination-item-active a {
+  color: white;
+}
+
+.custom-pagination .ant-pagination {
+  display: flex;
+  justify-content: center;
+}
