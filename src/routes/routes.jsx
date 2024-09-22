@@ -40,6 +40,7 @@ import DashboardHome from "../pages/DahsboardPages/DashboardHome.jsx";
 import AuctionManagment from "../pages/DahsboardPages/AuctionManagment.jsx";
 import ActiveAuctionPage from "../pages/DahsboardPages/ActiveAuctionPage.jsx";
 import OrderManagment from "../pages/DahsboardPages/OrderManagment.jsx";
+import UserManagement from "../pages/DahsboardPages/UserManagement.jsx";
 
 const router = createBrowserRouter([
     {
@@ -127,6 +128,10 @@ const router = createBrowserRouter([
             {
                 path : 'order-managment',
                 element : <OrderManagment/>
+            },
+            {
+                path : 'user-managment',
+                element : <UserManagement/>
             },
         ]
     },

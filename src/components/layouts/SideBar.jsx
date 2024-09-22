@@ -35,7 +35,7 @@ const SideBar = () => {
           sub_menu: false
         },
         {
-          path: '/user-management',
+          path: '/admin/user-managment',
           label: 'User Management',
           icon: <FaRegUserCircle size={25} />,
           sub_menu: false
