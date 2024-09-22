@@ -41,6 +41,13 @@ import AuctionManagment from "../pages/DahsboardPages/AuctionManagment.jsx";
 import ActiveAuctionPage from "../pages/DahsboardPages/ActiveAuctionPage.jsx";
 import OrderManagment from "../pages/DahsboardPages/OrderManagment.jsx";
 import UserManagement from "../pages/DahsboardPages/UserManagement.jsx";
+import Profile from "../pages/DahsboardPages/Profile.jsx";
+import Aboutus from "../pages/DahsboardPages/Aboutus.jsx";
+import DashboardTipsAndTricks from "../pages/DahsboardPages/DashboardTipsAndTricks.jsx";
+import DashboardFaqs from "../pages/DahsboardPages/DashboardFaqs.jsx";
+import DashboardPrivacyAndPolicy from "../pages/DahsboardPages/DashboardPrivacyAndPolicy.jsx";
+import DashboardTermsAndCondition from "../pages/DahsboardPages/DashboardTermsAndCondition.jsx";
+import DashboardAccessibility from "../pages/DahsboardPages/DashboardAccessibility.jsx";
 
 const router = createBrowserRouter([
     {
@@ -133,6 +140,35 @@ const router = createBrowserRouter([
                 path : 'user-managment',
                 element : <UserManagement/>
             },
+            {
+                path : 'profile',
+                element : <Profile/>
+            },
+            {
+                path : 'about-us',
+                element : <Aboutus/>
+            },
+            {
+                path : 'tips-tricks',
+                element : <DashboardTipsAndTricks/>
+            },
+            {
+                path : 'faqs',
+                element : <DashboardFaqs/>
+            },
+            {
+                path : 'privacy-policy',
+                element : <DashboardPrivacyAndPolicy/>
+            },
+            {
+                path : 'terms-condition',
+                element : <DashboardTermsAndCondition/>
+            },
+            {
+                path : 'accessibility',
+                element : <DashboardAccessibility/>
+            },
+            
         ]
     },
     {

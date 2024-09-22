@@ -59,32 +59,41 @@ const SideBar = () => {
           icon: <IoSettingsOutline size={25} />,
           sub_menu: [
             {
-              path: '/profile',
+              path: '/admin/profile',
               label: 'Profile',
               icon: <></>,
             },
             {
-              path: '/faq',
+              path: '/admin/about-us',
               label: 'About Us',
               icon: <></>,
             },
             {
-              path: '/faq',
-              label: 'FAQ',
+              path: '/admin/tips-tricks',
+              label: 'Tips & tricks',
               icon: <></>,
             },
             {
-              path: '/terms-condition',
+              path: '/admin/accessibility',
+              label: 'Accessibility',
+              icon: <></>,
+            },
+            
+            {
+              path: '/admin/terms-condition',
               label: 'Terms & Condition',
               icon: <></>,
             },
             {
-              path: '/privacy-policy',
+              path: '/admin/privacy-policy',
               label: 'Privacy Policy',
               icon: <></>,
             },
-            
-    
+            {
+              path: '/admin/faqs',
+              label: 'FAQ',
+              icon: <></>,
+            },
     
           ]
         },
@@ -123,7 +132,7 @@ const SideBar = () => {
               }}> 
               </div>: ""}
               <div onClick={() => toggleAccordion(index)}
-                className={`cursor-pointer flex justify-start ml-8  mr-3 gap-2 items-center text-[white] ${isSubMenuActive ? "bg-black "  : ""} py-[12px] mb-[1px]`}
+                className={`cursor-pointer flex justify-start  pl-5   gap-2 items-center text-yellow ${isSubMenuActive ? "bg-[#FEF6E7] "  : ""} py-[12px] mb-[1px]`}
               >
                 {item?.icon}
                 {item?.label}
@@ -133,7 +142,7 @@ const SideBar = () => {
 
               <div
                 ref={(el) => (contentRefs.current[index] = el)}
-                className='accordion-content ml-8 mr-3 overflow-hidden transition-max-height duration-300 ease-in-out cursor-pointer  '
+                className='accordion-content  overflow-hidden transition-max-height duration-300 ease-in-out cursor-pointer  '
                 style={{
                   maxHeight: openIndex === index ? `${contentRefs.current[index]?.scrollHeight}px` : '0px'
                 }}
@@ -145,7 +154,7 @@ const SideBar = () => {
                       <NavLink
                         to={sub_item?.path}
                         key={subIndex}
-                        className={`flex justify-center items-center  ${isSubItemActive ? "bg-[#2A2A2A] text-white" : "bg-white text-[var(--primary-color)]  "}  px-2  w-full py-2 mb-[1px] cursor-pointer `}
+                        className={`flex justify-center items-center  ${isSubItemActive ? "bg-[#FEF6E7] text-yellow border-r-4 border-yellow" : " text-white  "}    w-full py-2 mb-[1px] cursor-pointer `}
                       >
                         {sub_item?.icon}
                         {sub_item?.label}
