@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import img1 from '../../assets/prod1.png'
 import img2 from '../../assets/prod2.png'
-import { Form, Input, Modal, Table } from 'antd';
+import { Form, Input, Modal, Table, Upload } from 'antd';
 import { CiEdit, CiSearch } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -9,9 +9,22 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Button from '../../components/ui/Button';
 import { IoAddOutline } from 'react-icons/io5';
 import TextArea from 'antd/es/input/TextArea';
+import { PlusOutlined } from '@ant-design/icons';
+import CreateUpdateAuctionModal from '../../components/ui/CreateUpdateAuctionModal';
 const AuctionManagment = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  console.log(isModalOpen);
+  const [visible, setVisible] = useState(false);
+  const [fileList, setFileList] = useState([]);
+
+
+  const handleUploadChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+
+  const handleRemove = (file) => {
+    setFileList(fileList.filter((item) => item.uid !== file.uid));
+  }
+
   const columns = [
     {
       title: "Order ID",
@@ -141,6 +154,7 @@ const AuctionManagment = () => {
     },
 
   ];
+
   return (
     <div className='p-5 bg-white rounded-md'>
 
@@ -150,7 +164,7 @@ const AuctionManagment = () => {
           <span className='font-semibold text-[20px]'>Auction Mangment</span>
         </div>
         <div>
-          <Button className='flex  items-center px-5 py-2'><IoAddOutline /> Create Auction</Button>
+          <Button className='flex  items-center px-5 py-2' onClick={()=> setIsModalOpen(true)} ><IoAddOutline /> Create Auction</Button>
         </div>
       </div>
 
@@ -168,7 +182,7 @@ const AuctionManagment = () => {
       </div>
 
 
-      <Modal centered
+      {/* <Modal centered
         open={isModalOpen}
         footer={false}
         onCancel={() => setIsModalOpen(false)}
@@ -221,15 +235,45 @@ const AuctionManagment = () => {
               <Input />
             </Form.Item>
           </div>
-          <Form.Item 
-          label ="Description"
+          <Form.Item
+            label="Description"
           >
             <TextArea />
           </Form.Item>
+
+
+          <Form.Item label="Upload Images">
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              onChange={handleUploadChange}
+              onRemove={handleRemove}
+              beforeUpload={() => false}
+              multiple
+            >
+              {fileList.length >= 4 ? null : (
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>Add Image</div>
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
+
+          <div className='flex justify-between  gap-3'>
+            <Form.Item className='w-full' >
+              <Button className='w-full'>Save</Button>
+            </Form.Item>
+            <Form.Item className='w-full' >
+              <button className='bg-[#d9000a] text-white w-full p-1 rounded-md' onClick={() => setIsModalOpen(false)} >cancel</button>
+            </Form.Item>
+
+          </div>
         </Form>
 
 
-      </Modal>
+      </Modal> */}
+      <CreateUpdateAuctionModal setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
 
     </div>
   );
