@@ -3,19 +3,27 @@ import React from 'react'
 import { AiFillGoogleCircle } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import img from '../../assets/login.png'
+import { useRegisterUserMutation } from '../../redux/api/userApi'
+import { toast } from 'sonner'
 
 
 const Register = () => {
 
 
+    const [registerUser] = useRegisterUserMutation()
+
     // Register form value handle function
     const onFinish = (values) => {
-        console.log('Success:', values);
+        console.log(values);
+        registerUser(values).unwrap()
+            .then((payload) => toast.success(payload?.message))
+            .catch((error) => toast.error(error?.data?.message));
+
     };
-  return (
-    <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
+    return (
+        <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
             <div className='h-screen hidden md:block'>
-                <img src={img} className='h-screen w-[100%]' alt="" />
+                <img src={img} className='h-full w-[100%]' alt="" />
             </div>
             <div className='mx-auto md:mx-0'>
                 <h1 className='text-[40px] font-semibold mb-2'>Sign Up</h1>
@@ -27,7 +35,7 @@ const Register = () => {
                     >
                         <Form.Item
                             label="Full Name"
-                            name="fullName"
+                            name="name"
 
                         >
                             <Input placeholder='Enter your email here' />
@@ -41,7 +49,7 @@ const Register = () => {
                         </Form.Item>
                         <Form.Item
                             label="Phone Number"
-                            name="phone"
+                            name="phone_number"
 
                         >
                             <Input placeholder='Enter your phone number' />
@@ -62,7 +70,7 @@ const Register = () => {
                             <Checkbox checked >I agre with the temrms and condition</Checkbox>
                         </div>
                         <Form.Item
- 
+
                         >
                             <Button type="primary" className='w-[100%] mt-4 bg-yellow  custom-button' htmlType="submit">
                                 Submit
@@ -81,7 +89,7 @@ const Register = () => {
 
 
         </div>
-  )
+    )
 }
 
 export default Register
