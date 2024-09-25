@@ -1,16 +1,33 @@
 import React from 'react'
 import img from '../../assets/login.png'
-import { Button, Checkbox, Form, Input } from 'antd'
+import { Button, Checkbox, Form, Input, Spin } from 'antd'
 import { AiFillGoogleCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { useLoginMutation } from '../../redux/api/authApis';
+import { toast } from 'sonner';
 const Login = () => {
-
+    const [loginUser, { isLoading }] = useLoginMutation()
     // login form value handle function
     const onFinish = (values) => {
-        console.log('Success:', values);
+        loginUser(values).unwrap()
+            .then((payload) => {
+                if (payload?.data?.accessToken) {
+                    toast.success(payload?.message)
+                    localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
+                } else {
+                    toast.error(payload?.message || 'something went wrong')
+                    localStorage.removeItem('token')
+                }
+            })
+            .catch((error) => {
+                toast.error(error?.data?.message || 'something went wrong')
+            })
     };
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
+            {
+                isLoading && <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center"> <Spin size="large" /></div>
+            }
             <div className='h-screen hidden md:block'>
                 <img src={img} className='h-screen w-[100%]' alt="" />
             </div>

@@ -1,21 +1,39 @@
 import { Button, Checkbox, Form, Input } from 'antd'
 import React from 'react'
 import { AiFillGoogleCircle } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import img from '../../assets/login.png'
+import { toast } from 'sonner'
+import { useRegisterMutation } from '../../redux/api/authApis'
 
 
 const Register = () => {
+    const navigate = useNavigate()
 
+    const [registerUser] = useRegisterMutation()
 
     // Register form value handle function
     const onFinish = (values) => {
-        console.log('Success:', values);
+        registerUser(values).unwrap()
+            .then((payload) => {
+                // console.log(payload)
+                if (payload?.success) {
+                    navigate('/verification-code')//, { state: { email: payload?.data?.email } }
+                    localStorage.setItem('email', JSON.stringify(payload?.data?.email))
+                }
+                toast.success(payload?.message || 'Registered successfully')
+
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error?.data?.message || 'something went wrong')
+            });
+
     };
-  return (
-    <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
+    return (
+        <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
             <div className='h-screen hidden md:block'>
-                <img src={img} className='h-screen w-[100%]' alt="" />
+                <img src={img} className='h-full w-[100%]' alt="" />
             </div>
             <div className='mx-auto md:mx-0'>
                 <h1 className='text-[40px] font-semibold mb-2'>Sign Up</h1>
@@ -27,7 +45,13 @@ const Register = () => {
                     >
                         <Form.Item
                             label="Full Name"
-                            name="fullName"
+                            name="name"
+                            rules={[
+                                {
+                                    message: 'Please enter your name',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your email here' />
@@ -35,13 +59,25 @@ const Register = () => {
                         <Form.Item
                             label="Email"
                             name="email"
+                            rules={[
+                                {
+                                    message: 'Please enter your Email',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your email here' />
                         </Form.Item>
                         <Form.Item
                             label="Phone Number"
-                            name="phone"
+                            name="phone_number"
+                            rules={[
+                                {
+                                    message: 'Please enter your Phone Number',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your phone number' />
@@ -49,12 +85,24 @@ const Register = () => {
                         <Form.Item
                             label="Password"
                             name='password'
+                            rules={[
+                                {
+                                    message: 'Please enter your Password',
+                                    required: true,
+                                }
+                            ]}
                         >
                             <Input.Password placeholder='**********' />
                         </Form.Item>
                         <Form.Item
                             label="Confirm Password"
                             name='confirmPassword'
+                            rules={[
+                                {
+                                    message: 'Please enter your Confirm Password',
+                                    required: true,
+                                }
+                            ]}
                         >
                             <Input.Password placeholder='**********' />
                         </Form.Item>
@@ -62,7 +110,7 @@ const Register = () => {
                             <Checkbox checked >I agre with the temrms and condition</Checkbox>
                         </div>
                         <Form.Item
- 
+
                         >
                             <Button type="primary" className='w-[100%] mt-4 bg-yellow  custom-button' htmlType="submit">
                                 Submit
@@ -81,7 +129,7 @@ const Register = () => {
 
 
         </div>
-  )
+    )
 }
 
 export default Register

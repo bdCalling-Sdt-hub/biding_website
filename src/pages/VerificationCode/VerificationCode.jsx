@@ -2,12 +2,33 @@ import React, { useState } from 'react'
 import OTPInput from 'react-otp-input'
 import img from '../../assets/login.png'
 import Button from '../../components/ui/Button';
+import { useActiveCodeMutation, useResendCodeMutation } from '../../redux/api/authApis';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const VerificationCode = () => {
     const [otp, setOtp] = useState("");
-
-    const handleVerifyOtp =()=>{
-        console.log(otp);
+    const [activeCode, { isLoading }] = useActiveCodeMutation()
+    const [resendCode, { isLoading: isResending }] = useResendCodeMutation()
+    const navigate = useNavigate()
+    const handleVerifyOtp = () => {
+        if (!otp) {
+            toast.error("Please enter OTP")
+        }
+        const email = JSON.parse(localStorage.getItem("email"))
+        activeCode({ activation_code: otp, email: email }).unwrap().then((payload) => {
+            // console.log(payload)
+            if (payload?.success) {
+                localStorage.setItem("token", JSON.stringify(payload?.data?.accessToken))
+                localStorage.removeItem("email")
+                toast.success(payload?.message || "Verified successfully")
+                navigate("/")
+            }
+            console.log(payload)
+        }).catch((error) => {
+            toast.error(error?.data?.message || "Something went wrong")
+            // console.log(error)
+        });
     }
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
@@ -35,7 +56,18 @@ const VerificationCode = () => {
                         renderInput={(props) => <input {...props} />}
                     />
                 </div>
-                <Button onClick={handleVerifyOtp} className='max-w-[40%]'>Countinue</Button>
+                <Button onClick={handleVerifyOtp} className='max-w-[40%]'>Continue</Button>
+                <p>Didn't receive code? <button onClick={() => {
+                    const email = JSON.parse(localStorage.getItem("email"))
+                    resendCode({ email: email }).unwrap().then((payload) => {
+                        if (payload?.success) {
+                            toast.success(payload?.message || "Code sent successfully")
+                        }
+                    }).catch((error) => {
+                        console.log(error)
+                        toast.error(error?.data?.message || "Something went wrong")
+                    });
+                }} className='text-[#F3A211]'>resend code</button></p>
             </div>
 
 
