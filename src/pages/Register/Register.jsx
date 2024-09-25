@@ -3,21 +3,29 @@ import React from 'react'
 import { AiFillGoogleCircle } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import img from '../../assets/login.png'
-import { useRegisterUserMutation } from '../../redux/api/userApi'
 import { toast } from 'sonner'
+import { useRegisterMutation } from '../../redux/api/authApis'
 
 
 const Register = () => {
 
 
-    const [registerUser] = useRegisterUserMutation()
+    const [registerUser] = useRegisterMutation()
 
     // Register form value handle function
     const onFinish = (values) => {
-        console.log(values);
         registerUser(values).unwrap()
-            .then((payload) => toast.success(payload?.message))
-            .catch((error) => toast.error(error?.data?.message));
+            .then((payload) => {
+                console.log(payload)
+                if (payload?.success) {
+                    localStorage.setItem('token', JSON.stringify(payload?.data?.email))
+                }
+                toast.success(payload?.message || 'Registered successfully')
+
+            })
+            .catch((error) => {
+                toast.error(error?.data?.message || 'something went wrong')
+            });
 
     };
     return (

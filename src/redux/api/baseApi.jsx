@@ -14,9 +14,9 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQuery,
-    tagTypes: ['overview'],
+    tagTypes: ['overview', 'winner', 'bookmark'],
     endpoints: () => ({})
 });
 
 
-export const imageUrl = 'http://192.168.10.153:6050/'
+export const imageUrl = 'http://192.168.10.153:6050'
