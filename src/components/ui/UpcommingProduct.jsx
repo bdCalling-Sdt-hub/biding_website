@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import img from '../../assets/image.png'
-import { FaRegStar } from 'react-icons/fa'
+import { FaRegStar, FaStar } from 'react-icons/fa'
 import { useAddBookmarkMutation } from '../../redux/api/bookmarkApis';
 import { Spin } from 'antd';
 import { toast } from 'sonner';
+import { useGetWinnerQuery } from '../../redux/api/winnerApi';
 const UpcommingProduct = ({ product }) => {
     // states 
     const combinedDateTime = new Date(`${product?.startingDate?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
     // query 
     const [addToBookmark, { isLoading }] = useAddBookmarkMutation();
+    const { data: upcomingData, refetch } = useGetWinnerQuery({ status: "UPCOMING", page: 1 })
     // handler
     const handleAddToBookmark = (id) => {
         addToBookmark({ auctionId: id }).unwrap()
@@ -38,7 +40,12 @@ const UpcommingProduct = ({ product }) => {
 
         return () => clearInterval(interval);
     }, [combinedDateTime]);
-    console.log(product)
+    //
+    useEffect(() => {
+        if (formatTimeLeft(timeLeft)?.startsWith('-')) {
+            refetch()
+        }
+    }, [formatTimeLeft(timeLeft), timeLeft])
     return (
         <div className='rounded-lg bg-white shadow-sm my-4 relative'>
             {
@@ -49,11 +56,13 @@ const UpcommingProduct = ({ product }) => {
                 <p className='font-medium'>{product?.name}</p>
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
                 <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
-                <p className='text-[#585858] font-semibold text-[ 24px]'>{formatTimeLeft(timeLeft)}</p>
+                <p className='text-[#585858] font-semibold text-[ 24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</p>
                 <button className='bg-[#666666] px-14 text-white rounded-md py-2'>Starting Soon</button>
             </div>
             <button onClick={() => handleAddToBookmark(product?._id)} className='absolute top-3 right-3 text-yellow' >
-                <FaRegStar size={22} />
+                {
+                    product?.isBookmark ? <FaStar size={22} className='text-yellow' /> : <FaRegStar size={22} className='text-yellow' />
+                }
             </button>
         </div>
     )

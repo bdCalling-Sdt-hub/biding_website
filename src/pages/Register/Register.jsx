@@ -1,14 +1,14 @@
 import { Button, Checkbox, Form, Input } from 'antd'
 import React from 'react'
 import { AiFillGoogleCircle } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import img from '../../assets/login.png'
 import { toast } from 'sonner'
 import { useRegisterMutation } from '../../redux/api/authApis'
 
 
 const Register = () => {
-
+    const navigate = useNavigate()
 
     const [registerUser] = useRegisterMutation()
 
@@ -16,14 +16,16 @@ const Register = () => {
     const onFinish = (values) => {
         registerUser(values).unwrap()
             .then((payload) => {
-                console.log(payload)
+                // console.log(payload)
                 if (payload?.success) {
-                    localStorage.setItem('token', JSON.stringify(payload?.data?.email))
+                    navigate('/verification-code')//, { state: { email: payload?.data?.email } }
+                    localStorage.setItem('email', JSON.stringify(payload?.data?.email))
                 }
                 toast.success(payload?.message || 'Registered successfully')
 
             })
             .catch((error) => {
+                console.log(error)
                 toast.error(error?.data?.message || 'something went wrong')
             });
 
@@ -44,6 +46,12 @@ const Register = () => {
                         <Form.Item
                             label="Full Name"
                             name="name"
+                            rules={[
+                                {
+                                    message: 'Please enter your name',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your email here' />
@@ -51,6 +59,12 @@ const Register = () => {
                         <Form.Item
                             label="Email"
                             name="email"
+                            rules={[
+                                {
+                                    message: 'Please enter your Email',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your email here' />
@@ -58,6 +72,12 @@ const Register = () => {
                         <Form.Item
                             label="Phone Number"
                             name="phone_number"
+                            rules={[
+                                {
+                                    message: 'Please enter your Phone Number',
+                                    required: true,
+                                }
+                            ]}
 
                         >
                             <Input placeholder='Enter your phone number' />
@@ -65,12 +85,24 @@ const Register = () => {
                         <Form.Item
                             label="Password"
                             name='password'
+                            rules={[
+                                {
+                                    message: 'Please enter your Password',
+                                    required: true,
+                                }
+                            ]}
                         >
                             <Input.Password placeholder='**********' />
                         </Form.Item>
                         <Form.Item
                             label="Confirm Password"
                             name='confirmPassword'
+                            rules={[
+                                {
+                                    message: 'Please enter your Confirm Password',
+                                    required: true,
+                                }
+                            ]}
                         >
                             <Input.Password placeholder='**********' />
                         </Form.Item>
