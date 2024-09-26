@@ -10,9 +10,12 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
-import { FaCircleArrowLeft, FaCircleArrowRight } from 'react-icons/fa6';
+import { useGetTopCategoryQuery } from '../../redux/api/HomeApi';
 
 const TopCategory = () => {
+
+    const {data } = useGetTopCategoryQuery();
+    console.log(data?.data);
     // Create refs for navigation buttons
     const prevRef = useRef(null);
     const nextRef = useRef(null);
@@ -20,7 +23,7 @@ const TopCategory = () => {
     return (
         <div>
             <div className='flex justify-between items-center -mb-16'>
-                <HomeContentHeading title={'Active Now'} />
+                <HomeContentHeading title={'Top Categories'} />
             </div>
             <div className='my-5 category'>
                 <Swiper
@@ -52,138 +55,22 @@ const TopCategory = () => {
                             spaceBetween: 20,
                         },
                     }}
-                    navigation={true} // Enable navigation
-                    modules={[Pagination, Navigation]} // Ensure both Pagination and Navigation are enabled
+                    navigation={true} 
+                    modules={[Pagination, Navigation]}
                     className="mySwiper"
                 >
-                    <SwiperSlide>
+                    {
+                        data?.data?.map((cat, i)=> <SwiperSlide>
                         <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
+                            <div className="flex flex-col justify-center items-center h-36 w-36">
+                                <img src={cat?.image} className='object-contain rounded-full ' alt="Image 1" />
                             </div>
-                            <h1>Electronics</h1>
+                            <h1 className='mt-2 font-medium text-[20px]'>{cat?.name}</h1>
                         </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-32 w-32">
-                                <img src={img1} className='object-contain' alt="Image 1" />
-                            </div>
-                            <h1>Electronics</h1>
-                        </div>
-                    </SwiperSlide>
+                    </SwiperSlide>)
+                    }
+                   
+                    
                     {/* Add more SwiperSlide components as needed */}
                 </Swiper>
             </div>
