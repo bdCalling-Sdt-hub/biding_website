@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import img from '../../assets/image.png'
 import { FaRegStar, FaStar } from 'react-icons/fa'
-import { useAddBookmarkMutation } from '../../redux/api/bookmarkApis';
+import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
 import { Spin } from 'antd';
 import { toast } from 'sonner';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
-const UpcommingProduct = ({ product }) => {
+const UpcommingProduct = ({ product, type,BookmarkId }) => {
     // states 
     const combinedDateTime = new Date(`${product?.startingDate?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
     // query 
     const [addToBookmark, { isLoading }] = useAddBookmarkMutation();
+    const [remove, { isLoading: isDeleting }] = useDeleteBookmarkMutation()
     const { data: upcomingData, refetch } = useGetWinnerQuery({ status: "UPCOMING", page: 1 })
     // handler
     const handleAddToBookmark = (id) => {
@@ -18,6 +19,22 @@ const UpcommingProduct = ({ product }) => {
             return toast.error('Please login first')
         }
         addToBookmark({ auctionId: id }).unwrap()
+            .then((payload) => {
+                console.log(payload)
+                toast.success(payload?.message)
+            }).catch((error) => {
+                console.log(error)
+                toast.error(error?.data?.message)
+            })
+    }
+    const handleRemoveBookmark = (id) => { 
+        if (!id) {
+            return 
+        }
+        if (!localStorage.getItem('token')) {
+            return toast.error('Please login first')
+        }
+        remove(id).unwrap()
             .then((payload) => {
                 console.log(payload)
                 toast.success(payload?.message)
@@ -45,16 +62,19 @@ const UpcommingProduct = ({ product }) => {
     }, [combinedDateTime]);
     //
     useEffect(() => {
+        if (type && type === 'bookmark') {
+            return
+        }
         if (formatTimeLeft(timeLeft)?.startsWith('-')) {
             refetch()
         }
-    }, [formatTimeLeft(timeLeft), timeLeft])
+    }, [formatTimeLeft(timeLeft), timeLeft, type])
     return (
         <div className='rounded-lg bg-white shadow-sm my-4 relative'>
             {
-                isLoading && <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center"> <Spin /></div>
+                (isLoading || isDeleting) && <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center"> <Spin /></div>
             }
-            <img src={product?.images[0]} className='w-full h-[180px] object-contain border rounded-md p-1' alt="" />
+            <img src={product?.images?.[0]} className='w-full h-[180px] object-contain border rounded-md p-1' alt="" />
             <div className=' text-center space-y-1 py-2'>
                 <p className='font-medium'>{product?.name}</p>
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
@@ -62,11 +82,9 @@ const UpcommingProduct = ({ product }) => {
                 <p className='text-[#585858] font-semibold text-[ 24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</p>
                 <button className='bg-[#666666] px-5 md:px-14 text-white rounded-md py-2'>Starting Soon</button>
             </div>
-            <button onClick={() => handleAddToBookmark(product?._id)} className='absolute top-3 right-3 text-yellow' >
-                {
-                    product?.isBookmark ? <FaStar size={22} className='text-yellow' /> : <FaRegStar size={22} className='text-yellow' />
-                }
-            </button>
+            {
+                product?.isBookmark || (type && type === 'bookmark') ? <FaStar onClick={() => handleRemoveBookmark(BookmarkId)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
+            }
         </div>
     )
 }
