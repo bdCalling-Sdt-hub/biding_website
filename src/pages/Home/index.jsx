@@ -3,6 +3,7 @@ import Caurosel from '../../components/ui/Caurosel';
 import Search from './Search';
 import FeaturedAuction from './FeaturedAuction';
 import TopCategory from './TopCategory';
+import WhyChooseUs from './WhyChooseUs';
 const Home = () => {
   
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Caurosel />
       <FeaturedAuction/>
       <TopCategory/>
+      <WhyChooseUs/>
     </div>
   );
 }
