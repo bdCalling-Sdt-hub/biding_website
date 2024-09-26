@@ -5,6 +5,7 @@ import { AiFillGoogleCircle } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/authApis';
 import { toast } from 'sonner';
+import GoogleAuthLogin from '../../components/ui/GoogleAuthLogin';
 const Login = () => {
     const [loginUser, { isLoading }] = useLoginMutation()
     // login form value handle function
@@ -68,7 +69,9 @@ const Login = () => {
                     {/* Google signin  */}
                     <div className='flex flex-col items-center gap-2'>
                         <p className='text-center text-[14px]'>Or Sign in with</p>
-                        <AiFillGoogleCircle size={25} className='text-yellow ' />
+                        <div className='flex justify-center items-center w-full'>
+                            <GoogleAuthLogin />
+                        </div>
                         <p>Don’t have a account? <Link to='/register' className='text-yellow'>Sign Up</Link></p>
                     </div>
                 </div>

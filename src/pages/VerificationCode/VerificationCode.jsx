@@ -24,7 +24,6 @@ const VerificationCode = () => {
                 toast.success(payload?.message || "Verified successfully")
                 navigate("/")
             }
-            console.log(payload)
         }).catch((error) => {
             toast.error(error?.data?.message || "Something went wrong")
             // console.log(error)

@@ -14,6 +14,9 @@ const UpcommingProduct = ({ product }) => {
     const { data: upcomingData, refetch } = useGetWinnerQuery({ status: "UPCOMING", page: 1 })
     // handler
     const handleAddToBookmark = (id) => {
+        if (!localStorage.getItem('token')) {
+            return toast.error('Please login first')
+        }
         addToBookmark({ auctionId: id }).unwrap()
             .then((payload) => {
                 console.log(payload)

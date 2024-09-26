@@ -6,14 +6,16 @@ import router from './routes/routes.jsx'
 import Providers from './lib/Providers/Providers.jsx'
 import { Toaster } from 'sonner'
 import SocketProviders from './Providers/SocketProviders.jsx'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <SocketProviders>
-      <Providers>
-        <RouterProvider router={router} />
-      </Providers>
-      <Toaster position="top-right" richColors />
-    </SocketProviders>
+    <Providers>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <SocketProviders>
+          <RouterProvider router={router} />
+        </SocketProviders>
+        <Toaster position="top-right" richColors />
+      </GoogleOAuthProvider>
+    </Providers>
   </StrictMode>,
 )
