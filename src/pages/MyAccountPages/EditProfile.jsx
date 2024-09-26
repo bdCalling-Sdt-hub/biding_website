@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoCameraOutline } from 'react-icons/io5';
 import img from '../../assets/user.png'
-import { Form, Input } from 'antd';
+import { Form, Input, Spin } from 'antd';
 import Button from '../../components/ui/Button';
+import { useGetProfileQuery, useUpdateProfileMutation } from '../../redux/api/authApis';
+import { toast } from 'sonner';
 const EditProfile = () => {
     const [image, setImage] = useState();
     const [form] = Form.useForm()
-
-    const handlePageChange = (tab) => {
-        setTab(tab);
-        const params = new URLSearchParams(window.location.search);
-        params.set('tab', tab);
-        window.history.pushState(null, "", `?${params.toString()}`);
-    };
+    const { data } = useGetProfileQuery()
+    const [updateProfile, { isLoading }] = useUpdateProfileMutation()
 
     const handleChange = (e) => {
         const file = e.target.files[0];
@@ -21,8 +18,26 @@ const EditProfile = () => {
     }
 
     const onEditProfile = (values) => {
-        console.log(values);
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(values));
+        if (image) {
+            formData.append("profile_image", image);
+        }
+        updateProfile(formData).unwrap()
+            .then((payload) => {
+                console.log(payload)
+                toast.success(payload?.message || "Profile updated successfully")
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error(error?.data?.message || "Something went wrong")
+            })
     }
+    useEffect(() => {
+        if (data?.data) {
+            form.setFieldsValue(data?.data)
+        }
+    }, [data?.data, form])
     return (
         <div>
             <h1 className='text-yellow font-medium'>Edit Your Profile</h1>
@@ -30,7 +45,7 @@ const EditProfile = () => {
                 <input type="file" onInput={handleChange} id='img' style={{ display: "none" }} />
                 <img
                     style={{ width: 120, height: 120, borderRadius: "100%" }}
-                    src={img}
+                    src={image ? URL.createObjectURL(image) : data?.data?.profile_image || img}
                     alt=""
                 />
 
@@ -60,7 +75,7 @@ const EditProfile = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-5'>
                     <div>
                         <Form.Item
-                            name="fullName"
+                            name="name"
                             label={<p className="text-[16px]  font-normal">Full
                                 Name</p>}
                         >
@@ -78,8 +93,8 @@ const EditProfile = () => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="email"
-                            label={<p className=" text-[16px] font-normal">Email</p>}
+                            name="date_of_birth"
+                            label={<p className=" text-[16px] font-normal">Date of Birth</p>}
                         >
                             <Input
                                 style={{
@@ -90,14 +105,15 @@ const EditProfile = () => {
                                     outline: "none"
                                 }}
                                 className='text-[16px] leading-5'
-                                placeholder={`xyz@gmail.com`}
+                                placeholder={`12/04/2002`}
+                                type='date'
                             />
                         </Form.Item>
                     </div>
 
                     <div>
                         <Form.Item
-                            name="mobileNumber"
+                            name="phone_number"
                             label={<p className="text-[#919191] text-[16px] leading-5 font-normal">Phone Number</p>}
                         >
                             <Input
@@ -113,8 +129,8 @@ const EditProfile = () => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="Date of Birth"
-                            label={<p className="text-[#919191] text-[16px] leading-5 font-normal">Address</p>}
+                            name="location"
+                            label={<p className="text-[#919191] text-[16px] leading-5 font-normal">address</p>}
                         >
                             <Input
                                 style={{
@@ -139,13 +155,15 @@ const EditProfile = () => {
                         justifyContent: "center"
                     }}
                 >
-                    <Button
+                    <Button 
                         type="primary"
                         htmlType="submit"
-                       
-                        className='px-5 '
+                        className={`p-5 bg-yellow rounded-md text-white ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     >
-                        Save  Changes
+                        {
+                            isLoading ? <Spin /> : ' Save  Changes'
+                        }
+
                     </Button>
                 </Form.Item>
             </Form>
