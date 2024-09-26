@@ -1,11 +1,19 @@
 import { Form, Input } from 'antd';
 import React from 'react'
 import Button from '../../components/ui/Button';
+import { useChangePasswordMutation } from '../../redux/api/authApis';
+import { toast } from 'sonner';
 
 const ChangePassword = () => {
   const [form] = Form.useForm()
+  const [Change] = useChangePasswordMutation()
   const onFinish = (values) => {
-    console.log(values);
+    Change(values).unwrap().then((payload) => {
+      toast.success(payload?.message || "Password changed successfully")
+    })
+      .catch((error) => {
+        toast.error(error?.data?.message || "Something went wrong")
+      })
   }
   return (
     <div>
@@ -18,8 +26,13 @@ const ChangePassword = () => {
         <div className=' gap-5 mt-5'>
           <div >
             <Form.Item
-              name="fullName"
-              
+              name="oldPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your current password",
+                },
+              ]}
               label={<p className="text-[16px]  font-normal">Current Password</p>}
             >
               <Input
@@ -37,7 +50,13 @@ const ChangePassword = () => {
               />
             </Form.Item>
             <Form.Item
-              name="streetAddress"
+              name="newPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your new password",
+                },
+              ]}
               label={<p className=" text-[16px] font-normal">New Password</p>}
             >
               <Input
@@ -54,7 +73,13 @@ const ChangePassword = () => {
               />
             </Form.Item>
             <Form.Item
-              name="streetAddress"
+              name="confirmPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please confirm your new password",
+                },
+              ]}
               label={<p className=" text-[16px] font-normal">Confirm Password</p>}
             >
               <Input
@@ -72,7 +97,7 @@ const ChangePassword = () => {
             </Form.Item>
           </div>
 
-         
+
         </div>
 
         <Form.Item

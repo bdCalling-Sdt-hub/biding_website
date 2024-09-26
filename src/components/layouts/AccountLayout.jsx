@@ -8,20 +8,21 @@ import { MdChevronRight } from 'react-icons/md'
 import { Tabs } from 'antd'
 import AccountMenu from '../ui/AccountMenu'
 import DashboardMenu from '../ui/DashboardMenu'
+import { useGetProfileQuery } from '../../redux/api/authApis'
 
 const AccountLayout = () => {
     const { pathname } = useLocation();
-
+    const { data } = useGetProfileQuery()
     const items = [
         {
             key: '1',
             label: 'Account Mangement',
-            children: <AccountMenu/>,
+            children: <AccountMenu />,
         },
         {
             key: '2',
             label: 'My Dashboard',
-            children: <DashboardMenu/>,
+            children: <DashboardMenu />,
         },
 
     ];
@@ -37,7 +38,7 @@ const AccountLayout = () => {
                         <div className="md:hidden">
                             <Tabs defaultActiveKey="1" items={items} />
                         </div>
-                       
+
 
                         {/* Hide this content on small devices */}
                         <div className='hidden md:block'>
@@ -49,9 +50,12 @@ const AccountLayout = () => {
                                 <Link to='/my-profile/address-book' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/address-book' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
                                     Address Book <MdChevronRight size={22} />
                                 </Link>
-                                <Link to='/my-profile/change-password' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/change-password' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
-                                    Change Password <MdChevronRight size={22} />
-                                </Link>
+                                {
+                                    data?.data?.authType !== 'GOOGLE' && <Link to='/my-profile/change-password' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/change-password' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
+                                        Change Password <MdChevronRight size={22} />
+                                    </Link>
+                                }
+
                             </div>
                             <h1 className='text-[22px] font-medium py-5'>My Dashboard</h1>
                             <div className='w-full flex flex-col gap-2 text-white mt-5'>

@@ -5,13 +5,11 @@ import { Link, useNavigate } from 'react-router-dom'
 import img from '../../assets/login.png'
 import { toast } from 'sonner'
 import { useRegisterMutation } from '../../redux/api/authApis'
-
+import GoogleAuthLogin from '../../components/ui/GoogleAuthLogin'
 
 const Register = () => {
     const navigate = useNavigate()
-
     const [registerUser] = useRegisterMutation()
-
     // Register form value handle function
     const onFinish = (values) => {
         registerUser(values).unwrap()
@@ -30,6 +28,7 @@ const Register = () => {
             });
 
     };
+
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
             <div className='h-screen hidden md:block'>
@@ -121,7 +120,9 @@ const Register = () => {
                     {/* Google signin  */}
                     <div className='flex flex-col items-center gap-2'>
                         <p className='text-center text-[14px]'>Or Sign in with</p>
-                        <AiFillGoogleCircle size={25} className='text-yellow ' />
+                        <div className='flex justify-center items-center w-full'>
+                            <GoogleAuthLogin />
+                        </div>
                         <p>Already have and account? <Link to='/login' className='text-yellow'>Sign In</Link></p>
                     </div>
                 </div>
