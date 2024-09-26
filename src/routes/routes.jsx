@@ -62,173 +62,173 @@ const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path : '/winner',
+                path: '/winner',
                 element: <Winner />
             },
             {
-                path : '/notification',
+                path: '/notification',
                 element: <Notification />
             },
             {
-                path : '/about',
+                path: '/about',
                 element: <About />
             },
             {
-                path : '/terms-and-condition',
+                path: '/terms-and-condition',
                 element: <TermsAndCondition />
             },
             {
-                path : '/privacy-policy',
+                path: '/privacy-policy',
                 element: <PrivacyAndPolicy />
             },
             {
-                path : '/faqs',
+                path: '/faqs',
                 element: <Faqs />
             },
             {
-                path : '/tips-and-tricks',
+                path: '/tips-and-tricks',
                 element: <TipsAndTricks />
             },
             {
-                path : '/accessibility',
+                path: '/accessibility',
                 element: <Accessibility />
             },
             {
-                path : '/contact',
+                path: '/contact',
                 element: <Contact />
             },
             {
-                path : '/help',
+                path: '/help',
                 element: <Help />
             },
             {
-                path : '/upcoming-auction',
+                path: '/upcoming-auction',
                 element: <UpcomingAuction />
             },
             {
-                path : '/product-details/:id',
+                path: '/product-details/:id',
                 element: <ProductDetails />
             },
             {
-                path : '/payment',
+                path: '/payment',
                 element: <Payment />
             },
             {
-                path : '/buy-bids',
+                path: '/buy-bids',
                 element: <BuyBids />
             },
         ]
     },
     {
-        path : '/admin',
-        element : <DashboardLayout/>,
-        children :[
+        path: '/admin',
+        element: <DashboardLayout />,
+        children: [
             {
-                index : true,
-                element : <DashboardHome/>
+                index: true,
+                element: <DashboardHome />
             },
             {
-                path : 'autction-managment',
-                element : <AuctionManagment/>
+                path: 'autction-managment',
+                element: <AuctionManagment />
             },
             {
-                path : 'active-auction',
-                element : <ActiveAuctionPage/>
+                path: 'active-auction',
+                element: <ActiveAuctionPage />
             },
             {
-                path : 'order-managment',
-                element : <OrderManagment/>
+                path: 'order-managment',
+                element: <OrderManagment />
             },
             {
-                path : 'user-managment',
-                element : <UserManagement/>
+                path: 'user-managment',
+                element: <UserManagement />
             },
             {
-                path : 'profile',
-                element : <Profile/>
+                path: 'profile',
+                element: <Profile />
             },
             {
-                path : 'about-us',
-                element : <Aboutus/>
+                path: 'about-us',
+                element: <Aboutus />
             },
             {
-                path : 'tips-tricks',
-                element : <DashboardTipsAndTricks/>
+                path: 'tips-tricks',
+                element: <DashboardTipsAndTricks />
             },
             {
-                path : 'faqs',
-                element : <DashboardFaqs/>
+                path: 'faqs',
+                element: <DashboardFaqs />
             },
             {
-                path : 'privacy-policy',
-                element : <DashboardPrivacyAndPolicy/>
+                path: 'privacy-policy',
+                element: <DashboardPrivacyAndPolicy />
             },
             {
-                path : 'terms-condition',
-                element : <DashboardTermsAndCondition/>
+                path: 'terms-condition',
+                element: <DashboardTermsAndCondition />
             },
             {
-                path : 'accessibility',
-                element : <DashboardAccessibility/>
+                path: 'accessibility',
+                element: <DashboardAccessibility />
             },
             {
-                path : 'transaction',
-                element : <Transaction/>
+                path: 'transaction',
+                element: <Transaction />
             },
             {
-                path : 'notification',
-                element : <DashboardNotification/>
+                path: 'notification',
+                element: <DashboardNotification />
             },
             {
-                path : 'category-banner',
-                element : <CategoryAndBanner/>
+                path: 'category-banner',
+                element: <CategoryAndBanner />
             },
-            
+
         ]
     },
     {
-        path : '/my-profile',
-        element : <AccountLayout/>,
-        children : [
+        path: '/my-profile',
+        element: <AccountLayout />,
+        children: [
             {
-                index : true,
-                element : <MyProfile/>
+                index: true,
+                element: <MyProfile />
             },
             {
                 path: 'address-book',
-                element : <AddressBook/>
+                element: <AddressBook />
             },
             {
                 path: 'change-password',
-                element : <ChangePassword/>
+                element: <ChangePassword />
             },
             {
                 path: 'my-order',
-                element : <MyOrder/>
+                element: <MyOrder />
             },
             {
                 path: 'bookmarks',
-                element : <Bookmarks/>
+                element: <Bookmarks />
             },
             {
                 path: 'bidding-history',
-                element : <BiddingHistory/>
+                element: <BiddingHistory />
             },
             {
                 path: 'my-bids',
-                element : <MyBids/>
+                element: <MyBids />
             },
             {
                 path: 'edit-profile',
-                element : <EditProfile/>
+                element: <EditProfile />
             },
             {
                 path: 'edit-address',
-                element : <EditAddAddress/>
+                element: <EditAddAddress />
             },
             {
                 path: 'track-order/:id',
-                element : <TrackOrder/>
+                element: <TrackOrder />
             },
         ]
     },

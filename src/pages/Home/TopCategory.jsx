@@ -19,17 +19,10 @@ const TopCategory = () => {
 
     return (
         <div>
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center -mb-16'>
                 <HomeContentHeading title={'Active Now'} />
-                <div className='flex items-center gap-2'>
-                    {/* Custom navigation buttons */}
-                    <div className='swiper-button-next'>
-                        <FaCircleArrowLeft ref={prevRef} className='text-yellow cursor-pointer ' size={35} />
-                    </div>
-                    <FaCircleArrowRight ref={nextRef} className='text-yellow cursor-pointer' size={35} />
-                </div>
             </div>
-            <div className='my-5'>
+            <div className='my-5 category'>
                 <Swiper
                     onSwiper={(swiper) => {
                         // Assign refs to Swiper navigation when Swiper instance is available
