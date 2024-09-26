@@ -2,10 +2,10 @@ import { baseApi } from "./baseApi";
 
 const bookmarkApis = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        // get bookmarek
+        // get bookmark
         getBookmark: build.query({
-            query: () => ({
-                url: '/bookmark/my-bookmarks',
+            query: ({ page }) => ({
+                url: `/bookmark/my-bookmarks?page=${page}`,
                 method: 'GET',
             }),
             providesTags: ['bookmark', 'winner'],
@@ -30,7 +30,10 @@ const bookmarkApis = baseApi.injectEndpoints({
     })
 })
 export const {
+    // get bookmark
     useGetBookmarkQuery,
+    // add bookmark
     useAddBookmarkMutation,
+    // delete bookmark
     useDeleteBookmarkMutation
 } = bookmarkApis
