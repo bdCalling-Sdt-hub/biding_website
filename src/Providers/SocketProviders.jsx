@@ -54,6 +54,7 @@ const SocketProviders = ({ children }) => {
     const socketData = {
         socket,
         notifications,
+        setNotificationLimit
     }
     return <SocketContextData.Provider value={socketData}>{children}</SocketContextData.Provider>;
 }
