@@ -1,11 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import BackButton from '../../components/ui/BackButton'
 import { useParams } from 'react-router-dom'
-import phone1 from '../../assets/phone1.png'
-import phone2 from '../../assets/phone2.png'
-import phone3 from '../../assets/phone3.png'
-import phone4 from '../../assets/phone4.png'
-import user from '../../assets/user4.png'
 import ProductCard from '../../components/ui/ProductCard'
 import { IoLocationOutline } from 'react-icons/io5'
 import { Table } from 'antd'
@@ -45,33 +40,39 @@ const columns = [
     },
 ];
 
-const data = [
-    {
-        key: '1',
-        bid: '$548.00',
-        user: {
-            name: 'Ronald Richards',
-            image: user,
-        },
-        time: '04:45:58 PM',
-    },
-    {
-        key: '1',
-        bid: '$547.00',
-        user: {
-            name: 'Ronald Richards',
-            image: user,
-        },
-        time: '04:45:58 PM',
-    },
 
-];
 
 const ProductDetails = () => {
     const { socket } = useSocketContext()
     const { id } = useParams()
-    const { data: getSingleAuction } = useGetSingleAuctionQuery(id)
-    getSingleAuction?.data?.bidHistory?.map(user=> console.log(user?.user?.profile_image))
+    const [auction , setAuction] =  useState({})
+    
+
+    const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
+    console.log(getSingleAuction?.data);
+
+    useEffect(()=>{
+        setAuction(getSingleAuction?.data)
+    },[getSingleAuction?.data])
+
+    /** Get unique bidder profile image */
+    const unniqueUser = auction?.bidHistory?.filter((user, index, self) => index === self.findIndex((u) => u?.user?._id === user?.user?._id))
+
+
+    /** Current height bider table data format */
+    const heightBidderDataFormat = auction?.bidHistory?.slice(-2)?.map((bidder, i)=>{
+        return {
+            key: i + 1,
+            bid: bidder?.bidAmount,
+            user: {
+                name: bidder?.user?.name,
+                image: bidder?.user?.profile_image,
+            },
+            time: '04:45:58 PM',
+        }
+    })
+
+
     const { data: profile } = useGetProfileQuery()
     const handleBid = () => {
 
@@ -88,11 +89,10 @@ const ProductDetails = () => {
         }
         socket.emit('joinAuction', (id))
         socket.on("bidHistory", (updatedBidHistory) => {
-            console.log('updatedBidHistory', updatedBidHistory)
+            setAuction(updatedBidHistory)
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
-            console.log('socket-error', error)
         })
     }, [socket, id])
     return (
@@ -103,17 +103,17 @@ const ProductDetails = () => {
                     <div className='flex  flex-col lg:flex-row justify-between gap-10'>
                         <div className='w-full '>
                             <div>
-                                <img src={getSingleAuction?.data?.images[0]} className='w-full rounded-md' alt="" />
+                                <img src={auction?.images?.[0]} className='w-full rounded-md' alt="" />
                             </div>
                             <div className='flex justify-between mt-2 gap-2 '>
                                 <div className=' h-[80px]'>
-                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
                                 </div>
                                 <div className=' h-[80px] '>
-                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
                                 </div>
                                 <div className=' h-[80px] '>
-                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
                                 </div>
 
                             </div>
@@ -121,31 +121,31 @@ const ProductDetails = () => {
                                 <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
                                 <div className='flex flex-wrap items-center gap-5 ml-2'>
                                     {
-                                       getSingleAuction?.data?.bidHistory?.slice(0,14).map(user=><img className='rounded-full h-16 object-contain' src={user?.user?.profile_image} /> )
+                                        unniqueUser?.slice(0, 14).map(user => <img src={user?.user?.profile_image} className='rounded-full' alt="" /> )
                                     }
-                                 
+
                                 </div>
-                               
+
                             </div>
                         </div>
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
-                            <h1 className='text-[26px] font-semibold'>{getSingleAuction?.data?.name}</h1>
+                            <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>
                             <div className='flex justify-between py-5'>
                                 <p>Current BID:</p>
-                                <p className='text-[#338BFF] text-[26px] font-semibold'>$548.00</p>
+                                <p className='text-[#338BFF] text-[26px] font-semibold'>$ {auction?.bidHistory?.[auction.bidHistory.length - 1]?.bidAmount}</p>
                             </div>
                             <p>Current Highest Bidder</p>
                             <div className='flex items-center gap-5 mt-5 mb-5'>
-                                <img src={user} alt="" />
+                                <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.profile_image} className='rounded-full' alt="" />
                                 <div>
-                                    <p className='font-semibold text-[20px]'>Ronald Richards</p>
-                                    <p className='flex items-center gap-2'> <IoLocationOutline className='text-yellow' /> 2715 Ash Dr. San Jose, South Dakota</p>
+                                    <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name}</p>
+                                    <p className='flex items-center gap-2'> <IoLocationOutline className='text-yellow' /> {auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.location || 'Location Not Available'} </p>
                                 </div>
                             </div>
 
 
-                            {/* bid table */}
-                            <Table columns={columns} dataSource={data} size="middle" pagination={false} />
+                            {/* Top bidder table */}
+                            <Table columns={columns} dataSource={heightBidderDataFormat} size="middle" pagination={false} />
 
                             <div className='text-center mt-5'>
                                 <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
@@ -168,9 +168,9 @@ const ProductDetails = () => {
                     {/* description */}
                     <div className='bg-white mt-5 p-5 rounded-md'>
                         <h1 className='font-semibold text-[20px]'>Description: </h1>
-                        <p className='text-[#2E2E2E] mt-5'>{getSingleAuction?.data?.description
+                        <p className='text-[#2E2E2E] mt-5'>{auction?.description
                         }</p>
-                        {/* <p className='my-5 font-medium'>{getSingleAuction?.data?.name}
+                        {/* <p className='my-5 font-medium'>{auction?.name}
                         </p> */}
 
                         {/* <div className='space-y-2'>
@@ -189,7 +189,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div className='col-span-12 lg:col-span-2  px-5 lg:px-0'>
-                    <p className='font-medium text-[18px] pb-5'>Upcoming Auction:</p>
+                    <p className='font-medium text-[18px] pb-5'>Similar Products:</p>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4'>
                         <ProductCard />
                         <ProductCard />
