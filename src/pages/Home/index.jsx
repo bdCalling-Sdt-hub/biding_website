@@ -4,6 +4,7 @@ import Search from './Search';
 import FeaturedAuction from './FeaturedAuction';
 import TopCategory from './TopCategory';
 import WhyChooseUs from './WhyChooseUs';
+import UpComingAuction from './UpComingAuction';
 const Home = () => {
   
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Caurosel />
       <FeaturedAuction/>
       <TopCategory/>
+      <UpComingAuction/>
       <WhyChooseUs/>
     </div>
   );

@@ -17,7 +17,6 @@ const Winner = () => {
   const [page, setPage] = useState(1)
   const { data, isFetching, isError } = useGetWinnerQuery({ status: "COMPLETED", page })//UPCOMING
   const { data: upcomingData } = useGetWinnerQuery({ status: "UPCOMING", page })//UPCOMING
-  const product = [1, 2, 3, 4]
   return (
     <div>
       <BackButton pageName={'winner'} />

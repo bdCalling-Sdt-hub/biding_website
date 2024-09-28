@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,8 +10,6 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import img from '../../assets/carousel1.png'
-import img2 from '../../assets/carousel2.png'
 import { useGetBannerQuery } from '../../redux/api/HomeApi';
 
 const Caurosel = () => {
