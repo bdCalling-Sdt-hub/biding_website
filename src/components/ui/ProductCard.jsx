@@ -42,23 +42,26 @@ const ProductCard = ({ product }) => {
       setTime(product?.time);
     }
   }, [product?.time]);
-  // console.log(product?.time)
   return (
     <div className='rounded-lg bg-white shadow-sm my-4 relative'>
       <img src={product?.images[0]} className='w-full h-[180px]' alt="" />
       <div style={{
-        background: time === 9 ? 'yellow' : ''
+        background: (formatTimeLeft(timeLeft)?.startsWith('-') && product?.status !== 'COMPLETED' && time === 9) ? '#F3A211' : ''
       }} className={`text-center space-y-1 py-2 px-5`}>
         <p className='font-medium'>{product?.name}</p>
         <p className='text-[#338BFF] font-medium '> {formatTimeLeft(timeLeft)?.startsWith('-') ? `$${product?.currentPrice}` : `${product?.startingDate?.split("T")[0]} at ${product?.startingTime}`}</p>
         <p className='text-[#2E2E2E]'>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name || 'no bid yet'}</p>
-        <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p>
+        {
+          product?.status !== 'COMPLETED' ? <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time).toString().startsWith('-') ? '0' : Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p> : <p></p>
+        }
+        {/* <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p> */}
+
         <button onClick={() => {
           navigate(`/product-details/${product?._id}`)
-        }} disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'>{formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button>
+        }} disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'>{product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button>
       </div>
       <FaRegStar size={22} className='absolute top-3 right-3 text-yellow' />
-    </div>
+    </div >
   )
 }
 
