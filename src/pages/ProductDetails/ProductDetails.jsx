@@ -13,6 +13,7 @@ import Button from '../../components/ui/Button'
 import { useSocketContext } from '../../Providers/SocketProviders'
 import { useGetProfileQuery } from '../../redux/api/authApis'
 import { toast } from 'sonner'
+import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis'
 
 
 
@@ -69,8 +70,9 @@ const data = [
 const ProductDetails = () => {
     const { socket } = useSocketContext()
     const { id } = useParams()
+    const { data: getSingleAuction } = useGetSingleAuctionQuery(id)
+    getSingleAuction?.data?.bidHistory?.map(user=> console.log(user?.user?.profile_image))
     const { data: profile } = useGetProfileQuery()
-
     const handleBid = () => {
 
         if (!socket) {
@@ -101,20 +103,33 @@ const ProductDetails = () => {
                     <div className='flex  flex-col lg:flex-row justify-between gap-10'>
                         <div className='w-full '>
                             <div>
-                                <img src={phone1} className='w-full' alt="" />
+                                <img src={getSingleAuction?.data?.images[0]} className='w-full rounded-md' alt="" />
                             </div>
                             <div className='flex justify-between mt-2 gap-2 '>
-                                <img src={phone2} className='w-[110px] h-[80px] md:w-full md:h-full' alt="" />
-                                <img src={phone3} className='w-[110px] h-[80px] md:w-full md:h-full' alt="" />
-                                <img src={phone4} className='w-[110px] h-[80px] md:w-full md:h-full' alt="" />
+                                <div className=' h-[80px]'>
+                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                </div>
+                                <div className=' h-[80px] '>
+                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                </div>
+                                <div className=' h-[80px] '>
+                                    <img src={getSingleAuction?.data?.images[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                </div>
+
                             </div>
-                            <div className='bg-white rounded-md p-5 mt-5'>
-                                <h1 className='text-[#2E2E2E] pb-2'>Winner of this product in the last 30 days.</h1>
-                                <Table columns={columns} dataSource={data} size="middle" pagination={false} />
+                            <div className='bg-white rounded-md  mt-14 py-2  '>
+                                <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
+                                <div className='flex flex-wrap items-center gap-5 ml-2'>
+                                    {
+                                       getSingleAuction?.data?.bidHistory?.slice(0,14).map(user=><img className='rounded-full h-16 object-contain' src={user?.user?.profile_image} /> )
+                                    }
+                                 
+                                </div>
+                               
                             </div>
                         </div>
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
-                            <h1 className='text-[26px] font-semibold'>Apple iPhone 14 Pro Max</h1>
+                            <h1 className='text-[26px] font-semibold'>{getSingleAuction?.data?.name}</h1>
                             <div className='flex justify-between py-5'>
                                 <p>Current BID:</p>
                                 <p className='text-[#338BFF] text-[26px] font-semibold'>$548.00</p>
@@ -153,10 +168,12 @@ const ProductDetails = () => {
                     {/* description */}
                     <div className='bg-white mt-5 p-5 rounded-md'>
                         <h1 className='font-semibold text-[20px]'>Description: </h1>
-                        <p className='text-[#2E2E2E] mt-5'>The Samsung 32 Y1G Y Series 32-Inch Android TV is Give your eyes pleasure with the 16M Display colors. You can connect anything with the Samsung TV Y series, very useful connections, including video games and your favorite binge-worthy TV shows. From its meticulously crafted exterior to its powerful performance capabilities, every aspect of this device exudes sophistication and class. Undoubtedly, the iPhone 14 Pro Max asserts its dominance as a leader in the ever-evolving landscape of exceptional iPhones.</p>
-                        <p className='my-5 font-medium'>iPhone 14 Pro Max Features
-                        </p>
-                        <div className='space-y-2'>
+                        <p className='text-[#2E2E2E] mt-5'>{getSingleAuction?.data?.description
+                        }</p>
+                        {/* <p className='my-5 font-medium'>{getSingleAuction?.data?.name}
+                        </p> */}
+
+                        {/* <div className='space-y-2'>
                             <li>Redefined the design in more polished way and solid construction with strong material
                             </li>
                             <li>The innovative dynamic island punch hole manifests important notifications
@@ -167,7 +184,7 @@ const ProductDetails = () => {
                             </li>
                             <li>Action mode  comes to bring smoothness and stability to videos
                             </li>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
