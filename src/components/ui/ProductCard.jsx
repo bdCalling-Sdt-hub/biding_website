@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate()
   const combinedDateTime = new Date(`${product?.activateTime}`);
   // const combinedDateTime = new Date(`${product?.activateTime?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
-  const [time, setTime] = useState(9)
+  const [time, setTime] = useState(product?.time);
   const [countDown, setCountDown] = useState(100);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
   // formate time 
@@ -36,6 +36,12 @@ const ProductCard = ({ product }) => {
     }, countDown);
     return () => clearInterval(interval);
   }, [countDown, time]);
+  useEffect(() => {
+    if (time !== product?.time) {
+      setTime(product?.time)
+    }
+  }, [product?.time])
+  // console.log(product?.time)
   return (
     <div className='rounded-lg bg-white shadow-sm my-4 relative'>
       <img src={img} className='w-full h-[180px]' alt="" />
