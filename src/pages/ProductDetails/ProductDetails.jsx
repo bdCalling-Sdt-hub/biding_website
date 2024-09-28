@@ -49,7 +49,6 @@ const ProductDetails = () => {
     
 
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
-    console.log(getSingleAuction?.data);
 
     useEffect(()=>{
         setAuction(getSingleAuction?.data)
@@ -79,8 +78,6 @@ const ProductDetails = () => {
         if (!socket) {
             return
         }
-        // console.log({ 'id': id, userId: profile?.data?._id })
-        // console.log(socket)
         socket.emit("place-manual-bid", { auction_id: id, user_id: profile?.data?._id });
     }
     useEffect(() => {
@@ -89,12 +86,13 @@ const ProductDetails = () => {
         }
         socket.emit('joinAuction', (id))
         socket.on("bidHistory", (updatedBidHistory) => {
-            setAuction(updatedBidHistory)
+            setAuction(updatedBidHistory?.updatedAuction)
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket, id])
+    
     return (
         <div>
             <BackButton pageName={"Product Details"} />
