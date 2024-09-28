@@ -29,12 +29,15 @@ const SocketProviders = ({ children }) => {
                 setSocketId(socketConnect.id);
             });
             socketConnect.on("notifications", (notification) => {
-                console.log('notification', notification);
+                // console.log('notification', notification);
                 setNotifications(prev => [notification?.notifications, ...prev])
             });
             socketConnect.on("allAuction", (data) => {
                 console.log('data', data)
             });
+            socketConnect.on("bidHistory", (updatedBidHistory) => {
+                console.log('updatedBidHistory', updatedBidHistory)
+            })
             return () => socketConnect.close();
         } else {
             if (socket) {

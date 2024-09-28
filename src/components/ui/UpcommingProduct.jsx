@@ -88,7 +88,7 @@ const UpcommingProduct = ({ product, type,BookmarkId }) => {
         </div>
     )
 }
-const calculateTimeLeft = (targetDateTime) => {
+export  const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
 
