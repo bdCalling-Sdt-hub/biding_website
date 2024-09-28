@@ -25,7 +25,6 @@ const TopCategory = () => {
             <div className='my-5 category'>
                 <Swiper
                     onSwiper={(swiper) => {
-                        // Assign refs to Swiper navigation when Swiper instance is available
                         if (swiper.params) {
                             swiper.params.navigation.prevEl = prevRef.current;
                             swiper.params.navigation.nextEl = nextRef.current;

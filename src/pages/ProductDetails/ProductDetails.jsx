@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import BackButton from '../../components/ui/BackButton'
 import { useParams } from 'react-router-dom'
 import phone1 from '../../assets/phone1.png'
@@ -10,6 +10,9 @@ import ProductCard from '../../components/ui/ProductCard'
 import { IoLocationOutline } from 'react-icons/io5'
 import { Table } from 'antd'
 import Button from '../../components/ui/Button'
+import { useSocketContext } from '../../Providers/SocketProviders'
+import { useGetProfileQuery } from '../../redux/api/authApis'
+import { toast } from 'sonner'
 
 
 
@@ -64,8 +67,32 @@ const data = [
 ];
 
 const ProductDetails = () => {
+    const { socket } = useSocketContext()
     const { id } = useParams()
-    console.log(id);
+    const { data: profile } = useGetProfileQuery()
+
+    const handleBid = () => {
+
+        if (!socket) {
+            return
+        }
+        // console.log({ 'id': id, userId: profile?.data?._id })
+        // console.log(socket)
+        socket.emit("place-manual-bid", { auction_id: id, user_id: profile?.data?._id });
+    }
+    useEffect(() => {
+        if (!socket) {
+            return
+        }
+        socket.emit('joinAuction', (id))
+        socket.on("bidHistory", (updatedBidHistory) => {
+            console.log('updatedBidHistory', updatedBidHistory)
+        })
+        socket.on('socket-error', (error) => {
+            toast.error(error?.errorMessage || 'something went wrong')
+            console.log('socket-error', error)
+        })
+    }, [socket, id])
     return (
         <div>
             <BackButton pageName={"Product Details"} />
@@ -81,7 +108,6 @@ const ProductDetails = () => {
                                 <img src={phone3} className='w-[110px] h-[80px] md:w-full md:h-full' alt="" />
                                 <img src={phone4} className='w-[110px] h-[80px] md:w-full md:h-full' alt="" />
                             </div>
-
                             <div className='bg-white rounded-md p-5 mt-5'>
                                 <h1 className='text-[#2E2E2E] pb-2'>Winner of this product in the last 30 days.</h1>
                                 <Table columns={columns} dataSource={data} size="middle" pagination={false} />
@@ -115,6 +141,9 @@ const ProductDetails = () => {
                             <div className='flex gap-5 justify-between mt-5 lg:px-10'>
                                 <button className='border py-3 border-[#9F9F9F] rounded-lg w-full text-[#9F9F9F] hover:bg-yellow hover:text-white '>Number of Bids</button>
                                 <Button className=''>Book BidBuddy</Button>
+                                <Button onClick={() => {
+                                    handleBid()
+                                }} className=''>manual Bid</Button>
                             </div>
                             <p className='text-[#585858] pt-5 px-10'>BidBuddy is your Automatic Bidding Tool. Book any number of bids. Each bid will be placed for you before the timer reaches zero. The first bid will be placed immediately.</p>
 
