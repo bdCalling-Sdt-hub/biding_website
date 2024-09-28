@@ -7,7 +7,10 @@ import ProductCard from '../../components/ui/ProductCard'
 
 const FeaturedAuction = () => {
     const { socket } = useSocketContext()
-    const [auctionsData, setAuctionData] = useState([])
+    const [auctionsData, setAuctionData] = useState({
+        data: [],
+        updatedCount: 0
+    })
     const { data } = useGetAuctionsQuery()
     const [socketData, setSocketData] = useState([])
     useEffect(() => {
@@ -17,42 +20,46 @@ const FeaturedAuction = () => {
         const addSerial = data?.data?.result?.slice(0, 4)?.map((item, i) => ({
             ...item,
             serial: i + 1,
-            time: 9
+            time: 9,
+            key: item?._id + 1,
+            count: i + 1
         }))
-        setAuctionData(addSerial)
+        setAuctionData({ data: addSerial, updatedCount: auctionsData?.updatedCount + 1 })
     }, [data?.data])
     useEffect(() => {
         if (!socket) {
             return
         }
         socket.on("updated-auction", (updatedBidHistory) => {
-            console.log('updatedBidHistory', updatedBidHistory)
+            // console.log('updatedBidHistory', updatedBidHistory)
             Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.auction]) : setSocketData([...socketData, updatedBidHistory?.auction])
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
-            console.log('socket-error', error)
+            // console.log('socket-error', error)
         })
     }, [socket])
 
     useEffect(() => {
-        let perviousData = auctionsData
-        auctionsData?.map(item => {
+        // console.log("item?._id === data?._id")
+        let perviousData = auctionsData?.data
+        auctionsData?.data?.map(item => {
             socketData?.map(data => {
                 if (item?._id === data?._id) {
                     const formateData = {
                         serial: item?.serial,
                         ...data,
-                        time: 4
+                        time: 9,
+                        key: item?._id + Number(item?.count + 1),
+                        count: item?.count + 1
                     }
                     perviousData.splice(item?.serial - 1, 1, formateData)
-                    console.log('perviousData', perviousData)
-                    console.log('auctionsData', auctionsData)
-                    setAuctionData(perviousData)
+                    setAuctionData({ data: perviousData, updatedCount: auctionsData?.updatedCount + 1 })
                 }
             })
         })
     }, [socketData])
+    // console.log('auctionsData', auctionsData)
     return (
         <div className='py-10'>
             <div className='flex justify-between items-center'>
@@ -61,7 +68,7 @@ const FeaturedAuction = () => {
             </div>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
-                    auctionsData?.map(item => <ProductCard key={item?._id} product={item} />)
+                    auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
                 }
             </div>
         </div>

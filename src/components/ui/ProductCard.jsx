@@ -26,6 +26,7 @@ const ProductCard = ({ product }) => {
 
     return () => clearInterval(interval);
   }, [combinedDateTime]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (Math.ceil(time) === 1) {
@@ -38,13 +39,13 @@ const ProductCard = ({ product }) => {
   }, [countDown, time]);
   useEffect(() => {
     if (time !== product?.time) {
-      setTime(product?.time)
+      setTime(product?.time);
     }
-  }, [product?.time])
+  }, [product?.time]);
   // console.log(product?.time)
   return (
     <div className='rounded-lg bg-white shadow-sm my-4 relative'>
-      <img src={img} className='w-full h-[180px]' alt="" />
+      <img src={product?.images[0]} className='w-full h-[180px]' alt="" />
       <div style={{
         background: time === 9 ? 'yellow' : ''
       }} className={`text-center space-y-1 py-2 px-5`}>
