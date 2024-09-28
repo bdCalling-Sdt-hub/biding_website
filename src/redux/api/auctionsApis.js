@@ -12,10 +12,18 @@ const auctionsApis = baseApi.injectEndpoints({
             },
             providesTags: ['auctions']
         }),
+        getSingleAuction : builder.query({
+            query : (id)=>{
+                return {
+                    url : `/auction/get-single-auction/${id}`,
+                    method : 'GET'
+                }
+            }
+        })
 
     })
 })
 export const {
     // get auctions 
-    useGetAuctionsQuery
+    useGetAuctionsQuery, useGetSingleAuctionQuery
 } = auctionsApis
