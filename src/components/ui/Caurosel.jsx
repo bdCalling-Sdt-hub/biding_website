@@ -14,7 +14,6 @@ import { useGetBannerQuery } from '../../redux/api/HomeApi';
 
 const Caurosel = () => {
   const { data: getBanners } = useGetBannerQuery()
-  console.log(getBanners?.data);
   return (
     <Swiper
       spaceBetween={30}

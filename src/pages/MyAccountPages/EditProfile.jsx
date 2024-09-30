@@ -25,11 +25,11 @@ const EditProfile = () => {
         }
         updateProfile(formData).unwrap()
             .then((payload) => {
-                console.log(payload)
+                (payload)
                 toast.success(payload?.message || "Profile updated successfully")
             })
             .catch((error) => {
-                console.log(error)
+                (error)
                 toast.error(error?.data?.message || "Something went wrong")
             })
     }

@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { IoIosArrowForward } from 'react-icons/io'
-import HomeContentHeading from '../../components/ui/HomeContentHeading'
+import BackButton from '../../components/ui/BackButton'
 import { useSocketContext } from '../../Providers/SocketProviders'
 import { useGetAuctionsQuery } from '../../redux/api/auctionsApis'
 import ProductCard from '../../components/ui/ProductCard'
-import { Link } from 'react-router-dom'
+import { useGetWinnerQuery } from '../../redux/api/winnerApi'
 
-const FeaturedAuction = () => {
+const Auctions = () => {
+    const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
     const { socket } = useSocketContext()
     const [auctionsData, setAuctionData] = useState({
         data: [],
         updatedCount: 0
     })
-    // const [aut]
-    const { data } = useGetAuctionsQuery()
+    const { data } = useGetAuctionsQuery({ category })//{ status: 'ACTIVE' }
     const [socketData, setSocketData] = useState([])
 
     useEffect(() => {
         if (!data?.data?.result) {
             return
         }
-        const addSerial = data?.data?.result?.slice(0, 4)?.map((item, i) => ({
+        const addSerial = data?.data?.result?.map((item, i) => ({
             ...item,
             serial: i + 1,
             time: 9,
@@ -62,8 +61,8 @@ const FeaturedAuction = () => {
     return (
         <div className='py-10'>
             <div className='flex justify-between items-center'>
-                <HomeContentHeading title={'Auction'} />
-                <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More <IoIosArrowForward /></Link>
+                <BackButton pageName={`Auctions ${category ? `/ ${category}` : ''}`} />
+                {/* <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More <IoIosArrowForward /></Link> */}
             </div>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
@@ -74,4 +73,4 @@ const FeaturedAuction = () => {
     )
 }
 
-export default FeaturedAuction
+export default Auctions

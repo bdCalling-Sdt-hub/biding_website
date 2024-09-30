@@ -39,7 +39,7 @@ const DashboardNotification = () => {
        
     ];
     const handleDelete = key => {
-        console.log(`Delete notification with key: ${key}`);
+        (`Delete notification with key: ${key}`);
     }
     return (
         <div>

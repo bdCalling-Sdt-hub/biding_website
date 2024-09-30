@@ -17,7 +17,7 @@ const bookmarkApis = baseApi.injectEndpoints({
                 method: 'POST',
                 body: data
             }),
-            invalidatesTags: ['bookmark', 'winner'],
+            invalidatesTags: ['bookmark', 'winner', 'auctions'],
         }),
         // delete bookmark
         deleteBookmark: build.mutation({
@@ -25,7 +25,7 @@ const bookmarkApis = baseApi.injectEndpoints({
                 url: `/bookmark/delete-bookmark/${id}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['bookmark', 'winner'],
+            invalidatesTags: ['bookmark', 'winner', 'auctions'],
         }),
     })
 })

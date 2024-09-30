@@ -75,7 +75,7 @@ const IncomeOverview = () => {
     ];
 
     const handleChange = (value) => {
-        console.log(`selected ${value}`);
+        (`selected ${value}`);
     };
     return (
         <>

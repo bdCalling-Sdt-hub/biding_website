@@ -29,7 +29,7 @@ const DashboardFaqs = () => {
 
   // add question and answer modal function
   const handleAddFaq = () => {
-    console.log('click');
+    ('click');
     setIsModalOpen(true)
 
   }

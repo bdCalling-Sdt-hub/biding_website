@@ -4,7 +4,7 @@ import Button from '../../components/ui/Button'
 
 const AdminResetPassword = () => {
     const onFinish = (values)=>{
-        console.log(values);
+        (values);
     }
   return (
     <div className='flex flex-col items-center justify-center h-screen bg-[#fbe2b5] '>

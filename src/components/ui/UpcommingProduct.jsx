@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import img from '../../assets/image.png'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
 import { Spin } from 'antd';
 import { toast } from 'sonner';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
-const UpcommingProduct = ({ product, type,BookmarkId }) => {
+const UpcommingProduct = ({ product, type, BookmarkId }) => {
     // states 
     const combinedDateTime = new Date(`${product?.startingDate?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
@@ -20,26 +19,26 @@ const UpcommingProduct = ({ product, type,BookmarkId }) => {
         }
         addToBookmark({ auctionId: id }).unwrap()
             .then((payload) => {
-                console.log(payload)
+                (payload)
                 toast.success(payload?.message)
             }).catch((error) => {
-                console.log(error)
+                (error)
                 toast.error(error?.data?.message)
             })
     }
-    const handleRemoveBookmark = (id) => { 
+    const handleRemoveBookmark = (id) => {
         if (!id) {
-            return 
+            return
         }
         if (!localStorage.getItem('token')) {
             return toast.error('Please login first')
         }
         remove(id).unwrap()
             .then((payload) => {
-                console.log(payload)
+                (payload)
                 toast.success(payload?.message)
             }).catch((error) => {
-                console.log(error)
+                (error)
                 toast.error(error?.data?.message)
             })
     }
@@ -80,15 +79,15 @@ const UpcommingProduct = ({ product, type,BookmarkId }) => {
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
                 <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
                 <p className='text-[#585858] font-semibold text-[ 24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</p>
-                <button className='bg-[#666666] px-5 md:px-14 text-white rounded-md py-2'>Starting Soon</button>
+                <button disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'> {formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button>
             </div>
             {
-                product?.isBookmark || (type && type === 'bookmark') ? <FaStar onClick={() => handleRemoveBookmark(BookmarkId)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
+                product?.isBookmark || (type && type === 'bookmark') ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
             }
         </div>
     )
 }
-export  const calculateTimeLeft = (targetDateTime) => {
+export const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
 

@@ -3,7 +3,7 @@ import React from 'react'
 
 const AdminForgetPassword = () => {
     const onFinish = (values) => {
-        console.log('Success:', values);
+        ('Success:', values);
     };
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-[#fbe2b5] '>

@@ -29,14 +29,14 @@ const SocketProviders = ({ children }) => {
                 setSocketId(socketConnect.id);
             });
             socketConnect.on("notifications", (notification) => {
-                // console.log('notification', notification);
+                // ('notification', notification);
                 setNotifications(prev => [notification?.notifications, ...prev])
             });
             socketConnect.on("allAuction", (data) => {
-                console.log('data', data)
+                ('data', data)
             });
             socketConnect.on("bidHistory", (updatedBidHistory) => {
-                console.log('updatedBidHistory', updatedBidHistory)
+                ('updatedBidHistory', updatedBidHistory)
             })
             return () => socketConnect.close();
         } else {

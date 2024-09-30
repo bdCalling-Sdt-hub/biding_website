@@ -8,7 +8,7 @@ import img2 from '../../assets/phone2.png'
 const OrderManagment = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalData, setModalData] = useState()
-    console.log(modalData);
+    (modalData);
     const columns = [
         {
             title: "Order ID",

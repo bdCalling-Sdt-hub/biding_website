@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const ForgetPassword = () => {
     // forget password form value handle function
     const onFinish = (values) => {
-        console.log('Success:', values);
+        ('Success:', values);
     };
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>

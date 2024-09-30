@@ -4,21 +4,22 @@ const auctionsApis = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         // get actions 
         getAuctions: builder.query({
-            query: () => {
+            query: ({ category }) => {
                 return {
-                    url: '/auction',
+                    url: `/auction${category ? `?category=${category}` : ''}`,
                     method: 'GET'
                 }
             },
             providesTags: ['auctions']
         }),
-        getSingleAuction : builder.query({
-            query : (id)=>{
+        getSingleAuction: builder.query({
+            query: (id) => {
                 return {
-                    url : `/auction/get-single-auction/${id}`,
-                    method : 'GET'
+                    url: `/auction/get-single-auction/${id}`,
+                    method: 'GET'
                 }
-            }
+            },
+            providesTags: ['singleAuctions']
         })
 
     })

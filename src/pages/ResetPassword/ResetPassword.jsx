@@ -5,7 +5,7 @@ const ResetPassword = () => {
 
     /** handle reset password functionlity */
     const onFinish = (values)=>{
-        console.log(values);
+        (values);
     }
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
