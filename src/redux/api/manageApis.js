@@ -12,9 +12,10 @@ const manageApis = baseApi.injectEndpoints({
         }),
         // read notification
         readNotification: build.mutation({
-            query: (id) => ({
-                url: `/notification/read-notification/${id}`,
-                method: 'PUT',
+            query: () => ({
+                url: `/notification/see-notification`,
+                method: 'PATCH',
+                body: {}
             }),
             invalidatesTags: ['notification']
         }),
@@ -67,6 +68,7 @@ const manageApis = baseApi.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        // notification read 
     }),
 })
 export const {

@@ -67,8 +67,6 @@ const TopCategory = () => {
                             </div>
                         </SwiperSlide>)
                     }
-
-
                     {/* Add more SwiperSlide components as needed */}
                 </Swiper>
             </div>

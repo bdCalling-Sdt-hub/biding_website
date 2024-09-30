@@ -13,7 +13,7 @@ const SocketProviders = ({ children }) => {
     const [notifications, setNotifications] = useState([])
     const [notificationLimit, setNotificationLimit] = useState(50)
     const { data: notificationsData, isLoading: isLoadingNotifications } = useGetNotificationQuery({ page: 1, limit: notificationLimit })
-
+    const [newNotifications, setNewNotification] = useState(0)
     useEffect(() => {
         if (localStorage.getItem("token")) {
             const socketConnect = io(`http://192.168.10.153:6050`, {
@@ -29,8 +29,9 @@ const SocketProviders = ({ children }) => {
                 setSocketId(socketConnect.id);
             });
             socketConnect.on("notifications", (notification) => {
-                // ('notification', notification);
-                setNotifications(prev => [notification?.notifications, ...prev])
+                // setNotifications(prev => [notification?.notifications, ...prev])
+                setNewNotification(notification?.unseenCount)
+                setNotifications(prev => [...notification?.notifications])
             });
             socketConnect.on("allAuction", (data) => {
                 ('data', data)
@@ -47,14 +48,16 @@ const SocketProviders = ({ children }) => {
         }
     }, [localStorage.getItem("token")]);
     useEffect(() => {
+        console.log('notificationsData?.data?.result', notificationsData?.data?.result)
         if (notificationsData?.data?.result) {
-            setNotifications(notificationsData?.data?.result)
+            setNotifications([...notificationsData?.data?.result])
         }
     }, [notificationsData?.data?.result])
     const socketData = {
         socket,
         notifications,
-        setNotificationLimit
+        setNotificationLimit,
+        newNotifications
     }
     return <SocketContextData.Provider value={socketData}>{children}</SocketContextData.Provider>;
 }

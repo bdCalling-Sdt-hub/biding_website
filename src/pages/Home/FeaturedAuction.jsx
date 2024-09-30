@@ -13,7 +13,7 @@ const FeaturedAuction = () => {
         updatedCount: 0
     })
     // const [aut]
-    const { data } = useGetAuctionsQuery()
+    const { data } = useGetAuctionsQuery({ category: null })
     const [socketData, setSocketData] = useState([])
 
     useEffect(() => {
