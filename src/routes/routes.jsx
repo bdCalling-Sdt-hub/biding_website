@@ -51,6 +51,7 @@ import DashboardAccessibility from "../pages/DahsboardPages/DashboardAccessibili
 import Transaction from "../pages/DahsboardPages/Transaction.jsx";
 import DashboardNotification from "../pages/DahsboardPages/DashboardNotification.jsx";
 import CategoryAndBanner from "../pages/DahsboardPages/CategoryAndBanner.jsx";
+import Auctions from "../pages/Auctions/Auctions.jsx";
 
 const router = createBrowserRouter([
     {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
             {
                 path: '/about',
                 element: <About />
+            },
+            {
+                path: '/auctions',
+                element: <Auctions />
             },
             {
                 path: '/terms-and-condition',

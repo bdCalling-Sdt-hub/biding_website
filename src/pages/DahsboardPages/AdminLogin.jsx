@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const AdminLogin = () => {
     const onFinish = (values) => {
-        console.log(values);
+        (values);
     }
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-[#fbe2b5] '>

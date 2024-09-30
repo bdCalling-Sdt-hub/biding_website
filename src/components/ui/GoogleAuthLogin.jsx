@@ -28,7 +28,7 @@ const GoogleAuthLogin = () => {
                         navigate('/')
                     })
                     .catch((error) => {
-                        console.log(error)
+                        (error)
                         toast.error(error.message || 'Something went wrong')
                     })
             } catch (error) {

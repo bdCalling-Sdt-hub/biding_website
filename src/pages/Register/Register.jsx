@@ -14,7 +14,7 @@ const Register = () => {
     const onFinish = (values) => {
         registerUser(values).unwrap()
             .then((payload) => {
-                // console.log(payload)
+                // (payload)
                 if (payload?.success) {
                     navigate('/verification-code')//, { state: { email: payload?.data?.email } }
                     localStorage.setItem('email', JSON.stringify(payload?.data?.email))
@@ -23,7 +23,7 @@ const Register = () => {
 
             })
             .catch((error) => {
-                console.log(error)
+                (error)
                 toast.error(error?.data?.message || 'something went wrong')
             });
 

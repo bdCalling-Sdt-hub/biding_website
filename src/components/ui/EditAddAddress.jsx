@@ -5,7 +5,7 @@ import Button from './Button'
 const EditAddAddress = () => {
     const [form] = Form.useForm()
     const onFinish  = (values)=>{
-        console.log(values);
+        (values);
     }
     return (
         <div>

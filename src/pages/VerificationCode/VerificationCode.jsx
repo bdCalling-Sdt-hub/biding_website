@@ -17,7 +17,7 @@ const VerificationCode = () => {
         }
         const email = JSON.parse(localStorage.getItem("email"))
         activeCode({ activation_code: otp, email: email }).unwrap().then((payload) => {
-            // console.log(payload)
+            // (payload)
             if (payload?.success) {
                 localStorage.setItem("token", JSON.stringify(payload?.data?.accessToken))
                 localStorage.removeItem("email")
@@ -26,7 +26,7 @@ const VerificationCode = () => {
             }
         }).catch((error) => {
             toast.error(error?.data?.message || "Something went wrong")
-            // console.log(error)
+            // (error)
         });
     }
     return (
@@ -63,7 +63,7 @@ const VerificationCode = () => {
                             toast.success(payload?.message || "Code sent successfully")
                         }
                     }).catch((error) => {
-                        console.log(error)
+                        (error)
                         toast.error(error?.data?.message || "Something went wrong")
                     });
                 }} className='text-[#F3A211]'>resend code</button></p>

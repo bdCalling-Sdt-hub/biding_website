@@ -11,15 +11,14 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 import { useGetTopCategoryQuery } from '../../redux/api/HomeApi';
+import { useNavigate } from 'react-router-dom';
 
 const TopCategory = () => {
-
-    const {data } = useGetTopCategoryQuery();
-    console.log(data?.data);
+    const navigate = useNavigate()
+    const { data } = useGetTopCategoryQuery();
     // Create refs for navigation buttons
     const prevRef = useRef(null);
     const nextRef = useRef(null);
-
     return (
         <div>
             <div className='flex justify-between items-center -mb-16'>
@@ -54,22 +53,22 @@ const TopCategory = () => {
                             spaceBetween: 20,
                         },
                     }}
-                    navigation={true} 
+                    navigation={true}
                     modules={[Pagination, Navigation]}
                     className="mySwiper"
                 >
                     {
-                        data?.data?.map((cat, i)=> <SwiperSlide>
-                        <div className='flex flex-col items-center'>
-                            <div className="flex flex-col justify-center items-center h-36 w-36">
-                                <img src={cat?.image} className='object-contain rounded-full ' alt="Image 1" />
+                        data?.data?.map((cat, i) => <SwiperSlide className='cursor-pointer' onClick={() => navigate(`/auctions?category=${cat?.name}`)} >
+                            <div className='flex flex-col items-center'>
+                                <div className="flex flex-col justify-center items-center h-36 w-36">
+                                    <img src={cat?.image} className='object-contain rounded-full ' alt="Image 1" />
+                                </div>
+                                <h1 className='mt-2 font-medium text-[20px]'>{cat?.name}</h1>
                             </div>
-                            <h1 className='mt-2 font-medium text-[20px]'>{cat?.name}</h1>
-                        </div>
-                    </SwiperSlide>)
+                        </SwiperSlide>)
                     }
-                   
-                    
+
+
                     {/* Add more SwiperSlide components as needed */}
                 </Swiper>
             </div>

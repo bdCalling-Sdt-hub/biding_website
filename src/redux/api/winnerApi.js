@@ -4,8 +4,8 @@ const winnerApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         //get 24 hr winners data 
         getWinner: builder.query({
-            query: ({ status, page }) => ({
-                url: `/auction?page=${page || 1}${status ? `&status=${status}` : ''}`,//?last24Hours=true
+            query: ({ status, page, category }) => ({
+                url: `/auction?page=${page || 1}${status ? `&status=${status}` : ''}${category ? `&category=${category}` : ""}`,//?last24Hours=true
                 method: 'GET',
             }),
             providesTags: ['winner'],

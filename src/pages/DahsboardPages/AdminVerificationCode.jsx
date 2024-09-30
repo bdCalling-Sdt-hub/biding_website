@@ -6,7 +6,7 @@ const AdminVerificationCode = () => {
     const [otp, setOtp] = useState("");
 
     const handleVerifyOtp = () => {
-        console.log(otp);
+        (otp);
     }
     return (
         <div className='flex flex-col items-center justify-center h-screen bg-[#fbe2b5] '>

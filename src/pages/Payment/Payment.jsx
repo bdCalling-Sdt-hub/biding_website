@@ -25,7 +25,7 @@ const Payment = () => {
 
     /**Handle change location  */
     const onFinish = (values) => {
-        console.log(values);
+        (values);
     }
 
     return (

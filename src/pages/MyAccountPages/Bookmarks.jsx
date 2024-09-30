@@ -6,7 +6,6 @@ import UpcommingProduct from '../../components/ui/UpcommingProduct'
 const Bookmarks = () => {
   const [page, setPage] = useState(new URLSearchParams(window.location.search).get('page') || 1)
   const { data } = useGetBookmarkQuery({ page })
-  console.log(data)
   return (
     <div>
       <h1 className='text-yellow font-medium'>Bookmarks</h1>

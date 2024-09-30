@@ -23,7 +23,7 @@ const authApis = baseApi.injectEndpoints({
         // active Code function
         activeCode: builder.mutation({
             query: ({ activation_code, email }) => {
-                console.log('data', { activation_code, email })
+                ('data', { activation_code, email })
                 return {
                     url: '/user/auth/activate-user',
                     method: 'POST',

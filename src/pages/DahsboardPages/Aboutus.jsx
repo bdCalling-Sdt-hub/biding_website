@@ -8,7 +8,7 @@ const Aboutus = () => {
     const [content, setContent] = useState('');
     const [isLoading, seLoading] = useState(false)
     const handleTerms = () => {
-        console.log(content)
+        (content)
     }
     const config = {
         readonly: false,
