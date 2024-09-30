@@ -1,12 +1,26 @@
 import { Form, Input } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './Button'
+import { useGetMyAddressQuery, useUpdateAddressMutation } from '../../redux/api/addressApis'
+import { useNavigate } from 'react-router-dom'
 
 const EditAddAddress = () => {
+    const { data } = useGetMyAddressQuery()
+    const navigate = useNavigate()
     const [form] = Form.useForm()
-    const onFinish  = (values)=>{
-        (values);
+    const [addressId, setAddressId] = useState(null)
+    const [update] = useUpdateAddressMutation()
+    const onFinish = (values) => {
+        update({ id: addressId, data: values }).unwrap().then((res) => {
+            navigate(-1)
+        })
     }
+    useEffect(() => {
+        if (data?.data?.length >= 1) {
+            setAddressId(data?.data[0]?._id)
+            form.setFieldsValue({ ...data?.data[0] })
+        }
+    }, [data?.data])
     return (
         <div>
             <h1 className='text-yellow font-medium'>Edit Address</h1>
@@ -18,7 +32,13 @@ const EditAddAddress = () => {
                 <div className=' gap-5 mt-5'>
                     <div >
                         <Form.Item
-                            name="fullName"
+                            name="user_name"
+                            rules={[
+                                {
+                                    message: 'user name is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className="text-[16px]  font-normal">Full
                                 Name</p>}
                         >
@@ -36,7 +56,36 @@ const EditAddAddress = () => {
                             />
                         </Form.Item>
                         <Form.Item
+                            name="email"
+                            rules={[
+                                {
+                                    message: 'email is required',
+                                    required: true
+                                }
+                            ]}
+                            label={<p className="text-[16px]  font-normal">email</p>}
+                        >
+                            <Input
+                                style={{
+                                    width: "100%",
+                                    height: 40,
+                                    border: "",
+                                    borderRadius: "5px",
+                                    color: "#919191",
+                                    outline: "none"
+                                }}
+                                className='text-[16px] leading-5 '
+                                placeholder="Robert Smith"
+                            />
+                        </Form.Item>
+                        <Form.Item
                             name="streetAddress"
+                            rules={[
+                                {
+                                    message: 'street address is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className=" text-[16px] font-normal">Street Address</p>}
                         >
                             <Input
@@ -55,7 +104,13 @@ const EditAddAddress = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <Form.Item
-                            name="mobileNumber"
+                            name="city"
+                            rules={[
+                                {
+                                    message: 'city is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className="text-[#919191] text-[16px] leading-5 font-normal">City</p>}
                         >
                             <Input
@@ -72,6 +127,12 @@ const EditAddAddress = () => {
                         </Form.Item>
                         <Form.Item
                             name="state"
+                            rules={[
+                                {
+                                    message: 'state is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className="text-[#919191] text-[16px] leading-5 font-normal">State</p>}
                         >
                             <Input
@@ -87,10 +148,17 @@ const EditAddAddress = () => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="zip"
+                            name="zipCode"
+                            rules={[
+                                {
+                                    message: 'zipCode is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className="text-[#919191] text-[16px] leading-5 font-normal">Zip Code</p>}
                         >
                             <Input
+                                type='number'
                                 style={{
                                     width: "100%",
                                     height: 40,
@@ -103,7 +171,13 @@ const EditAddAddress = () => {
                             />
                         </Form.Item>
                         <Form.Item
-                            name="mobileNumber"
+                            name="phone_number"
+                            rules={[
+                                {
+                                    message: 'phone number is required',
+                                    required: true
+                                }
+                            ]}
                             label={<p className="text-[#919191] text-[16px] leading-5 font-normal">Phone Number</p>}
                         >
                             <Input
@@ -118,7 +192,7 @@ const EditAddAddress = () => {
                                 placeholder="+9900700007"
                             />
                         </Form.Item>
-                       
+
                     </div>
                 </div>
 
