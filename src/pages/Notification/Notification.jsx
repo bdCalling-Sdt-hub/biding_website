@@ -23,8 +23,8 @@ const Notification = () => {
             <div className='grid grid-cols-12 justify-between gap-5'>
                 <div className='col-span-12 lg:col-span-10 bg-white rounded-lg p-4'>
                     <h1 className='text-[24px] font-medium pb-4'>Notification</h1>
-                    {product?.map((product, index) => (
-                        <NotificationCard key={index} />
+                    {notifications?.map((item, index) => (
+                        <NotificationCard item={item} key={index} />
                     ))}
                 </div>
 

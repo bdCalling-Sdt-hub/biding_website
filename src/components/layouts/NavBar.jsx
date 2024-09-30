@@ -1,4 +1,4 @@
-import { Button, Drawer, Layout } from 'antd';
+import { Badge, Button, Drawer, Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
 import LeftMenu from '../ui/LeftMenu';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,8 +6,12 @@ import { IoIosNotificationsOutline } from 'react-icons/io';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { IoMenuOutline } from 'react-icons/io5';
 import img from '../../assets/user.png'
+import { useSocketContext } from '../../Providers/SocketProviders';
+import { useReadNotificationMutation } from '../../redux/api/manageApis';
 
 const NavBar = () => {
+  const { newNotifications } = useSocketContext()
+  const [readNotification] = useReadNotificationMutation()
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(!visible);
@@ -34,10 +38,12 @@ const NavBar = () => {
                 <Link className={`${location === '/contact' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/contact'>Contact</Link>
 
               </div>
-              <div className='flex items-center gap-2 mt-2'>
-                <Link to='/notification' className='bg-[#FEF6e7] rounded-full p-2'>
-                  <IoIosNotificationsOutline size={22} className='text-yellow' />
-                </Link>
+              <div className='flex items-center gap-4 mt-2'>
+                <Badge className='mt-2' count={newNotifications || 0}>
+                  <Link onClick={() => readNotification()} to='/notification' >
+                    <IoIosNotificationsOutline size={22} className='text-yellow' />
+                  </Link>
+                </Badge>
                 <div className='bg-[#FEF6e7] rounded-full p-2'>
                   <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                 </div>
