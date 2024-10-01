@@ -52,6 +52,7 @@ import Transaction from "../pages/DahsboardPages/Transaction.jsx";
 import DashboardNotification from "../pages/DahsboardPages/DashboardNotification.jsx";
 import CategoryAndBanner from "../pages/DahsboardPages/CategoryAndBanner.jsx";
 import Auctions from "../pages/Auctions/Auctions.jsx";
+import PaypalSuccess from "../pages/Paypal/PaypalSuccess.jsx";
 
 const router = createBrowserRouter([
     {
@@ -276,6 +277,10 @@ const router = createBrowserRouter([
     {
         path: '/reset-password',
         element: <ResetPassword />
+    },
+    {
+        path: '/paypal/success',
+        element: <PaypalSuccess />
     },
 ])
 

@@ -6,10 +6,10 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
-import Swal from 'sweetalert2';
 import { useGetProfileQuery } from '../../redux/api/authApis';
 import { useCreatePaymentIntentMutation } from '../../redux/api/paymentApis';
 import { ErrorResult, logEvent, Result } from '../../Utils/Utils';
+import { toast } from 'sonner';
 
 const ELEMENT_OPTIONS = {
     style: {
@@ -27,28 +27,30 @@ const ELEMENT_OPTIONS = {
     },
 };
 
-const CheckoutForm = ({ setPaymentStatus, data }) => {
+const CheckoutForm = ({ onPaymentSuccess, data }) => {
     const { data: user } = useGetProfileQuery();
     const [loading, setLoading] = useState(false);
-    const [postal, setPostal] = useState('');
+
     const [errorMessage, setErrorMessage] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [createIntent] = useCreatePaymentIntentMutation();
     const [clientSecret, setClientSecret] = useState(null);
     const stripe = useStripe();
     const elements = useElements();
-
+    console.log('data?.totalAmount', data?.totalAmount)
     useEffect(() => {
-        if (!data?.totalAmount) return;
-        createIntent({ amount: Number(data?.totalAmount) })
+        if (!data?.totalAmount) {
+            return
+        }
+        createIntent(data)
             .unwrap()
             .then((res) => {
-                console.log(res?.data);
+                // console.log('res?.data', res?.data);
                 setClientSecret(res?.data?.clientSecret);
             }).catch((err) => {
-                console.log(err)
+                toast.error(err?.message || 'something went wrong')
             });
-    }, [data?.totalAmount]);
+    }, [data]);
 
     const handleSubmit = async (event) => {
         console.log('object')
@@ -57,13 +59,13 @@ const CheckoutForm = ({ setPaymentStatus, data }) => {
 
         if (!stripe || !elements || !clientSecret) {
             setLoading(false);
-            return;
+            return toast.error('something went wrong');
         }
 
         const cardElement = elements.getElement(CardNumberElement);
         if (!cardElement) {
             setLoading(false);
-            return;
+            return toast.error('something went wrong');
         }
 
         const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -83,25 +85,11 @@ const CheckoutForm = ({ setPaymentStatus, data }) => {
             setPaymentMethod(null);
             setLoading(false);
         } else {
-            console.log('payload', payload)
-            const orderData = {
-                transactionID: payload.paymentIntent.id,
-                name: event.target.name.value,
-                amount: data.price,
-                productId: data.id,
-                quantity: data.quantity,
-                status: 'paid',
-            };
+            // console.log('payload', payload)
             setErrorMessage(null);
-            setPaymentStatus(orderData);
+            onPaymentSuccess(payload);
             event.target.reset();
-            Swal.fire({
-                title: "Payment Successful",
-                text: "Your Payment has been successful.",
-                icon: "success",
-                showConfirmButton: false,
-                timer: 1500,
-            });
+            toast.success('Your Payment has been successful.')
         }
         setLoading(false);
     };
