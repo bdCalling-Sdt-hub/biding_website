@@ -48,13 +48,14 @@ const columns = [
 const ProductDetails = () => {
     const { socket } = useSocketContext()
     const { id } = useParams()
-    const { data } = useGetProfileQuery()
+    // const { data } = useGetProfileQuery()
     const [auction, setAuction] = useState({})
     const [numberOfBids, setNumberOfBids] = useState(0)
     const [countDown, setCountDown] = useState(100);
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null })
     const [time, setTime] = useState(getSingleAuction?.data?.countdownTime || 9);
+    const [bidBuddyUser, setBidBuddyUser] = useState({})
     // console.log('similarProduct', auction)
     useEffect(() => {
         setAuction(getSingleAuction?.data)
@@ -96,12 +97,14 @@ const ProductDetails = () => {
         socket.on("bidHistory", (updatedBidHistory) => {
             console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
             setAuction(updatedBidHistory?.updatedAuction)
+            const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user?._id)
+            setBidBuddyUser(filterBidUser?.[0])
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket, id])
-
+    console.log(bidBuddyUser, profile)
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         if (Math.ceil(time) < 1) {

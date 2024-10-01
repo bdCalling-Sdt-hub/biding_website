@@ -1,11 +1,14 @@
 import React from 'react'
 import img from '../../assets/mob.png'
+import { useGetBiddingHistoryQuery } from '../../redux/api/auctionsApis'
 const BiddingHistory = () => {
+  const { data } = useGetBiddingHistoryQuery()
+  // console.log('history', data)
   return (
-    <div>
+    <div className='h-screen overflow-y-scroll'>
       <h1 className='text-yellow font-medium'>Bidding History</h1>
       {
-        [...Array(3)]?.map(item=><div className='mt-5 bg-[#F9F9F9] p-5 rounded-md flex flex-wrap items-center justify-between'>
+        data?.data?.map(item => <div className='mt-5 bg-[#F9F9F9] p-5 rounded-md flex flex-wrap items-center justify-between'>
           {/* Image and details */}
           <div className='flex items-center gap-2'>
             <img src={img} alt="" />
@@ -14,7 +17,7 @@ const BiddingHistory = () => {
               <p>Ended on 12/06/24 at 2:25 PM</p>
             </div>
           </div>
-  
+
           <div className='text-center space-y-2'>
             <p>Bids Placed</p>
             <p className='font-medium'>48</p>
@@ -38,7 +41,7 @@ const BiddingHistory = () => {
         </div>)
       }
 
-      
+
     </div>
   )
 }

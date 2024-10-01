@@ -34,7 +34,7 @@ const FeaturedAuction = () => {
             return
         }
         socket.on("updated-auction", (updatedBidHistory) => {
-            ('updatedBidHistory', updatedBidHistory)
+            console.log('updatedBidHistory', updatedBidHistory)
             Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) : setSocketData([...socketData, updatedBidHistory?.updatedAuction])
         })
         socket.on('socket-error', (error) => {
