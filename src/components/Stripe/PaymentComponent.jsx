@@ -7,11 +7,11 @@ import CheckoutForm from './CheckoutForm';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
 // console.log(import.meta.process.VITE_STRIPE_KEY)
 
-const PaymentComponent = ({ setPaymentStatus, data }) => {
+const PaymentComponent = ({ onPaymentSuccess, data }) => {
     return (
         <div className="px-14 py-4 payment">
             <Elements stripe={stripePromise}>
-                <CheckoutForm setPaymentStatus={setPaymentStatus} data={data} />
+                <CheckoutForm onPaymentSuccess={onPaymentSuccess} data={data} />
             </Elements>
         </div>
     )

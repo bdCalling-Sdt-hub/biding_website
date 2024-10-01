@@ -95,7 +95,7 @@ const ProductDetails = () => {
         }
         socket.emit('joinAuction', (id))
         socket.on("bidHistory", (updatedBidHistory) => {
-            console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
+            // console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
             setAuction(updatedBidHistory?.updatedAuction)
         })
         socket.on('socket-error', (error) => {
