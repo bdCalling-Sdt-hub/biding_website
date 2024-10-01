@@ -67,11 +67,23 @@ const manageApis = baseApi.injectEndpoints({
                 url: '/manage/accessibility',
                 method: 'GET',
             }),
+
         }),
-        // notification read 
+        //  FAQ api 
+        getFaq : build.query({
+            query : ()=>{
+                return {
+                    url : '/manage/all-faq',
+                    method : 'GET'
+                }
+            },
+            providesTags : ['faq']
+        }),
+
     }),
 })
 export const {
+    useGetFaqQuery,
     // get notification
     useGetNotificationQuery,
     // read notification
