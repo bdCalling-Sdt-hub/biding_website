@@ -53,7 +53,7 @@ const ProductDetails = () => {
 
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null })
-    // console.log('similarProduct', similarProduct)
+    console.log('similarProduct', getSingleAuction)
     useEffect(() => {
         setAuction(getSingleAuction?.data)
     }, [getSingleAuction?.data])
@@ -113,15 +113,15 @@ const ProductDetails = () => {
                             <div>
                                 <img src={auction?.images?.[0]} className='w-full rounded-md' alt="" />
                             </div>
-                            <div className='flex justify-between mt-2 gap-2 '>
-                                <div className=' h-[80px]'>
-                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                            <div className='flex justify-between items-center mt-5 '>
+                                <div className='h-[80px] w-full '>
+                                    <img src={auction?.images?.[1]} className=' rounded-md h-[120px] ' alt="" />
                                 </div>
-                                <div className=' h-[80px] '>
-                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                <div className=' h-[80px] w-full'>
+                                    <img src={auction?.images?.[2]} className=' rounded-md h-[120px]  ' alt="" />
                                 </div>
-                                <div className=' h-[80px] '>
-                                    <img src={auction?.images?.[1]} className='w-[110px] rounded-md h-[120px] md:w-full object-contain' alt="" />
+                                <div className=' h-[80px] w-full'>
+                                    <img src={auction?.images?.[3]} className=' rounded-md h-[120px] ' alt="" />
                                 </div>
 
                             </div>
@@ -129,7 +129,7 @@ const ProductDetails = () => {
                                 <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
                                 <div className='flex flex-wrap items-center gap-5 ml-2'>
                                     {
-                                        unniqueUser?.slice(0, 14).map(user => <img src={user?.user?.profile_image} className='rounded-full' alt="" />)
+                                        unniqueUser?.slice(0, 14).map(user => <img src={user?.user?.profile_image} className='rounded-full w-[80px] h-[80px] ' alt="" />)
                                     }
 
                                 </div>
@@ -144,7 +144,7 @@ const ProductDetails = () => {
                             </div>
                             <p>Current Highest Bidder</p>
                             <div className='flex items-center gap-5 mt-5 mb-5'>
-                                <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.profile_image} className='rounded-full' alt="" />
+                                <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.profile_image} className='rounded-full h-[150px] w-[150px]' alt="" />
                                 <div>
                                     <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name}</p>
                                     <p className='flex items-center gap-2'> <IoLocationOutline className='text-yellow' /> {auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.location || 'Location Not Available'} </p>
@@ -160,20 +160,20 @@ const ProductDetails = () => {
                                 <p>Time Left</p>
                             </div>
 
-
+                            <div className='lg:px-10 mt-5'> <Button onClick={() => {
+                                handleBid()
+                            }} className='py-2'>Bid</Button></div>
                             <div className='flex gap-5 justify-between mt-5 lg:px-10'>
                                 <Input type='number' onChange={(e) => {
                                     setNumberOfBids(e.target.value)
-                                }} placeholder='number of bids' className='border py-3 border-[#9F9F9F] rounded-lg w-full text-[#9F9F9F] hover:bg-yellow hover:text-white ' />
+                                }} placeholder='number of bids' className='border py-3 border-[#9F9F9F] rounded-lg w-full' />
                                 <Button onClick={() => {
                                     if (!numberOfBids) {
                                         toast.error('Please input number of bids')
                                     }
                                     socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) })
                                 }} className=''>Book BidBuddy</Button>
-                                <Button onClick={() => {
-                                    handleBid()
-                                }} className=''>manual Bid</Button>
+
                             </div>
                             <p className='text-[#585858] pt-5 px-10'>BidBuddy is your Automatic Bidding Tool. Book any number of bids. Each bid will be placed for you before the timer reaches zero. The first bid will be placed immediately.</p>
 
