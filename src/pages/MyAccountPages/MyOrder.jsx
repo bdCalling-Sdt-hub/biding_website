@@ -4,6 +4,7 @@ import Button from '../../components/ui/Button'
 import { CiLocationOn } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
 const MyOrder = () => {
+  // const {data : getOrder}=
   const arr = [1,2,3]
   return (
     <div>
