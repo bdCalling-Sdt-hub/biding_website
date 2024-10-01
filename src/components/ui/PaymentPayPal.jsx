@@ -27,3 +27,4 @@ const PaymentPayPal = (data) => {
 }
 
 export default PaymentPayPal
+//http://localhost:3003/paypal/success?paymentId=PAYID-M35YQVI64V07963KL1197018&token=EC-35A624311N426471D&PayerID=8N3S765UA4D3J
