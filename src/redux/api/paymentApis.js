@@ -36,10 +36,27 @@ const paymentApis = baseApi.injectEndpoints({
                 method: 'POST',
                 body: data
             })
+        }),
+        myOrder :builder.query({
+            query : ()=>{
+                return {
+                    url :'/order/my-orders',
+                    method : 'GET' 
+                }
+            }
+        }),
+        getSingleOrder :  builder.query({
+            query : (id)=>{
+                return {
+                    url : `/order/get-single-order/${id}`,
+                    method : 'GET'
+                }
+            }
         })
     })
 })
 export const {
+    useGetSingleOrderQuery,
     // create payment mutation 
     useCreatePaymentIntentMutation,
     // confirm  payment 
@@ -47,5 +64,6 @@ export const {
     // paypal confirm payment 
     usePaypalConfirmPaymentMutation,
     // paypal create payment  
-    usePaypalCreatePaymentMutation
+    usePaypalCreatePaymentMutation,
+    useMyOrderQuery
 } = paymentApis
