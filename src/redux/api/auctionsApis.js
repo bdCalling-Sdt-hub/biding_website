@@ -21,6 +21,16 @@ const auctionsApis = baseApi.injectEndpoints({
                 }
             },
             providesTags: ['singleAuctions']
+        }),
+        // get bidding history
+        getBiddingHistory: builder.query({
+            query: () => ({
+                url: `/auction/get-bidding-history`,
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
+            })
         })
 
     })
@@ -29,5 +39,7 @@ export const {
     // get auctions 
     useGetAuctionsQuery,
     // get single auctions
-    useGetSingleAuctionQuery
+    useGetSingleAuctionQuery,
+    // get bidding history
+    useGetBiddingHistoryQuery
 } = auctionsApis
