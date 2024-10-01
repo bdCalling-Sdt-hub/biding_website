@@ -2,17 +2,29 @@ import React, { useState } from 'react'
 import BackButton from '../../components/ui/BackButton'
 import img from '../../assets/phone1.png'
 import { Form, Input, Modal, Tabs } from 'antd'
-import PaymentStripe from '../../components/ui/PaymentStripe'
 import PaymentPayPal from '../../components/ui/PaymentPayPal'
 import Button from '../../components/ui/Button'
+import PaymentComponent from '../../components/Stripe/PaymentComponent'
+import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis'
 const Payment = () => {
+    const [id, setId] = useState(new URLSearchParams(window.location.search).get('id') || null)
     const [modalOpen, setModalOpen] = useState(false);
-
+    const [paymentStatus, setPaymentStatus] = useState({})
+    const { data: singleAuctions } = useGetSingleAuctionQuery(id)
+    console.log('singleAuctions', singleAuctions)
+    const data = {
+        "shippingAddress": "66e91c02216ba726330b9200",
+        "item": "I phone 14 pro max",
+        "itemType": "PRODUCT",
+        "product": "66f25e573340a185626c3798",
+        "winingBid": 80,
+        "totalAmount": 100
+    }
     const items = [
         {
             key: '1',
             label: 'Credit Card',
-            children: <PaymentStripe />,
+            children: <PaymentComponent data={data} setPaymentStatus={setPaymentStatus} />,
         },
         {
             key: '2',
@@ -21,8 +33,6 @@ const Payment = () => {
         },
         ,
     ];
-
-
     /**Handle change location  */
     const onFinish = (values) => {
         (values);
@@ -143,14 +153,14 @@ const Payment = () => {
                             {
                                 message: 'Please enter phone number',
                             },
-                        ]} 
+                        ]}
                     >
                         <Input placeholder="Enter Phone Number" />
                     </Form.Item>
                     <div className='flex  items-center justify-center w-full gap-5 '>
                         <Form.Item>
 
-                            <button onClick={()=> setModalOpen(false)} className='border border-yellow rounded-md px-10 py-1 text-yellow'>cancel</button>
+                            <button onClick={() => setModalOpen(false)} className='border border-yellow rounded-md px-10 py-1 text-yellow'>cancel</button>
                         </Form.Item>
                         <Form.Item>
                             <Button className='w-full px-10' >Submit</Button>
