@@ -130,9 +130,7 @@ const ProductDetails = () => {
                                     {
                                         unniqueUser?.slice(0, 14).map(user => <img src={user?.user?.profile_image} className='rounded-full w-[80px] h-[80px] ' alt="" />)
                                     }
-
                                 </div>
-
                             </div>
                         </div>
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
@@ -159,6 +157,8 @@ const ProductDetails = () => {
                                     color: '#338BFF'
                                 }}>Congratulations</p>
                                 <p>You Are the Winning Bidder!</p>
+                                <div onClick={() => Navigate(`payment?id=${id}`)} className='lg:px-10 mt-5'> <Button onClick={() => {
+                                }} className='py-2'>Proceed to Pay</Button></div>
                             </div> : <div className='text-center'>
                                 <p className='font-semibold text-4xl mt-3' style={{
                                     color: '#338BFF'
@@ -169,7 +169,6 @@ const ProductDetails = () => {
                                     <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
                                     <p>Time Left</p>
                                 </div>
-
                                 <div className='lg:px-10 mt-5'> <Button onClick={() => {
                                     handleBid()
                                 }} className='py-2'>Bid</Button></div>

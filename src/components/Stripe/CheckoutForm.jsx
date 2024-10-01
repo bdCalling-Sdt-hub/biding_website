@@ -10,7 +10,6 @@ import { useGetProfileQuery } from '../../redux/api/authApis';
 import { useCreatePaymentIntentMutation } from '../../redux/api/paymentApis';
 import { ErrorResult, logEvent, Result } from '../../Utils/Utils';
 import { toast } from 'sonner';
-
 const ELEMENT_OPTIONS = {
     style: {
         base: {
@@ -26,18 +25,16 @@ const ELEMENT_OPTIONS = {
         },
     },
 };
-
 const CheckoutForm = ({ onPaymentSuccess, data }) => {
     const { data: user } = useGetProfileQuery();
     const [loading, setLoading] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState(null);
-    const [createIntent] = useCreatePaymentIntentMutation();
+    const [createIntent, { isLoading }] = useCreatePaymentIntentMutation();
     const [clientSecret, setClientSecret] = useState(null);
     const stripe = useStripe();
     const elements = useElements();
-    console.log('data?.totalAmount', data?.totalAmount)
     useEffect(() => {
         if (!data?.totalAmount) {
             return
@@ -90,10 +87,10 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
             onPaymentSuccess(payload);
             event.target.reset();
             toast.success('Your Payment has been successful.')
+            setLoading(false);
         }
         setLoading(false);
     };
-
     return (
         <form onSubmit={handleSubmit} className="w-full">
             <div className="md:grid md:grid-cols-2  gap-2 flex flex-col items-start justify-start md:items-center mb-2">
@@ -171,14 +168,16 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
                 </div>
             </div>
 
-            {errorMessage && <ErrorResult><p className="text-red-500">{errorMessage}</p></ErrorResult>}
+            {errorMessage && <ErrorResult><p style={{
+                color: 'red'
+            }} className="text-red-500">{errorMessage}</p></ErrorResult>}
             {paymentMethod && <Result>Got PaymentMethod: {paymentMethod.id}</Result>}
             <button
-                className="w-full block text-white bg-yellow mt-6 py-3 disabled:bg-gray-400 disabled:pointer-events-none rounded"
+                className="w-full block text-white bg-yellow disabled:bg-gray mt-6 py-3 disabled:bg-gray-400 disabled:pointer-events-none rounded disabled:cursor-not-allowed"
                 type="submit"
-                disabled={!stripe || loading}
+                disabled={!stripe || loading || isLoading || !data?.totalAmount}
             >
-                {loading ? 'please wait....' : 'Confirm Pay'}
+                {isLoading ? 'creating intent ...' : loading ? 'please wait....' : `Confirm Payment $ ${data?.totalAmount}`}
             </button>
         </form>
     );
