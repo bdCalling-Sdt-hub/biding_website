@@ -1,0 +1,199 @@
+import React, { useEffect, useState } from 'react';
+import {
+    CardNumberElement,
+    CardCvcElement,
+    CardExpiryElement,
+    useStripe,
+    useElements,
+} from '@stripe/react-stripe-js';
+import Swal from 'sweetalert2';
+import { useGetProfileQuery } from '../../redux/api/authApis';
+import { useCreatePaymentIntentMutation } from '../../redux/api/paymentApis';
+import { ErrorResult, logEvent, Result } from '../../Utils/Utils';
+
+const ELEMENT_OPTIONS = {
+    style: {
+        base: {
+            fontSize: '18px',
+            color: '#424770',
+            letterSpacing: '0.025em',
+            '::placeholder': {
+                color: '#aab7c4',
+            },
+        },
+        invalid: {
+            color: '#9e2146',
+        },
+    },
+};
+
+const CheckoutForm = ({ setPaymentStatus, data }) => {
+    const { data: user } = useGetProfileQuery();
+    const [loading, setLoading] = useState(false);
+    const [postal, setPostal] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [paymentMethod, setPaymentMethod] = useState(null);
+    const [createIntent] = useCreatePaymentIntentMutation();
+    const [clientSecret, setClientSecret] = useState(null);
+    const stripe = useStripe();
+    const elements = useElements();
+
+    useEffect(() => {
+        if (!data?.totalAmount) return;
+        createIntent({ amount: Number(data?.totalAmount) })
+            .unwrap()
+            .then((res) => {
+                console.log(res?.data);
+                setClientSecret(res?.data?.clientSecret);
+            }).catch((err) => {
+                console.log(err)
+            });
+    }, [data?.totalAmount]);
+
+    const handleSubmit = async (event) => {
+        console.log('object')
+        event.preventDefault();
+        setLoading(true);
+
+        if (!stripe || !elements || !clientSecret) {
+            setLoading(false);
+            return;
+        }
+
+        const cardElement = elements.getElement(CardNumberElement);
+        if (!cardElement) {
+            setLoading(false);
+            return;
+        }
+
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: user?.data?.name || 'anonyms',
+                    // address: {
+                    //     postal_code: postal,
+                    // },
+                },
+            },
+        });
+
+        if (payload.error) {
+            setErrorMessage(payload.error.message || null);
+            setPaymentMethod(null);
+            setLoading(false);
+        } else {
+            console.log('payload', payload)
+            const orderData = {
+                transactionID: payload.paymentIntent.id,
+                name: event.target.name.value,
+                amount: data.price,
+                productId: data.id,
+                quantity: data.quantity,
+                status: 'paid',
+            };
+            setErrorMessage(null);
+            setPaymentStatus(orderData);
+            event.target.reset();
+            Swal.fire({
+                title: "Payment Successful",
+                text: "Your Payment has been successful.",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+        setLoading(false);
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="w-full">
+            <div className="md:grid md:grid-cols-2  gap-2 flex flex-col items-start justify-start md:items-center mb-2">
+                <div className="w-full ">
+                    <label className="block" htmlFor="name">Full Name</label>
+                    <input disabled
+                        className="outline-none  p-2 border rounded border-[#9494943D]"
+                        style={{ width: "100%", }}
+                        defaultValue={user?.data?.name}
+                        required
+                        placeholder="Jenny Rosen"
+                        name="name"
+                    />
+                </div>
+                <div className="w-full">
+                    <label className="block" htmlFor="Email">Email</label>
+                    <input disabled
+                        type="email"
+                        className="outline-none  p-2 border rounded border-[#9494943D]"
+                        style={{ width: "100%", }}
+                        defaultValue={user?.data?.email}
+                        required
+                        placeholder="JennyRosen@gmail.com"
+                        name="email"
+                    />
+                </div>
+            </div>
+            <label htmlFor="cardNumber">Card Number</label>
+            <CardNumberElement
+                className="outline-none p-2 border rounded border-[#9494943D]"
+                id="cardNumber"
+                onBlur={logEvent('blur')}
+                onChange={logEvent('change')}
+                onFocus={logEvent('focus')}
+                onReady={logEvent('ready')}
+                options={ELEMENT_OPTIONS}
+            />
+            <div className="md:grid md:grid-cols-2 gap-2 flex flex-col items-start justify-start md:items-center mt-3">
+                <div className="w-full">
+                    <label htmlFor="expiry">Card Expiration</label>
+                    <CardExpiryElement
+                        className="outline-none p-2 border rounded border-[#9494943D]"
+                        id="expiry"
+                        onBlur={logEvent('blur')}
+                        onChange={logEvent('change')}
+                        onFocus={logEvent('focus')}
+                        onReady={logEvent('ready')}
+                        options={ELEMENT_OPTIONS}
+                    />
+                </div>
+                <div className="w-full flex justify-between items-center gap-[2%]">
+                    <div className="w-[100%]">
+                        <label htmlFor="cvc">CVC</label>
+                        <CardCvcElement
+                            className="outline-none border p-2 rounded border-[#9494943D]"
+                            id="cvc"
+                            onBlur={logEvent('blur')}
+                            onChange={logEvent('change')}
+                            onFocus={logEvent('focus')}
+                            onReady={logEvent('ready')}
+                            options={ELEMENT_OPTIONS}
+                        />
+                    </div>
+                    {/* <div className="w-[49%]">
+                        <label htmlFor="postal">Postal Code</label>
+                        <input
+                            className="outline-none p-[1px] border border-[#9494943D] w-full text-lg"
+                            id="postal"
+                            required
+                            placeholder="12345"
+                            value={postal}
+                            onChange={(event) => setPostal(event.target.value)}
+                        />
+                    </div> */}
+                </div>
+            </div>
+
+            {errorMessage && <ErrorResult><p className="text-red-500">{errorMessage}</p></ErrorResult>}
+            {paymentMethod && <Result>Got PaymentMethod: {paymentMethod.id}</Result>}
+            <button
+                className="w-full block text-white bg-yellow mt-6 py-3 disabled:bg-gray-400 disabled:pointer-events-none rounded"
+                type="submit"
+                disabled={!stripe || loading}
+            >
+                {loading ? 'please wait....' : 'Confirm Pay'}
+            </button>
+        </form>
+    );
+};
+
+export default CheckoutForm;

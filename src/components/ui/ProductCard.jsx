@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { FaRegStar, FaStar } from 'react-icons/fa'
 import img from '../../assets/watch.png'
-import { calculateTimeLeft } from './UpcommingProduct'
+// import { calculateTimeLeft } from './UpcommingProduct'
 import { useNavigate } from 'react-router-dom'
 import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis'
 const ProductCard = ({ product }) => {
@@ -11,6 +11,7 @@ const ProductCard = ({ product }) => {
   const [time, setTime] = useState(product?.time);
   const [countDown, setCountDown] = useState(100);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
+  // console.log(product?.name,timeLeft)
   // formate time 
   const formatTimeLeft = (time) => {
     return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
@@ -27,8 +28,7 @@ const ProductCard = ({ product }) => {
         clearInterval(interval);
       }
     }, 1000);
-
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, [combinedDateTime]);
 
   useEffect(() => {
@@ -99,11 +99,25 @@ const ProductCard = ({ product }) => {
       }} disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'>{product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button>
 
       {
-        //|| (type && type === 'bookmark')
         product?.isBookmark ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
       }
     </div >
   )
 }
 
-export default ProductCard     
+export default ProductCard
+const calculateTimeLeft = (targetDateTime) => {
+  const now = new Date().getTime();
+  const timeLeft = targetDateTime - now;
+
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  return {
+    total: timeLeft,
+    hours,
+    minutes,
+    seconds,
+  };
+};
