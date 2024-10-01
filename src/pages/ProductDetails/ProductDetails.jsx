@@ -51,10 +51,11 @@ const ProductDetails = () => {
     const { data } = useGetProfileQuery()
     const [auction, setAuction] = useState({})
     const [numberOfBids, setNumberOfBids] = useState(0)
-
+    const [countDown, setCountDown] = useState(100);
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null })
-    console.log('similarProduct', getSingleAuction)
+    const [time, setTime] = useState(getSingleAuction?.data?.countdownTime || 9);
+    // console.log('similarProduct', auction)
     useEffect(() => {
         setAuction(getSingleAuction?.data)
     }, [getSingleAuction?.data])
@@ -81,27 +82,36 @@ const ProductDetails = () => {
 
     const { data: profile } = useGetProfileQuery()
     const handleBid = () => {
-
         if (!socket) {
             return
         }
         socket.emit("place-manual-bid", { auction_id: id, user_id: profile?.data?._id });
     }
+
     useEffect(() => {
         if (!socket) {
             return
         }
         socket.emit('joinAuction', (id))
         socket.on("bidHistory", (updatedBidHistory) => {
-            // console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
+            console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
             setAuction(updatedBidHistory?.updatedAuction)
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket, id])
-    console.log('getSingleAuction', getSingleAuction)
-    console.log('data', data)
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         if (Math.ceil(time) < 1) {
+    //             setTime(9)
+    //         } else (
+    //             setTime(time - .1)
+    //         )
+    //     }, countDown);
+    //     return () => clearInterval(interval);
+    // }, [countDown, time]);
     return (
         <div>
             <BackButton pageName={"Product Details"} />
@@ -166,7 +176,7 @@ const ProductDetails = () => {
                                 <p>You have loose the auctions</p>
                             </div> : <div>
                                 <div className='text-center mt-5'>
-                                    <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
+                                    <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:0{Math.ceil(time)}</h1>
                                     <p>Time Left</p>
                                 </div>
                                 <div className='lg:px-10 mt-5'> <Button onClick={() => {

@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { useGetProfileQuery } from '../../redux/api/authApis';
+import { Link } from 'react-router-dom';
 const Search = () => {
     const [searchText, setSearchText] = useState('');
-
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-    ('Search text:', e.target.value);
-  }
+    const { data } = useGetProfileQuery()
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+        ('Search text:', e.target.value);
+    }
     return (
         <div className='md:flex gap-2  items-center justify-between my-4'>
             <div className=' hidden  md:flex items-center gap-2 text-white'>
-                <div className='text-[#338BFF] bg-white p-2 rounded-md'>225 Bids</div>
-                <div className='bg-yellow p-2 rounded-md'>Buy Credits</div>
+                <div className='text-[#338BFF] bg-white p-2 rounded-md'>{data?.data?.availableBid} Bids</div>
+                <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
             </div>
             <div className='flex items-center justify-center '>
                 <Input
