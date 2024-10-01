@@ -28,7 +28,6 @@ const Payment = () => {
     })
     const navigate = useNavigate()
     const [confirmPayment] = useConfirmPaymentMutation()
-    const [createPayment] = usePaypalCreatePaymentMutation()
     //  payment success handler
     const onPaymentSuccess = (data) => {
         const formateData = {

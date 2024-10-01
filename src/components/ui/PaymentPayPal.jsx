@@ -4,7 +4,7 @@ import { usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
-const PaymentPayPal = (data) => {
+const PaymentPayPal = ({ data }) => {
     const navigate = useNavigate()
     const [createPayment] = usePaypalCreatePaymentMutation()
     const handlePaypalPayment = () => {
@@ -18,7 +18,12 @@ const PaymentPayPal = (data) => {
     }
     return (
         <div className='px-10 py-10'>
-            <button onClick={() => handlePaypalPayment()} className='flex items-center border text-[#338BFF] border-[#C0DBFF] w-full rounded-md justify-center py-2 '>
+            <button onClick={() => {
+                if (!data?.totalAmount) {
+                    return toast.error('amount cant be empty')
+                }
+                handlePaypalPayment()
+            }} className='flex items-center border text-[#338BFF] border-[#C0DBFF] w-full rounded-md justify-center py-2 '>
                 <FaPaypal className='text-[#338BFF]' />
                 Checkout With PayPal
             </button>
@@ -27,3 +32,4 @@ const PaymentPayPal = (data) => {
 }
 
 export default PaymentPayPal
+//http://localhost:3003/paypal/success?paymentId=PAYID-M35YQVI64V07963KL1197018&token=EC-35A624311N426471D&PayerID=8N3S765UA4D3J

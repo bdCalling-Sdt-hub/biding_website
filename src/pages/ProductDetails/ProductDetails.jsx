@@ -48,6 +48,7 @@ const columns = [
 const ProductDetails = () => {
     const { socket } = useSocketContext()
     const { id } = useParams()
+    const { data } = useGetProfileQuery()
     const [auction, setAuction] = useState({})
     const [numberOfBids, setNumberOfBids] = useState(0)
 
@@ -57,11 +58,8 @@ const ProductDetails = () => {
     useEffect(() => {
         setAuction(getSingleAuction?.data)
     }, [getSingleAuction?.data])
-
     /** Get unique bidder profile image */
     const unniqueUser = auction?.bidHistory?.filter((user, index, self) => index === self.findIndex((u) => u?.user?._id === user?.user?._id))
-
-
     /** Current height bider table data format */
     const heightBidderDataFormat = auction?.bidHistory?.slice(-2)?.map((bidder, i) => {
         const formattedTime = new Date(bidder?.time).toLocaleTimeString('en-US', {
@@ -102,7 +100,8 @@ const ProductDetails = () => {
             toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket, id])
-
+    console.log('getSingleAuction', getSingleAuction)
+    console.log('data', data)
     return (
         <div>
             <BackButton pageName={"Product Details"} />
@@ -131,9 +130,7 @@ const ProductDetails = () => {
                                     {
                                         unniqueUser?.slice(0, 14).map(user => <img src={user?.user?.profile_image} className='rounded-full w-[80px] h-[80px] ' alt="" />)
                                     }
-
                                 </div>
-
                             </div>
                         </div>
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
@@ -155,26 +152,41 @@ const ProductDetails = () => {
                             {/* Top bidder table */}
                             <Table columns={columns} dataSource={heightBidderDataFormat?.reverse()} size="middle" pagination={false} />
 
-                            <div className='text-center mt-5'>
-                                <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
-                                <p>Time Left</p>
-                            </div>
+                            {getSingleAuction?.data?.status === 'COMPLETED' ? data?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name ? <div className='text-center'>
+                                <p className='font-semibold text-4xl mt-3' style={{
+                                    color: '#338BFF'
+                                }}>Congratulations</p>
+                                <p>You Are the Winning Bidder!</p>
+                                <div onClick={() => Navigate(`payment?id=${id}`)} className='lg:px-10 mt-5'> <Button onClick={() => {
+                                }} className='py-2'>Proceed to Pay</Button></div>
+                            </div> : <div className='text-center'>
+                                <p className='font-semibold text-4xl mt-3' style={{
+                                    color: '#338BFF'
+                                }}>ops !</p>
+                                <p>You have loose the auctions</p>
+                            </div> : <div>
+                                <div className='text-center mt-5'>
+                                    <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
+                                    <p>Time Left</p>
+                                </div>
+                                <div className='lg:px-10 mt-5'> <Button onClick={() => {
+                                    handleBid()
+                                }} className='py-2'>Bid</Button></div>
+                                <div className='flex gap-5 justify-between mt-5 lg:px-10'>
+                                    <Input type='number' onChange={(e) => {
+                                        setNumberOfBids(e.target.value)
+                                    }} placeholder='number of bids' className='border py-3 border-[#9F9F9F] rounded-lg w-full' />
+                                    <Button onClick={() => {
+                                        if (!numberOfBids) {
+                                            toast.error('Please input number of bids')
+                                        }
+                                        socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) })
+                                    }} className=''>Book BidBuddy</Button>
 
-                            <div className='lg:px-10 mt-5'> <Button onClick={() => {
-                                handleBid()
-                            }} className='py-2'>Bid</Button></div>
-                            <div className='flex gap-5 justify-between mt-5 lg:px-10'>
-                                <Input type='number' onChange={(e) => {
-                                    setNumberOfBids(e.target.value)
-                                }} placeholder='number of bids' className='border py-3 border-[#9F9F9F] rounded-lg w-full' />
-                                <Button onClick={() => {
-                                    if (!numberOfBids) {
-                                        toast.error('Please input number of bids')
-                                    }
-                                    socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) })
-                                }} className=''>Book BidBuddy</Button>
-
+                                </div>
                             </div>
+                            }
+
                             <p className='text-[#585858] pt-5 px-10'>BidBuddy is your Automatic Bidding Tool. Book any number of bids. Each bid will be placed for you before the timer reaches zero. The first bid will be placed immediately.</p>
 
                         </div>

@@ -8,7 +8,8 @@ export default {
     colors: {
       'yellow': '#F3A211',
       'white': 'white',
-      'gray': '#666666'
+      'gray': '#666666',
+      'yellow-20': '#F9D492'
     },
     extend: {
       fontFamily: {

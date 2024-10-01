@@ -92,7 +92,7 @@ const ProductCard = ({ product }) => {
             product?.status !== 'COMPLETED' ? <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time).toString().startsWith('-') ? '0' : Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p> : <p></p>
           }
         </div>
-        {/* <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p> */}
+        {/* <p className='text-[#585858] font-semibold text-[24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? `00:00:0${Math.ceil(time)}` : formatTimeLeft(timeLeft)}</p>  || product?.status === 'COMPLETED'*/}
       </div>
       <button onClick={() => {
         navigate(`/product-details/${product?._id}`)
