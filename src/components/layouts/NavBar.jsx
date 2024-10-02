@@ -12,7 +12,6 @@ import { useGetProfileQuery } from '../../redux/api/authApis';
 
 const NavBar = () => {
   const { data } = useGetProfileQuery()
-  console.log(data?.data);
   const { data: profile } = useGetProfileQuery();
   const { newNotifications } = useSocketContext()
   const [readNotification] = useReadNotificationMutation()
@@ -25,12 +24,11 @@ const NavBar = () => {
   useEffect(() => {
     setVisible(false);
   }, [location])
-
   return (
     <nav className="navbar ">
       <Layout className='max-w-screen-2xl mx-auto'>
         <Layout.Header className="nav-header">
-          <Link to={`/`} className="logo">
+          <Link to={`/`} className="logo hover:text-yellow">
             <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Biding Website</h3>
           </Link>
           <div className="navbar-menu">
@@ -53,16 +51,15 @@ const NavBar = () => {
                     <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                   </div>
 
-                </div> : <div className='flex justify-center items-center'>
-                  <button className='border-yellow border text-yellow px-4 py-2 rounded-md'>
+                </div> : <div className='flex justify-center items-center mt-2 gap-5'>
+                  <Link to={`/register`} className='border-yellow border text-yellow px-4 py-1 rounded-md'>
                     Get Started
-                  </button>
-                  <button className='bg-yellow border-yellow border text-white px-4 py-2 rounded-md'>
+                  </Link>
+                  <Link to={`/login`} className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>
                     Sign in
-                  </button>
+                  </Link>
                 </div>
               }
-
             </div>
             <Button className="menuButton" type="text" onClick={showDrawer}>
               <IoMenuOutline size={21} className='text-yellow' />
