@@ -12,7 +12,7 @@ const AccountMenu = () => {
   return (
     <div >
     <Swiper
-        slidesPerView={3.5}
+        slidesPerView={2}
         spaceBetween={5}
         centeredSlides={true}
         pagination={{
@@ -21,7 +21,7 @@ const AccountMenu = () => {
         modules={[Pagination]}
         className="mySwiper"
     >
-        <SwiperSlide className={` text-center rounded-full border border-yellow  py-1 ${pathname ==='/my-profile' ? "bg-yellow text-white " : ""} `}><Link to='/my-profile'>My Profile</Link></SwiperSlide>
+        <SwiperSlide className={` text-center test rounded-full border border-yellow   py-1 ${pathname ==='/my-profile' ? "bg-yellow text-white " : ""} `}><Link to='/my-profile'>My Profile</Link></SwiperSlide>
         <SwiperSlide className={` text-center rounded-full border border-yellow test  py-1 ${pathname ==='/my-profile/address-book' ? "bg-yellow text-white " : ""} `}><Link to='/my-profile/address-book'>Address Book</Link></SwiperSlide>
 
         <SwiperSlide className={` text-center rounded-full test border border-yellow  py-1 ${pathname ==='/my-profile/change-password' ? "bg-yellow text-white " : ""} `}><Link to='/my-profile/change-password'>Change Password</Link></SwiperSlide>
