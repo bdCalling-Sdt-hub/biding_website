@@ -77,7 +77,7 @@ const AccountLayout = () => {
                                     localStorage.removeItem('token')
                                     navigate('/')
                                     window.location.reload()
-                                }} className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/my-bids' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
+                                }} className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between bg-[#FEF6e7] text-[#2E2E2E]`}>
                                     Logout <MdChevronRight size={22} />
                                 </button>
 
