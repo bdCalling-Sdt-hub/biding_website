@@ -59,6 +59,8 @@ const ProductDetails = () => {
     // console.log('similarProduct', auction)
     useEffect(() => {
         setAuction(getSingleAuction?.data)
+        const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user?._id)
+        setBidBuddyUser(filterBidUser?.[0])
     }, [getSingleAuction?.data])
     /** Get unique bidder profile image */
     const unniqueUser = auction?.bidHistory?.filter((user, index, self) => index === self.findIndex((u) => u?.user?._id === user?.user?._id))
@@ -88,23 +90,23 @@ const ProductDetails = () => {
         }
         socket.emit("place-manual-bid", { auction_id: id, user_id: profile?.data?._id });
     }
-
     useEffect(() => {
         if (!socket) {
             return
         }
         socket.emit('joinAuction', (id))
         socket.on("bidHistory", (updatedBidHistory) => {
-            console.log('sldfh9yadhfu9asd7yuasdbh fuyasdg ft7sdf rtvafd', updatedBidHistory)
+            console.log('updatedBidHistory azsd sdf sdf ', updatedBidHistory)
             setAuction(updatedBidHistory?.updatedAuction)
             const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user?._id)
+            // console.log('filterBidUser', filterBidUser)
             setBidBuddyUser(filterBidUser?.[0])
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket, id])
-    console.log(bidBuddyUser, profile)
+    console.log('bidBuddyUser', bidBuddyUser)
     // useEffect(() => {
     //     const interval = setInterval(() => {
     //         if (Math.ceil(time) < 1) {
@@ -153,19 +155,19 @@ const ProductDetails = () => {
                                 <p className='text-[#338BFF] text-[26px] font-semibold'>$ {auction?.bidHistory?.[auction.bidHistory.length - 1]?.bidAmount}</p>
                             </div>
                             <p>Current Highest Bidder</p>
-                            <div className='flex items-center gap-5 mt-5 mb-5'>
-                                <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.profile_image} className='rounded-full h-[150px] w-[150px]' alt="" />
-                                <div>
-                                    <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name}</p>
-                                    <p className='flex items-center gap-2'> <IoLocationOutline className='text-yellow' /> {auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.location || 'Location Not Available'} </p>
+                            {
+                                auction?.bidHistory?.length < 1 ? <p>no bid yet !</p> : <div className='flex items-center gap-5 mt-5 mb-5'>
+                                    <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.profile_image} className='rounded-full h-[150px] w-[150px]' alt="" />
+                                    <div>
+                                        <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name}</p>
+                                        <p className='flex items-center gap-2'> <IoLocationOutline className='text-yellow' /> {auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.location || 'Location Not Available'} </p>
+                                    </div>
                                 </div>
-                            </div>
-
-
+                            }
                             {/* Top bidder table */}
                             <Table columns={columns} dataSource={heightBidderDataFormat?.reverse()} size="middle" pagination={false} />
 
-                            {getSingleAuction?.data?.status === 'COMPLETED' ? data?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name ? <div className='text-center'>
+                            {getSingleAuction?.data?.status === 'COMPLETED' ? profile?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name ? <div className='text-center'>
                                 <p className='font-semibold text-4xl mt-3' style={{
                                     color: '#338BFF'
                                 }}>Congratulations</p>
@@ -182,9 +184,34 @@ const ProductDetails = () => {
                                     <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:0{Math.ceil(time)}</h1>
                                     <p>Time Left</p>
                                 </div>
-                                <div className='lg:px-10 mt-5'> <Button onClick={() => {
-                                    handleBid()
-                                }} className='py-2'>Bid</Button></div>
+
+                                {
+                                    bidBuddyUser?.isActive ? <>
+                                        <div className='flex justify-between items-center lg:px-10 mt-5'>
+                                            <button onClick={() => {
+                                                if (bidBuddyUser?.isActive) {
+                                                    socket.emit("stopBidBuddy", { auctionId: id, userId: profile?.data?._id, totalBids: Number(bidBuddyUser?.availableBids) })
+                                                }
+                                                // socket.on("add-bids", async ({ auctionId, userId, bids })
+                                            }} className='py-3 px-8 rounded-md' style={{
+                                                background: 'red',
+                                                color: 'white'
+                                            }}>
+                                                Stop Bidding
+                                            </button>
+                                            <p className=' text-xl font-medium'>
+                                                Bids Left : <span style={{
+                                                    color: '#338BFF'
+                                                }}>{bidBuddyUser?.availableBids}</span>
+                                            </p>
+                                        </div>
+                                    </> : <div>
+                                        <div className='lg:px-10 mt-5'> <Button onClick={() => {
+                                            handleBid()
+                                        }} className='py-2'>Bid</Button></div>
+
+                                    </div>
+                                }
                                 <div className='flex gap-5 justify-between mt-5 lg:px-10'>
                                     <Input type='number' onChange={(e) => {
                                         setNumberOfBids(e.target.value)
@@ -193,8 +220,13 @@ const ProductDetails = () => {
                                         if (!numberOfBids) {
                                             toast.error('Please input number of bids')
                                         }
-                                        socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) })
-                                    }} className=''>Book BidBuddy</Button>
+                                        if (bidBuddyUser?.isActive) {
+                                            socket.emit('add-bids', { auctionId: id, userId: profile?.data?._id, bids: Number(numberOfBids) })
+                                        } else {
+                                            socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) })
+                                        }
+                                        // socket.on("add-bids", async ({ auctionId, userId, bids })
+                                    }} className=''>{bidBuddyUser?.isActive ? 'Add Bids' : 'Book BidBuddy'}</Button>
 
                                 </div>
                             </div>

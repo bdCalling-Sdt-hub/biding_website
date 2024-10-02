@@ -4,9 +4,9 @@ const auctionsApis = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         // get actions 
         getAuctions: builder.query({
-            query: ({ category }) => {
+            query: ({ category, searchTerm }) => {
                 return {
-                    url: `/auction${category ? `?category=${category}` : ''}`,
+                    url: `/auction${category ? `?category=${category}` : ''}${searchTerm ? `${category ? "&" : "?"}searchTerm=${searchTerm}` : ''}`,
                     method: 'GET'
                 }
             },
