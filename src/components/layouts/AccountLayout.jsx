@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar'
 import Footer from './Footer'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import BackButton from '../ui/BackButton'
 import { MdChevronRight } from 'react-icons/md'
 
@@ -9,8 +9,10 @@ import { Tabs } from 'antd'
 import AccountMenu from '../ui/AccountMenu'
 import DashboardMenu from '../ui/DashboardMenu'
 import { useGetProfileQuery } from '../../redux/api/authApis'
+import { FaArrowLeft } from 'react-icons/fa'
 
 const AccountLayout = () => {
+    const navigate = useNavigate()
     const { pathname } = useLocation();
     const { data } = useGetProfileQuery()
     const items = [
@@ -71,6 +73,14 @@ const AccountLayout = () => {
                                 <Link to='/my-profile/my-bids' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/my-bids' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
                                     My Bids <MdChevronRight size={22} />
                                 </Link>
+                                <button onClick={() => {
+                                    localStorage.removeItem('token')
+                                    navigate('/')
+                                    window.location.reload()
+                                }} className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/my-bids' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
+                                    Logout <MdChevronRight size={22} />
+                                </button>
+
                             </div>
                         </div>
                     </div>
