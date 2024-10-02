@@ -53,11 +53,11 @@ const NavBar = () => {
                     <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                   </div>
 
-                </div> : <div className='flex justify-center items-center'>
-                  <button className='border-yellow border text-yellow px-4 py-2 rounded-md'>
+                </div> : <div className='flex justify-center items-center mt-2 gap-5'>
+                  <button className='border-yellow border text-yellow px-4 py-1 rounded-md'>
                     Get Started
                   </button>
-                  <button className='bg-yellow border-yellow border text-white px-4 py-2 rounded-md'>
+                  <button className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>
                     Sign in
                   </button>
                 </div>
