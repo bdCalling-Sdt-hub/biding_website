@@ -4,6 +4,7 @@ import { useSocketContext } from '../../Providers/SocketProviders'
 import { useGetAuctionsQuery } from '../../redux/api/auctionsApis'
 import ProductCard from '../../components/ui/ProductCard'
 import { useGetWinnerQuery } from '../../redux/api/winnerApi'
+import { Spin } from 'antd'
 
 const Auctions = () => {
     const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
@@ -13,7 +14,7 @@ const Auctions = () => {
         data: [],
         updatedCount: 0
     })
-    const { data } = useGetAuctionsQuery({ category, searchTerm })//{ status: 'ACTIVE' }
+    const { data , isLoading } = useGetAuctionsQuery({ category, searchTerm })//{ status: 'ACTIVE' }
     const [socketData, setSocketData] = useState([])
 
     useEffect(() => {
@@ -67,7 +68,7 @@ const Auctions = () => {
             </div>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
-                    auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
+                   isLoading ? <div className=' flex items-center justify-center col-span-2 md:col-span-4'><Spin size='large' /></div>: auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
                 }
             </div>
         </div>

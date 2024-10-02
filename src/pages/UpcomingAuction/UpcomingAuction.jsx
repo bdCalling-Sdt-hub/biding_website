@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import BackButton from '../../components/ui/BackButton'
 import UpcommingProduct from '../../components/ui/UpcommingProduct'
 import { useGetWinnerQuery } from '../../redux/api/winnerApi'
-import { Pagination } from 'antd'
+import { Pagination, Spin } from 'antd'
 
 const UpcomingAuction = () => {
   const [page, setPage] = useState(1)
-  const { data: upcomingData } = useGetWinnerQuery({ status: "UPCOMING", page })//UPCOMING
+  const { data: upcomingData , isLoading } = useGetWinnerQuery({ status: "UPCOMING", page })//UPCOMING
   return (
     <div className='px-5 lg:px-0 pb-10'>
       <BackButton pageName={'Upcoming Auction'} />
@@ -14,7 +14,7 @@ const UpcomingAuction = () => {
       <div >
         <div className='grid  grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2 '>
           {
-            upcomingData?.data?.result?.map(pro => (
+             isLoading ? <div className='flex items-center justify-center col-span-2 md:col-span-5'><Spin size='large'/></div> : upcomingData?.data?.result?.map(pro => (
               <UpcommingProduct product={pro} key={pro?._id} />
             ))
           }
