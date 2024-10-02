@@ -19,7 +19,7 @@ const MyOrder = () => {
               <p>Expected Delivery Date: {item?.expectedDeliveryData || "No date"}</p>
             </div>
             <div className='flex flex-wrap items-center justify-between mt-5'>
-              <div className='flex items-center gap-5 mt-5'>
+              <div className='flex  flex-wrap items-center gap-5 mt-5'>
                 <img src={item?.item?.images?.[0]} alt="" />
                 <div>
                   <h1 className='text-[22px] font-medium'>{item?.item?.name}</h1>

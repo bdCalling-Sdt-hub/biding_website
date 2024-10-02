@@ -8,8 +8,11 @@ import { IoMenuOutline } from 'react-icons/io5';
 import img from '../../assets/user.png'
 import { useSocketContext } from '../../Providers/SocketProviders';
 import { useReadNotificationMutation } from '../../redux/api/manageApis';
+import { useGetProfileQuery } from '../../redux/api/authApis';
 
 const NavBar = () => {
+  const { data } = useGetProfileQuery()
+  console.log(data?.data);
   const { newNotifications } = useSocketContext()
   const [readNotification] = useReadNotificationMutation()
   const [visible, setVisible] = useState(false);
@@ -67,15 +70,15 @@ const NavBar = () => {
             >
               <div className='mt-4'>
                 <div className='flex items-center gap-2'>
-                  <img src={img} alt="" />
+                  <img className='h-10 w-10 rounded-full' src={data?.data?.profile_image} alt="" />
                   <div>
-                    <p className='font-semibold'>Robert Smith</p>
-                    <p>robertsmith@gmail.com</p>
+                    <p className='font-semibold'>{data?.data?.name}</p>
+                    <p>{data?.data?.email}</p>
                   </div>
                 </div>
-                <div className='flex items-center justify-center gap-4'>
-                  <p className='text-[#338BFF] bg-[#F9F9F9] px-4 py-2'>225 Bids</p>
-                  <p className='bg-yellow rounded-md px-4 py-2 text-white'>Buy Bids</p>
+                <div className='flex items-center justify-center gap-4 mt-5'>
+                  <p className='text-[#338BFF] bg-[#F9F9F9] px-4 py-2'>{data?.data?.availableBid} Bids</p>
+                  <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
                 </div>
               </div>
               <LeftMenu mode={"inline"} />
