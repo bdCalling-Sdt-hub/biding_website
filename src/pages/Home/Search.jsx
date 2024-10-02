@@ -9,7 +9,6 @@ const Search = () => {
     const navigate = useNavigate()
     const handleSearch = (e) => {
         setSearchText(e.target.value);
-        // ('Search text:', e.target.value);
     }
     return (
         <div className='md:flex gap-2  items-center justify-between my-4'>

@@ -17,10 +17,13 @@ const auctionsApis = baseApi.injectEndpoints({
             query: (id) => {
                 return {
                     url: `/auction/get-single-auction/${id}`,
-                    method: 'GET'
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
                 }
             },
-            providesTags: ['singleAuctions']
+
         }),
         // get bidding history
         getBiddingHistory: builder.query({
