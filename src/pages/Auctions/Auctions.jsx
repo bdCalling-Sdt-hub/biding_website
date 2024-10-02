@@ -7,12 +7,13 @@ import { useGetWinnerQuery } from '../../redux/api/winnerApi'
 
 const Auctions = () => {
     const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
+    const [searchTerm, setSearchTerm] = useState(new URLSearchParams(window.location.search).get('searchTerm') || null)
     const { socket } = useSocketContext()
     const [auctionsData, setAuctionData] = useState({
         data: [],
         updatedCount: 0
     })
-    const { data } = useGetAuctionsQuery({ category })//{ status: 'ACTIVE' }
+    const { data } = useGetAuctionsQuery({ category, searchTerm })//{ status: 'ACTIVE' }
     const [socketData, setSocketData] = useState([])
 
     useEffect(() => {

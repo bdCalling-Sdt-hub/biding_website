@@ -8,13 +8,13 @@ import { useGetSingleOrderQuery } from '../../redux/api/paymentApis';
 const TrackOrder = () => {
     const { id } = useParams()
     const { data: getSingleOrder } = useGetSingleOrderQuery(id)
-    console.log(getSingleOrder?.data);
+    console.log('getSingleOrder?.data', getSingleOrder?.data);
     const ENUM_DELIVERY_STATUS = [
-       { title : "PAYMENT_PENDING"},
-       { title : "PAYMENT_SUCCESS"},
-       { title : "PROCESSING"},
-       { title : "SHIPPED"},
-       { title : "DELIVERED"},
+        { title: "PAYMENT_PENDING" },
+        { title: "PAYMENT_SUCCESS" },
+        { title: "PROCESSING" },
+        { title: "SHIPPED" },
+        { title: "DELIVERED" },
     ];
 
     const progressItem = getSingleOrder?.data?.statusWithTime?.map((item) => {
