@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useGetProfileQuery } from '../../redux/api/authApis';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Search = () => {
     const [searchText, setSearchText] = useState('');
     const { data } = useGetProfileQuery()
+    const navigate = useNavigate()
     const handleSearch = (e) => {
         setSearchText(e.target.value);
-        ('Search text:', e.target.value);
     }
     return (
         <div className='md:flex gap-2  items-center justify-between my-4'>
@@ -22,7 +22,7 @@ const Search = () => {
                     placeholder="What are you looking for?"
                     value={searchText}
                     onChange={handleSearch}
-                    suffix={<SearchOutlined />}
+                    suffix={<SearchOutlined onClick={() => navigate(`/auctions?searchTerm=${searchText}`)} className='cursor-pointer hover:scale-110 active:scale-95 text-yellow' />}
                     style={{ width: 300 }}
                 />
             </div>
