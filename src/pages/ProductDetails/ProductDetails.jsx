@@ -103,9 +103,12 @@ const ProductDetails = () => {
         socket.emit('joinAuction', id);
 
         socket.on("bidHistory", (updatedBidHistory) => {
-            setAuction(updatedBidHistory?.updatedAuction);
-            const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
-            setBidBuddyUser(filterBidUser?.[0]);
+            if (updatedBidHistory?.updatedAuction?._id === id) {
+                console.log('id matched')
+                setAuction(updatedBidHistory?.updatedAuction);
+                const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
+                setBidBuddyUser(filterBidUser?.[0]);
+            }
         });
 
         socket.on('socket-error', (error) => {
@@ -129,7 +132,7 @@ const ProductDetails = () => {
 
         return () => clearInterval(interval);
     }, [time]);
-
+    // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
     return (
         <div>
             <BackButton pageName={"Product Details"} />
