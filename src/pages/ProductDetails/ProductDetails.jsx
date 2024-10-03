@@ -183,7 +183,7 @@ const ProductDetails = () => {
                             <Table columns={columns} dataSource={heightBidderDataFormat?.reverse()} size="middle" pagination={false} />
 
                             {getSingleAuction?.data?.status === 'COMPLETED' ? (
-                                profile?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name ? (
+                                profile?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user ? (
                                     <div className='text-center'>
                                         <p className='font-semibold text-4xl mt-3' style={{ color: '#338BFF' }}>Congratulations</p>
                                         <p>You Are the Winning Bidder!</p>
