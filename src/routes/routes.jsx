@@ -54,6 +54,7 @@ import CategoryAndBanner from "../pages/DahsboardPages/CategoryAndBanner.jsx";
 import Auctions from "../pages/Auctions/Auctions.jsx";
 import PaypalSuccess from "../pages/Paypal/PaypalSuccess.jsx";
 import BIdPayment from "../pages/BuyBids/BIdPayment.jsx";
+import FinancialPayment from "../pages/MyAccountPages/FinancialPayment.jsx";
 
 const router = createBrowserRouter([
     {
@@ -228,6 +229,10 @@ const router = createBrowserRouter([
             {
                 path: 'my-bids',
                 element: <MyBids />
+            },
+            {
+                path: 'financial-payment',
+                element: <FinancialPayment />
             },
             {
                 path: 'edit-profile',

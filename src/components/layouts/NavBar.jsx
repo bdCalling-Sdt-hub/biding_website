@@ -5,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { IoMenuOutline } from 'react-icons/io5';
-import img from '../../assets/user.png'
 import { useSocketContext } from '../../Providers/SocketProviders';
 import { useReadNotificationMutation } from '../../redux/api/manageApis';
 import { useGetProfileQuery } from '../../redux/api/authApis';
@@ -42,11 +41,12 @@ const NavBar = () => {
               </div>
               {
                 profile?.data?.email ? <div className='flex items-center gap-4 mt-2'>
-                  <Badge className='mt-2' count={newNotifications || 0}>
-                    <Link onClick={() => readNotification()} to='/notification' >
-                      <IoIosNotificationsOutline size={22} className='text-yellow' />
-                    </Link>
-                  </Badge>
+                    <Badge className='' count={newNotifications || 0}>
+                      <Link onClick={() => readNotification()} to='/notification'  >
+                        <IoIosNotificationsOutline size={22} className='text-yellow' />
+                      </Link>
+
+                    </Badge>
                   <div className='bg-[#FEF6e7] rounded-full p-2'>
                     <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                   </div>

@@ -73,7 +73,7 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
             {
                 (isLoading || isDeleting) && <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center"> <Spin /></div>
             }
-            <img src={product?.images?.[0]} className='w-full h-[180px] object-contain border rounded-md p-1' alt="" />
+            <img src={product?.images?.[0]} className='w-full h-[180px] object-contain shadow-sm  rounded-md p-1' alt="" />
             <div className=' text-center space-y-1 py-2'>
                 <p className='font-medium'>{product?.name}</p>
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
