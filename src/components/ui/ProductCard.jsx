@@ -70,7 +70,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <div className='rounded-lg bg-white shadow-sm my-4 relative flex flex-col justify-between'>
+    <div className='rounded-lg bg-white shadow-sm my-4  relative flex flex-col justify-between'>
       <div>
         <img src={product?.images[0]} className='w-full h-[180px]' alt="" />
         <div style={{
@@ -86,11 +86,13 @@ const ProductCard = ({ product }) => {
           }
         </div>
       </div>
-      <button onClick={() => navigate(`/product-details/${product?._id}`)}
-        disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
-        className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'>
-        {product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon'}
-      </button>
+      <div className='p-2 md:p-5'>
+        <button onClick={() => navigate(`/product-details/${product?._id}`)}
+          disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
+          className='bg-yellow md:px-14  text-white disabled:bg-gray rounded-md py-2 w-full'>
+          {product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon'}
+        </button>
+      </div>
       {
         product?.isBookmark
           ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} />
