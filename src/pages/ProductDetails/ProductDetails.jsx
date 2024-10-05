@@ -133,6 +133,7 @@ const ProductDetails = () => {
         return () => clearInterval(interval);
     }, [time]);
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
+    // console.log('auction',auction)
     return (
         <div>
             <BackButton pageName={"Product Details"} />
