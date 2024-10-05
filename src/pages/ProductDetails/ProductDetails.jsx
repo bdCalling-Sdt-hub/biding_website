@@ -190,7 +190,7 @@ const ProductDetails = () => {
                                     <div className='text-center'>
                                         <p className='font-semibold text-4xl mt-3' style={{ color: '#338BFF' }}>Congratulations</p>
                                         <p>You Are the Winning Bidder!</p>
-                                        <div onClick={() => navigate(`payment?id=${id}`)} className='lg:px-10 mt-5'>
+                                        <div onClick={() => navigate(`/payment?id=${id}`)} className='lg:px-10 mt-5'>
                                             <Button className='py-2'>Proceed to Pay</Button>
                                         </div>
                                     </div>
