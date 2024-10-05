@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import BackButton from '../../components/ui/BackButton'
-import { Form, Input, Modal, Tabs } from 'antd'
+import { Form, Input, Modal, Switch, Tabs } from 'antd'
 import PaymentPayPal from '../../components/ui/PaymentPayPal'
 import Button from '../../components/ui/Button'
 import PaymentComponent from '../../components/Stripe/PaymentComponent'
@@ -18,6 +18,7 @@ const Payment = () => {
     const { data: singleAuctions } = useGetSingleAuctionQuery(id)
     const { data: addressDetails } = useGetMyAddressQuery()
     const [address, setAddress] = useState({})
+    const [payWithFinance, setPayWithFinance] = useState(false)
     const [data, setData] = useState({
         "shippingAddress": null,
         "item": null,
@@ -73,9 +74,12 @@ const Payment = () => {
             "itemType": 'PRODUCT',
             "product": singleAuctions?.data?._id,
             "winingBid": singleAuctions?.data?.currentPrice,
-            "totalAmount": singleAuctions?.data?.currentPrice
+            "totalAmount": payWithFinance ? Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2) : singleAuctions?.data?.currentPrice,
+            "orderType": payWithFinance ? "FINANCE" : "NORMAL",
+            "paymentType": payWithFinance ? "INSTALLMENT" : "FULL_PAYMENT"
         })
-    }, [address, singleAuctions?.data])
+    }, [address, singleAuctions?.data, payWithFinance])
+
     return (
         <div className='px-5 lg:px-0'>
             <BackButton pageName={'Payment'} />
@@ -93,9 +97,31 @@ const Payment = () => {
                             <p>Shipping Fee:</p>
                             <p className='font-semibold'>Free</p>
                         </div>
+                        {
+                            singleAuctions?.data?.financeAvailable && <div className=' mb-4'>
+                                <div className='flex justify-between items-center'>
+                                    <p>Monthly Financing</p>
+                                    <Switch defaultChecked={false} onChange={(value) => setPayWithFinance(value)} />
+                                </div>
+                                {
+                                    payWithFinance && <div className='w-full my-2'>
+                                        <div className='flex justify-between items-center pb-3'>
+                                            <p>Total Month</p>
+                                            <p className='font-semibold'>{singleAuctions?.data?.totalMonthForFinance}</p>
+                                        </div>
+                                        <div className='flex justify-between items-center pb-3'>
+                                            <p>Per Month</p>
+                                            <p className='font-semibold'>${Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        }
+
                         <div className='flex justify-between items-center '>
-                            <p>Total Fee</p>
-                            <p className='font-semibold'>$560.00</p>
+                            <p>Pay</p>
+                            <p className='font-semibold'>${data?.totalAmount}</p>
                         </div>
                     </div>
                 </div>

@@ -133,6 +133,7 @@ const ProductDetails = () => {
         return () => clearInterval(interval);
     }, [time]);
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
+    // console.log('auction',auction)
     return (
         <div>
             <BackButton pageName={"Product Details"} />
@@ -190,7 +191,7 @@ const ProductDetails = () => {
                                     <div className='text-center'>
                                         <p className='font-semibold text-4xl mt-3' style={{ color: '#338BFF' }}>Congratulations</p>
                                         <p>You Are the Winning Bidder!</p>
-                                        <div onClick={() => navigate(`payment?id=${id}`)} className='lg:px-10 mt-5'>
+                                        <div onClick={() => navigate(`/payment?id=${id}`)} className='lg:px-10 mt-5'>
                                             <Button className='py-2'>Proceed to Pay</Button>
                                         </div>
                                     </div>
