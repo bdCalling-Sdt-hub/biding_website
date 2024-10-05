@@ -55,6 +55,7 @@ import Auctions from "../pages/Auctions/Auctions.jsx";
 import PaypalSuccess from "../pages/Paypal/PaypalSuccess.jsx";
 import BIdPayment from "../pages/BuyBids/BIdPayment.jsx";
 import FinancialPayment from "../pages/MyAccountPages/FinancialPayment.jsx";
+import DuePayment from "../pages/DuePayment/DuePayment.jsx";
 
 const router = createBrowserRouter([
     {
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
             {
                 path: '/payment',
                 element: <Payment />
+            },
+            {
+                path: '/due-payment',
+                element: <DuePayment />
             },
             {
                 path: '/buy-bids',

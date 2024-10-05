@@ -48,7 +48,7 @@ const paymentApis = baseApi.injectEndpoints({
         getSingleOrder :  builder.query({
             query : (id)=>{
                 return {
-                    url : `/order/get-single-order/${id}`,
+                    url : `/order/get-single-order/${id}`,//order/get-single-order
                     method : 'GET'
                 }
             }
