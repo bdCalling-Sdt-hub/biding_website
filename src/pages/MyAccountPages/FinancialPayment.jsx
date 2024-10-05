@@ -25,13 +25,16 @@ const FinancialPayment = () => {
 
                   {/* <p>Order On : </p> */}
                   <p>Total Price : <span className='font-semibold'>$ {item?.totalAmount}</span></p>
+                  
                 </div>
               </div>
               <div className='space-y-2 text-end '>
                 <p>Winning Bids: <span className='font-medium'>${item?.winingBid
                 }</span></p>
+                <p>Number of month : <span className='font-semibold'> {item?.totalMonth}</span></p>
+                <p>Paid Installment :<span className='font-semibold'> {item?.paidInstallment}</span> </p>
                 <p className='pb-5'>Paid by Credit Card</p>
-                <Link to={`/due-payment?id=${item?._id}`}><Button >Pay</Button></Link>
+                <Link  className='bg-yellow text-white px-5 py-2 hover:bg-yellow rounded-md' to={`/due-payment?id=${item?._id}`}>Pay Now</Link>
               </div>
             </div>
 
