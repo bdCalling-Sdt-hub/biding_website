@@ -66,7 +66,7 @@ const FeaturedAuction = () => {
                 <HomeContentHeading title={'Auction'} />
                 <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More <IoIosArrowForward /></Link>
             </div>
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
                    isLoading ? <div className='flex items-center justify-center w-full  col-span-2 md:col-span-4'><Spin  size='large' /></div> :  auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
                 }

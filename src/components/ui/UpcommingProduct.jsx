@@ -79,7 +79,7 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
                 <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
                 <p className='text-[#585858] font-semibold text-[ 24px]'>{formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</p>
-                <button disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'> {formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button>
+                <div className='px-2 md:px-5'><button disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'> {formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button></div>
             </div>
             {
                 product?.isBookmark || (type && type === 'bookmark') ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
