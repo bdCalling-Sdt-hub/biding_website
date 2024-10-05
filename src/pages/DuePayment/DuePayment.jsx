@@ -8,17 +8,18 @@ import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis'
 import { useGetMyAddressQuery, useUpdateAddressMutation } from '../../redux/api/addressApis'
 // import { useConfirmPaymentMutation } from '../../redux/api/paymentApis'
 import { toast } from 'sonner'
-import { useConfirmPaymentMutation, usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
+import { useConfirmPaymentMutation, useGetSingleOrderQuery, usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
 import { useNavigate } from 'react-router-dom'
-const Payment = () => {
+const DuePayment = () => {
     const [id, setId] = useState(new URLSearchParams(window.location.search).get('id') || null)
     const [form] = Form.useForm()
     const [update] = useUpdateAddressMutation()
     const [modalOpen, setModalOpen] = useState(false);
-    const { data: singleAuctions } = useGetSingleAuctionQuery(id)
+    const { data: singleAuctions } = useGetSingleOrderQuery(id)
+    console.log(singleAuctions)
     const { data: addressDetails } = useGetMyAddressQuery()
     const [address, setAddress] = useState({})
-    const [payWithFinance, setPayWithFinance] = useState(false)
+    const [payWithFinance, setPayWithFinance] = useState(true)
     const [data, setData] = useState({
         "shippingAddress": null,
         "item": null,
@@ -36,7 +37,7 @@ const Payment = () => {
         }
         confirmPayment(formateData).unwrap().then((res) => {
             toast.success(res.data?.message || 'order Confirmed')
-            navigate(`/my-profile/${payWithFinance ? 'financial-payment' : 'my-order'}`)//
+            navigate('/my-profile/financial-payment')
         }).catch((err) => {
             toast.error(err?.message || 'something went wrong')
         })
@@ -63,18 +64,18 @@ const Payment = () => {
 
     useEffect(() => {
         if (addressDetails?.data?.length >= 1) {
-            setAddress(addressDetails?.data[0])
-            form.setFieldsValue({ ...addressDetails?.data[0] })
+            setAddress(addressDetails?.data?.[0])
+            form.setFieldsValue({ ...addressDetails?.data?.[0] })
         }
     }, [addressDetails?.data])
     useEffect(() => {
         setData({
-            "shippingAddress": address?._id,
-            "item": singleAuctions?.data?.name,
+            "orderId": id,
+            "item": singleAuctions?.data?.item?.name,
             "itemType": 'PRODUCT',
-            "product": singleAuctions?.data?._id,
-            "winingBid": singleAuctions?.data?.currentPrice,
-            "totalAmount": payWithFinance ? Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2) : singleAuctions?.data?.currentPrice,
+            "product": singleAuctions?.data?.item?._id,
+            "winingBid": singleAuctions?.data?.item?.currentPrice,
+            "totalAmount": singleAuctions?.data?.monthlyAmount,
             "orderType": payWithFinance ? "FINANCE" : "NORMAL",
             "paymentType": payWithFinance ? "INSTALLMENT" : "FULL_PAYMENT"
         })
@@ -87,31 +88,35 @@ const Payment = () => {
                 <div className='bg-white p-8 rounded-md my-5'>
                     <p className='font-medium text-[24px]'>Winning Product</p>
                     <p className='font-medium text-[20px] mt-2'>{singleAuctions?.data?.name}</p>
-                    <img src={singleAuctions?.data?.images[0]} className='w-full py-5' alt="" />
+                    <img src={singleAuctions?.data?.item?.images?.[0]} className='w-full py-5' alt="" />
                     <div>
                         <div className='flex justify-between items-center pb-3'>
-                            <p>Winning Price</p>
-                            <p className='font-semibold'>${singleAuctions?.data?.currentPrice}</p>
+                            <p>Total Amount</p>
+                            <p className='font-semibold'>${singleAuctions?.data?.item?.currentPrice}</p>
                         </div>
                         <div className='flex justify-between items-center pb-3'>
                             <p>Shipping Fee:</p>
                             <p className='font-semibold'>Free</p>
                         </div>
                         {
-                            singleAuctions?.data?.financeAvailable && <div className=' mb-4'>
-                                <div className='flex justify-between items-center'>
+                            singleAuctions?.data?.item?.financeAvailable && <div className=' mb-4'>
+                                {/* <div className='flex justify-between items-center'>
                                     <p>Monthly Financing</p>
                                     <Switch defaultChecked={false} onChange={(value) => setPayWithFinance(value)} />
-                                </div>
+                                </div> */}
                                 {
                                     payWithFinance && <div className='w-full my-2'>
                                         <div className='flex justify-between items-center pb-3'>
                                             <p>Total Month</p>
-                                            <p className='font-semibold'>{singleAuctions?.data?.totalMonthForFinance}</p>
+                                            <p className='font-semibold'>{singleAuctions?.data?.item?.totalMonthForFinance}</p>
+                                        </div>
+                                        <div className='flex justify-between items-center pb-3'>
+                                            <p>Due Amount</p>
+                                            <p className='font-semibold'>${singleAuctions?.data?.dueAmount}</p>
                                         </div>
                                         <div className='flex justify-between items-center pb-3'>
                                             <p>Per Month</p>
-                                            <p className='font-semibold'>${Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2)}</p>
+                                            <p className='font-semibold'>${singleAuctions?.data?.monthlyAmount}</p>
                                         </div>
                                     </div>
                                 }
@@ -138,9 +143,9 @@ const Payment = () => {
                                 <p>Phone Number: <span className='font-medium'>{address?.phone_number}</span></p>
                             </div>
                         </div>
-                        <div className='pt-5'>
+                        {/* <div className='pt-5'>
                             <button onClick={() => setModalOpen(true)} className='text-yellow border  rounded-lg w-[70%] py-1'>Change Shipping Address</button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='bg-white p-8 rounded-md'>
                         <Tabs defaultActiveKey="1" items={items} />
@@ -349,4 +354,4 @@ const Payment = () => {
     )
 }
 
-export default Payment
+export default DuePayment

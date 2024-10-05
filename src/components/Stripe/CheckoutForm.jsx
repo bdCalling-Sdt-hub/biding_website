@@ -10,6 +10,7 @@ import { useGetProfileQuery } from '../../redux/api/authApis';
 import { useCreatePaymentIntentMutation } from '../../redux/api/paymentApis';
 import { ErrorResult, logEvent, Result } from '../../Utils/Utils';
 import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
 const ELEMENT_OPTIONS = {
     style: {
         base: {
@@ -28,7 +29,6 @@ const ELEMENT_OPTIONS = {
 const CheckoutForm = ({ onPaymentSuccess, data }) => {
     const { data: user } = useGetProfileQuery();
     const [loading, setLoading] = useState(false);
-
     const [errorMessage, setErrorMessage] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [createIntent, { isLoading }] = useCreatePaymentIntentMutation();

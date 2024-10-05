@@ -48,14 +48,23 @@ const paymentApis = baseApi.injectEndpoints({
         getSingleOrder :  builder.query({
             query : (id)=>{
                 return {
-                    url : `/order/get-single-order/${id}`,
+                    url : `/order/get-single-order/${id}`,//order/get-single-order
                     method : 'GET'
+                }
+            }
+        }),
+        getFinancialPayment : builder.query({
+            query : (orderType) =>{
+                return {
+                    url : `/order/my-orders?orderType=FINANCE`,
+                    method : 'GET',
                 }
             }
         })
     })
 })
 export const {
+    useGetFinancialPaymentQuery,
     useGetSingleOrderQuery,
     // create payment mutation 
     useCreatePaymentIntentMutation,

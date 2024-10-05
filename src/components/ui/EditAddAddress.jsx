@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Button from './Button'
 import { useGetMyAddressQuery, useUpdateAddressMutation } from '../../redux/api/addressApis'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const EditAddAddress = () => {
     const { data } = useGetMyAddressQuery()
@@ -11,9 +12,12 @@ const EditAddAddress = () => {
     const [addressId, setAddressId] = useState(null)
     const [update] = useUpdateAddressMutation()
     const onFinish = (values) => {
-        update({ id: addressId, data: values }).unwrap().then((res) => {
+        update({ id: addressId, data: values }).unwrap()
+        .then((res) => {
             navigate(-1)
         })
+        .catch(error => toast.error(error?.data?.message))
+        
     }
     useEffect(() => {
         if (data?.data?.length >= 1) {
