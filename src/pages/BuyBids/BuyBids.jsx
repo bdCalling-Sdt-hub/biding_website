@@ -5,9 +5,12 @@ import PaymentPayPal from '../../components/ui/PaymentPayPal';
 import PaymentComponent from '../../components/Stripe/PaymentComponent';
 import { toast } from 'sonner';
 import { useConfirmPaymentMutation } from '../../redux/api/paymentApis';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useGetProfileQuery } from '../../redux/api/authApis';
 
 const BuyBids = () => {
+    const { data: profile } = useGetProfileQuery();
+    const location = useLocation()
     const navigate = useNavigate()
     const inputRef = useRef()
     const [amount, setAmount] = useState()
@@ -33,6 +36,9 @@ const BuyBids = () => {
             total: 300
         },
     ]
+    if (!profile?.data?.email) {
+        return <Navigate to={'/login'} state={location?.pathname} ></Navigate>
+    }
     return (
         <div className='px-5 lg:px-0'>
             <BackButton pageName={'Payment'} />

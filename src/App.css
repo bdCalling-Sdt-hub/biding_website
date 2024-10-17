@@ -285,14 +285,12 @@ body {
 }
 
 .swiper-button-prev, .swiper-button-next {
-  
   color: #F3A211 !important;
   background-color:  #FEF6E7;
   border-radius: 100%;
 }
 .swiper-button-prev:after, .swiper-button-next:after {
   font-size: 20px !important;
- 
 }
 .swiper-button-prev, .swiper-button-next {
   width: 40px !important;
