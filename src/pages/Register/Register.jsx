@@ -106,7 +106,7 @@ const Register = () => {
                             <Input.Password placeholder='**********' />
                         </Form.Item>
                         <div className='flex justify-between items-center'>
-                            <Checkbox checked >I agre with the temrms and condition</Checkbox>
+                            <Checkbox >I agre with the temrms and condition</Checkbox>
                         </div>
                         <Form.Item
 

@@ -8,12 +8,14 @@ import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis'
 import { useGetMyAddressQuery, useUpdateAddressMutation } from '../../redux/api/addressApis'
 // import { useConfirmPaymentMutation } from '../../redux/api/paymentApis'
 import { toast } from 'sonner'
-import { useConfirmPaymentMutation, usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
+import { useConfirmPaymentMutation, useFinancePaymentMutation, usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
 import { useNavigate } from 'react-router-dom'
+import { useGetProfileQuery } from '../../redux/api/authApis'
 const Payment = () => {
     const [id, setId] = useState(new URLSearchParams(window.location.search).get('id') || null)
     const [form] = Form.useForm()
     const [update] = useUpdateAddressMutation()
+    const [financePayment, { isLoading }] = useFinancePaymentMutation()
     const [modalOpen, setModalOpen] = useState(false);
     const { data: singleAuctions } = useGetSingleAuctionQuery(id)
     const { data: addressDetails } = useGetMyAddressQuery()
@@ -79,7 +81,19 @@ const Payment = () => {
             "paymentType": payWithFinance ? "INSTALLMENT" : "FULL_PAYMENT"
         })
     }, [address, singleAuctions?.data, payWithFinance])
+    const onFiancePayment = (value) => {
+        value.shippingAddress = address?._id
+        value.product = singleAuctions?.data?._id
+        value.item = singleAuctions?.data?.name
+        financePayment(value).unwrap().then(res => {
+            console.log(res)
+            toast.success(res?.message)
+        }).catch(err => {
+            console.log(err)
+            toast.error(err?.data?.message)
+        })
 
+    }
     return (
         <div className='px-5 lg:px-0'>
             <BackButton pageName={'Payment'} />
@@ -143,7 +157,66 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className='bg-white p-8 rounded-md'>
-                        <Tabs defaultActiveKey="1" items={items} />
+                        {
+                            payWithFinance ? <Form className='mx-auto max-w-[500px]'
+                                onFinish={onFiancePayment}
+                                layout='vertical'
+                            >
+                                <p className='text-2xl text-center'>Pay with Financing</p>
+                                <Form.Item
+                                    name={`customerName`}
+                                    label='Name'
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Name is Required'
+                                        }
+                                    ]}
+                                >
+                                    <Input placeholder='name' />
+                                </Form.Item>
+                                <Form.Item
+                                    name={`customerEmail`}
+                                    label='Email'
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Email is Required'
+                                        }
+                                    ]}
+                                >
+                                    <Input type='email' placeholder='email' />
+                                </Form.Item>
+                                <Form.Item
+                                    name={`customerPhoneNum`}
+                                    label='Phone Number'
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Phone Number is Required'
+                                        }
+                                    ]}
+                                >
+                                    <Input placeholder='Phone Number' />
+                                </Form.Item>
+                                <Form.Item
+                                    name={`customerAddress`}
+                                    label='Address'
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Address is Required'
+                                        }
+                                    ]}
+                                >
+                                    <Input placeholder='Address' />
+                                </Form.Item>
+                                <button className='bg-yellow text-white w-full py-2 rounded-md'>
+                                    Apply For Financing
+                                </button>
+                            </Form> : <Tabs defaultActiveKey="1" items={items} />
+                        }
+
                     </div>
                 </div>
             </div>
