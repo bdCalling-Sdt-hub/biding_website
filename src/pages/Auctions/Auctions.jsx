@@ -5,16 +5,18 @@ import { useGetAuctionsQuery } from '../../redux/api/auctionsApis'
 import ProductCard from '../../components/ui/ProductCard'
 import { useGetWinnerQuery } from '../../redux/api/winnerApi'
 import { Spin } from 'antd'
+import { useParams } from 'react-router-dom'
 
 const Auctions = () => {
     const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
+    const financeAvailable = new URLSearchParams(window.location.search).get('financeAvailable') || false
     const [searchTerm, setSearchTerm] = useState(new URLSearchParams(window.location.search).get('searchTerm') || null)
     const { socket } = useSocketContext()
     const [auctionsData, setAuctionData] = useState({
         data: [],
         updatedCount: 0
     })
-    const { data , isLoading } = useGetAuctionsQuery({ category, searchTerm })//{ status: 'ACTIVE' }
+    const { data, isLoading } = useGetAuctionsQuery({ category, searchTerm, financeAvailable: financeAvailable === 'true' ? true : false })//{ status: 'ACTIVE' }
     const [socketData, setSocketData] = useState([])
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const Auctions = () => {
             </div>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
-                   isLoading ? <div className=' flex items-center justify-center col-span-2 md:col-span-4'><Spin size='large' /></div>: auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
+                    isLoading ? <div className=' flex items-center justify-center col-span-2 md:col-span-4'><Spin size='large' /></div> : auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
                 }
             </div>
         </div>

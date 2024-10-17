@@ -19,13 +19,13 @@ const FinancialPayment = () => {
             </div>
             <div className='flex flex-wrap items-center justify-between mt-5'>
               <div className='flex  flex-wrap items-center gap-5 mt-5'>
-                <img src={item?.item?.images?.[0]} alt="" />
+                <img className='h-24 object-contain' src={item?.item?.images?.[0]} alt="" />
                 <div>
                   <h1 className='text-[22px] font-medium'>{item?.item?.name}</h1>
 
                   {/* <p>Order On : </p> */}
                   <p>Total Price : <span className='font-semibold'>$ {item?.totalAmount}</span></p>
-                  
+
                 </div>
               </div>
               <div className='space-y-2 text-end '>
@@ -34,7 +34,7 @@ const FinancialPayment = () => {
                 <p>Number of month : <span className='font-semibold'> {item?.totalMonth}</span></p>
                 <p>Paid Installment :<span className='font-semibold'> {item?.paidInstallment}</span> </p>
                 <p className='pb-5'>Paid by Credit Card</p>
-                <Link  className='bg-yellow text-white px-5 py-2 hover:bg-yellow rounded-md' to={`/due-payment?id=${item?._id}`}>Pay Now</Link>
+                <Link className='bg-yellow text-white px-5 py-2 hover:bg-yellow rounded-md' to={`/due-payment?id=${item?._id}`}>Pay Now</Link>
               </div>
             </div>
 

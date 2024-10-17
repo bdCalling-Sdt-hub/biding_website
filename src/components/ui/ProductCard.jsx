@@ -71,7 +71,6 @@ const ProductCard = ({ product }) => {
         toast.error(error?.data?.message);
       });
   };
-
   return (
     <div className='rounded-lg bg-white shadow-sm my-4  relative flex flex-col justify-between'>
       <div>
@@ -90,7 +89,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className='p-2 md:p-5'>
-        <button onClick={() => navigate(`/product-details/${product?._id}`)}
+        <button onClick={() => navigate(`/product-details/${product?._id}?time=${Math.floor(time)}`)}
           disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
           className='bg-yellow md:px-14  text-white disabled:bg-gray rounded-md py-2 w-full'>
           {product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon'}

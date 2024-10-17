@@ -20,7 +20,7 @@ const MyOrder = () => {
             </div>
             <div className='flex flex-wrap items-center justify-between mt-5'>
               <div className='flex  flex-wrap items-center gap-5 mt-5'>
-                <img src={item?.item?.images?.[0]} alt="" />
+                <img className='h-24 object-contain' src={item?.item?.images?.[0]} alt="" />
                 <div>
                   <h1 className='text-[22px] font-medium'>{item?.item?.name}</h1>
                   <p className='flex items-center gap-1 '><CiLocationOn className='text-yellow' /> Shipping Address : {item?.shippingAddress
@@ -31,7 +31,7 @@ const MyOrder = () => {
                 <p>Winning Bids: <span className='font-medium'>${item?.winingBid
                 }</span></p>
                 <p className='pb-5'>Paid by Credit Card</p>
-                <Link  to={`/my-profile/track-order/${item?._id}`}><Button >Track Order</Button></Link>
+                <Link to={`/my-profile/track-order/${item?._id}`}><Button >Track Order</Button></Link>
               </div>
             </div>
 
