@@ -16,7 +16,6 @@ const FeaturedAuction = () => {
 
     const { data , isLoading} = useGetAuctionsQuery({ category: null })
     const [socketData, setSocketData] = useState([])
-    console.log(isLoading);
     useEffect(() => {
         if (!data?.data?.result) {
             return
@@ -35,7 +34,6 @@ const FeaturedAuction = () => {
             return
         }
         socket.on("updated-auction", (updatedBidHistory) => {
-            console.log('updatedBidHistory', updatedBidHistory)
             Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) : setSocketData([...socketData, updatedBidHistory?.updatedAuction])
         })
         socket.on('socket-error', (error) => {
@@ -63,8 +61,8 @@ const FeaturedAuction = () => {
     return (
         <div className='py-10'>
             <div className='flex justify-between items-center'>
-                <HomeContentHeading title={'Auction'} />
-                <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More <IoIosArrowForward /></Link>
+                <HomeContentHeading title={'Featured Auction'} />
+                <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More<IoIosArrowForward /></Link>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
