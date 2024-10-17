@@ -50,7 +50,6 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
     }, [data]);
 
     const handleSubmit = async (event) => {
-        console.log('object')
         event.preventDefault();
         setLoading(true);
 

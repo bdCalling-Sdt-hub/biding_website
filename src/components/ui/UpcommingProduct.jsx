@@ -4,7 +4,9 @@ import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/a
 import { Spin } from 'antd';
 import { toast } from 'sonner';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
+import { useGetProfileQuery } from '../../redux/api/authApis';
 const UpcommingProduct = ({ product, type, BookmarkId }) => {
+    const { data: profile } = useGetProfileQuery();
     // states 
     const combinedDateTime = new Date(`${product?.startingDate?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
@@ -14,6 +16,9 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
     const { data: upcomingData, refetch } = useGetWinnerQuery({ status: "UPCOMING", page: 1 })
     // handler
     const handleAddToBookmark = (id) => {
+        if (!profile?.data?.email) {
+            return toast.error('Please Login First')
+        }
         if (!localStorage.getItem('token')) {
             return toast.error('Please login first')
         }
@@ -27,6 +32,9 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
             })
     }
     const handleRemoveBookmark = (id) => {
+        if (!profile?.data?.email) {
+            return toast.error('Please Login First')
+        }
         if (!id) {
             return
         }
