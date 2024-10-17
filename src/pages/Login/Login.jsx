@@ -54,7 +54,7 @@ const Login = () => {
                             <Input.Password placeholder='**********' />
                         </Form.Item>
                         <div className='flex justify-between items-center'>
-                            <Checkbox checked >Remember me</Checkbox>
+                            <Checkbox >Remember me</Checkbox>
                             <Link to='/forget-password' className='text-[#F3A211] hover:text-[#F3A211] font-medium'>Forget Password?</Link>
                         </div>
                         <Form.Item

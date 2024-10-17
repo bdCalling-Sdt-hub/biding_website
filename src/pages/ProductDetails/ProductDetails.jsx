@@ -56,7 +56,7 @@ const ProductDetails = () => {
 
     // Get profile data
     const { data: profile } = useGetProfileQuery();
-
+    console.log(getSingleAuction?.data)
     useEffect(() => {
         setAuction(getSingleAuction?.data);
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);

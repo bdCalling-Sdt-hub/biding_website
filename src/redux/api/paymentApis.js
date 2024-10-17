@@ -21,6 +21,14 @@ const paymentApis = baseApi.injectEndpoints({
                 body: data
             })
         }),
+        // create finance payment 
+        financePayment: builder.mutation({
+            query: (data) => ({
+                url: '/order/create-finance-order',
+                method: 'POST',
+                body: data
+            })
+        }),
         // paypal confirm payment 
         paypalConfirmPayment: builder.mutation({
             query: (data) => ({
@@ -37,27 +45,27 @@ const paymentApis = baseApi.injectEndpoints({
                 body: data
             })
         }),
-        myOrder :builder.query({
-            query : ()=>{
+        myOrder: builder.query({
+            query: () => {
                 return {
-                    url :'/order/my-orders',
-                    method : 'GET' 
+                    url: '/order/my-orders',
+                    method: 'GET'
                 }
             }
         }),
-        getSingleOrder :  builder.query({
-            query : (id)=>{
+        getSingleOrder: builder.query({
+            query: (id) => {
                 return {
-                    url : `/order/get-single-order/${id}`,//order/get-single-order
-                    method : 'GET'
+                    url: `/order/get-single-order/${id}`,//order/get-single-order
+                    method: 'GET'
                 }
             }
         }),
-        getFinancialPayment : builder.query({
-            query : (orderType) =>{
+        getFinancialPayment: builder.query({
+            query: (orderType) => {
                 return {
-                    url : `/order/my-orders?orderType=FINANCE`,
-                    method : 'GET',
+                    url: `/order/my-orders?orderType=FINANCE`,
+                    method: 'GET',
                 }
             }
         })
@@ -74,5 +82,6 @@ export const {
     usePaypalConfirmPaymentMutation,
     // paypal create payment  
     usePaypalCreatePaymentMutation,
-    useMyOrderQuery
+    useMyOrderQuery,
+    useFinancePaymentMutation
 } = paymentApis

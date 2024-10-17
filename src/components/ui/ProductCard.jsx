@@ -2,8 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
+import { useGetProfileQuery } from '../../redux/api/authApis';
+import { toast } from 'sonner';
 
 const ProductCard = ({ product }) => {
+  const { data: profile } = useGetProfileQuery();
   const navigate = useNavigate();
   const combinedDateTime = useMemo(() => new Date(`${product?.activateTime}`), [product?.activateTime]);
   const [time, setTime] = useState(product?.time);

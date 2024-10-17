@@ -90,6 +90,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
         }
         setLoading(false);
     };
+    // console.log(clientSecret)
     return (
         <form onSubmit={handleSubmit} className="w-full">
             <div className="md:grid md:grid-cols-2  gap-2 flex flex-col items-start justify-start md:items-center mb-2">
@@ -174,7 +175,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
             <button
                 className="w-full block text-white bg-yellow disabled:bg-gray mt-6 py-3 disabled:bg-gray-400 disabled:pointer-events-none rounded disabled:cursor-not-allowed"
                 type="submit"
-                disabled={!stripe || loading || isLoading || !data?.totalAmount}
+                disabled={!stripe || loading || isLoading || !data?.totalAmount || !clientSecret}
             >
                 {isLoading ? 'creating intent ...' : loading ? 'please wait....' : `Confirm Payment $ ${data?.totalAmount}`}
             </button>
