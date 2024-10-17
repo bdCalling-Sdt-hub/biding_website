@@ -52,7 +52,7 @@ const NavBar = () => {
                   </div>
 
                 </div> : <div className='flex justify-center items-center mt-2 gap-5'>
-                  <Link to={`/register`} className='border-yellow border text-yellow px-4 py-1 rounded-md'>
+                  <Link to={`/register`} className='border-yellow hover:text-yellow border text-yellow px-4 py-1 rounded-md'>
                     Get Started
                   </Link>
                   <Link to={`/login`} className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>

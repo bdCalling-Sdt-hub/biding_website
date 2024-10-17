@@ -74,7 +74,7 @@ const AccountLayout = () => {
                                     My Bids <MdChevronRight size={22} />
                                 </Link>
                                 
-                                <Link to='/my-profile/financial-payment' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/my-bids' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
+                                <Link to='/my-profile/financial-payment' className={`w-full  px-5 rounded-sm py-1 flex items-center justify-between ${pathname == '/my-profile/financial-payment' ? 'bg-yellow' : "bg-[#FEF6e7] text-[#2E2E2E]"}`}>
                                     Financial Payment <MdChevronRight size={22} />
                                 </Link>
                                 <button onClick={() => {
