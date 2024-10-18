@@ -45,7 +45,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
                 // console.log('res?.data', res?.data);
                 setClientSecret(res?.data?.clientSecret);
             }).catch((err) => {
-                toast.error(err?.message || 'something went wrong')
+                toast.error(err?.data?.message || 'something went wrong')
             });
     }, [data]);
 
