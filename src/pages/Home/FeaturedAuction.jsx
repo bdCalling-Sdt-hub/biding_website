@@ -14,7 +14,7 @@ const FeaturedAuction = () => {
         updatedCount: 0
     })
 
-    const { data , isLoading} = useGetAuctionsQuery({ category: null })
+    const { data, isLoading } = useGetAuctionsQuery({ category: null })
     const [socketData, setSocketData] = useState([])
     useEffect(() => {
         if (!data?.data?.result) {
@@ -66,7 +66,7 @@ const FeaturedAuction = () => {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
-                   isLoading ? <div className='flex items-center justify-center w-full  col-span-2 md:col-span-4'><Spin  size='large' /></div> :  auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
+                    isLoading ? <div className='flex items-center justify-center w-full  col-span-2 md:col-span-4'><Spin size='large' /></div> : auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
                 }
             </div>
         </div>

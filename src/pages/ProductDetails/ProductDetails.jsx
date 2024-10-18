@@ -43,11 +43,11 @@ const columns = [
 
 const ProductDetails = () => {
     const { socket } = useSocketContext();
-    const { id } = useParams();
+    const { id, } = useParams();
     const navigate = useNavigate();
     const [auction, setAuction] = useState({});
     const [numberOfBids, setNumberOfBids] = useState(0);
-    const [time, setTime] = useState(9);
+    const [time, setTime] = useState(new URLSearchParams(window.location.search).get('time') || 9);
     const [bidBuddyUser, setBidBuddyUser] = useState({});
 
     // Get auction and similar product data
@@ -56,7 +56,6 @@ const ProductDetails = () => {
 
     // Get profile data
     const { data: profile } = useGetProfileQuery();
-    console.log(getSingleAuction?.data)
     useEffect(() => {
         setAuction(getSingleAuction?.data);
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);

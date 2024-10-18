@@ -9,7 +9,7 @@ import { useGetMyAddressQuery, useUpdateAddressMutation } from '../../redux/api/
 // import { useConfirmPaymentMutation } from '../../redux/api/paymentApis'
 import { toast } from 'sonner'
 import { useConfirmPaymentMutation, useFinancePaymentMutation, usePaypalCreatePaymentMutation } from '../../redux/api/paymentApis'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useGetProfileQuery } from '../../redux/api/authApis'
 const Payment = () => {
     const [id, setId] = useState(new URLSearchParams(window.location.search).get('id') || null)
@@ -86,7 +86,7 @@ const Payment = () => {
         value.product = singleAuctions?.data?._id
         value.item = singleAuctions?.data?.name
         financePayment(value).unwrap().then(res => {
-            console.log(res)
+            navigate(`/my-profile/financial-payment`)
             toast.success(res?.message)
         }).catch(err => {
             console.log(err)
