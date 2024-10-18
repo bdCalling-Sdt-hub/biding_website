@@ -111,7 +111,7 @@ const ProductDetails = () => {
         });
 
         socket.on('socket-error', (error) => {
-            toast.error(error?.errorMessage || 'Something went wrong');
+            //toast.error(error?.errorMessage || 'Something went wrong');
         });
 
         return () => {
@@ -240,7 +240,7 @@ const ProductDetails = () => {
                                         <Button
                                             onClick={() => {
                                                 if (!numberOfBids) {
-                                                    return toast.error('Please input number of bids');
+                                                    return //toast.error('Please input number of bids');
                                                 }
                                                 if (bidBuddyUser?.isActive) {
                                                     socket.emit('add-bids', { auctionId: id, userId: profile?.data?._id, bids: Number(numberOfBids) });

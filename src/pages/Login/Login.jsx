@@ -13,15 +13,15 @@ const Login = () => {
         loginUser(values).unwrap()
             .then((payload) => {
                 if (payload?.data?.accessToken) {
-                    toast.success(payload?.message)
+                    //toast.success(payload?.message)
                     localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
                 } else {
-                    toast.error(payload?.message || 'something went wrong')
+                    //toast.error(payload?.message || 'something went wrong')
                     localStorage.removeItem('token')
                 }
             })
             .catch((error) => {
-                toast.error(error?.data?.message || 'something went wrong')
+                //toast.error(error?.data?.message || 'something went wrong')
             })
     };
     return (

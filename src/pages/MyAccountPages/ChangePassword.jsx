@@ -9,10 +9,10 @@ const ChangePassword = () => {
   const [Change] = useChangePasswordMutation()
   const onFinish = (values) => {
     Change(values).unwrap().then((payload) => {
-      toast.success(payload?.message || "Password changed successfully")
+      //toast.success(payload?.message || "Password changed successfully")
     })
       .catch((error) => {
-        toast.error(error?.data?.message || "Something went wrong")
+        //toast.error(error?.data?.message || "Something went wrong")
       })
   }
   return (

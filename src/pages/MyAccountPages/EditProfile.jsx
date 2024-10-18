@@ -26,11 +26,11 @@ const EditProfile = () => {
         updateProfile(formData).unwrap()
             .then((payload) => {
                 (payload)
-                toast.success(payload?.message || "Profile updated successfully")
+                //toast.success(payload?.message || "Profile updated successfully")
             })
             .catch((error) => {
                 (error)
-                toast.error(error?.data?.message || "Something went wrong")
+                //toast.error(error?.data?.message || "Something went wrong")
             })
     }
     useEffect(() => {

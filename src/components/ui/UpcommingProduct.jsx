@@ -17,37 +17,37 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
     // handler
     const handleAddToBookmark = (id) => {
         if (!profile?.data?.email) {
-            return toast.error('Please Login First')
+            return //toast.error('Please Login First')
         }
         if (!localStorage.getItem('token')) {
-            return toast.error('Please login first')
+            return //toast.error('Please login first')
         }
         addToBookmark({ auctionId: id }).unwrap()
             .then((payload) => {
                 (payload)
-                toast.success(payload?.message)
+                //toast.success(payload?.message)
             }).catch((error) => {
                 (error)
-                toast.error(error?.data?.message)
+                //toast.error(error?.data?.message)
             })
     }
     const handleRemoveBookmark = (id) => {
         if (!profile?.data?.email) {
-            return toast.error('Please Login First')
+            return //toast.error('Please Login First')
         }
         if (!id) {
             return
         }
         if (!localStorage.getItem('token')) {
-            return toast.error('Please login first')
+            return //toast.error('Please login first')
         }
         remove(id).unwrap()
             .then((payload) => {
                 (payload)
-                toast.success(payload?.message)
+                //toast.success(payload?.message)
             }).catch((error) => {
                 (error)
-                toast.error(error?.data?.message)
+                //toast.error(error?.data?.message)
             })
     }
     // formate time 

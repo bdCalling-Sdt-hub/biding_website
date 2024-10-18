@@ -13,11 +13,13 @@ const EditAddAddress = () => {
     const [update] = useUpdateAddressMutation()
     const onFinish = (values) => {
         update({ id: addressId, data: values }).unwrap()
-        .then((res) => {
-            navigate(-1)
-        })
-        .catch(error => toast.error(error?.data?.message))
-        
+            .then((res) => {
+                navigate(-1)
+            })
+            .catch(error => {
+                //toast.error(error?.data?.message)
+            })
+
     }
     useEffect(() => {
         if (data?.data?.length >= 1) {

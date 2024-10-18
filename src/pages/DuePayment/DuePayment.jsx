@@ -36,10 +36,10 @@ const DuePayment = () => {
             paymentId: data?.paymentIntent?.id
         }
         confirmPayment(formateData).unwrap().then((res) => {
-            toast.success(res.data?.message || 'order Confirmed')
+            //toast.success(res.data?.message || 'order Confirmed')
             navigate('/my-profile/financial-payment')
         }).catch((err) => {
-            toast.error(err?.message || 'something went wrong')
+            //toast.error(err?.message || 'something went wrong')
         })
     }
     const items = [

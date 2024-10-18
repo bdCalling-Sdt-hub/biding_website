@@ -19,12 +19,12 @@ const Register = () => {
                     navigate('/verification-code')//, { state: { email: payload?.data?.email } }
                     localStorage.setItem('email', JSON.stringify(payload?.data?.email))
                 }
-                toast.success(payload?.message || 'Registered successfully')
+                //toast.success(payload?.message || 'Registered successfully')
 
             })
             .catch((error) => {
                 (error)
-                toast.error(error?.data?.message || 'something went wrong')
+                //toast.error(error?.data?.message || 'something went wrong')
             });
 
     };

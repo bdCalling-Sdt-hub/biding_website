@@ -27,7 +27,7 @@ const PaypalSuccess = () => {
             navigate('/')
         }).catch((err) => {
             console.log(err)
-            // toast.error(err?.message)
+            // //toast.error(err?.message)
         })
     }, [payerID, paymentId])
     return <div className='w-full h-screen flex justify-center items-center'>

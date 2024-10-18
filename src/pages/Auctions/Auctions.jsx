@@ -41,7 +41,7 @@ const Auctions = () => {
             Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) : setSocketData([...socketData, updatedBidHistory?.updatedAuction])
         })
         socket.on('socket-error', (error) => {
-            toast.error(error?.errorMessage || 'something went wrong')
+            //toast.error(error?.errorMessage || 'something went wrong')
         })
     }, [socket])
     useEffect(() => {

@@ -13,14 +13,14 @@ const PaymentPayPal = ({ data }) => {
             window.open(res?.data?.approvalUrl?.approvalUrl, '_blank');
         }).catch((err) => {
             console.log(err)
-            toast.error(err?.message || 'something went wrong')
+            //toast.error(err?.message || 'something went wrong')
         })
     }
     return (
         <div className='px-10 py-10'>
             <button onClick={() => {
                 if (!data?.totalAmount) {
-                    return toast.error('amount cant be empty')
+                    return //toast.error('amount cant be empty')
                 }
                 handlePaypalPayment()
             }} className='flex items-center border text-[#338BFF] border-[#C0DBFF] w-full rounded-md justify-center py-2 '>

@@ -13,7 +13,7 @@ const VerificationCode = () => {
     const navigate = useNavigate()
     const handleVerifyOtp = () => {
         if (!otp) {
-            toast.error("Please enter OTP")
+            //toast.error("Please enter OTP")
         }
         const email = JSON.parse(localStorage.getItem("email"))
         activeCode({ activation_code: otp, email: email }).unwrap().then((payload) => {
@@ -21,11 +21,11 @@ const VerificationCode = () => {
             if (payload?.success) {
                 localStorage.setItem("token", JSON.stringify(payload?.data?.accessToken))
                 localStorage.removeItem("email")
-                toast.success(payload?.message || "Verified successfully")
+                //toast.success(payload?.message || "Verified successfully")
                 navigate("/")
             }
         }).catch((error) => {
-            toast.error(error?.data?.message || "Something went wrong")
+            //toast.error(error?.data?.message || "Something went wrong")
             // (error)
         });
     }
@@ -60,11 +60,11 @@ const VerificationCode = () => {
                     const email = JSON.parse(localStorage.getItem("email"))
                     resendCode({ email: email }).unwrap().then((payload) => {
                         if (payload?.success) {
-                            toast.success(payload?.message || "Code sent successfully")
+                            //toast.success(payload?.message || "Code sent successfully")
                         }
                     }).catch((error) => {
                         (error)
-                        toast.error(error?.data?.message || "Something went wrong")
+                        //toast.error(error?.data?.message || "Something went wrong")
                     });
                 }} className='text-[#F3A211]'>resend code</button></p>
             </div>

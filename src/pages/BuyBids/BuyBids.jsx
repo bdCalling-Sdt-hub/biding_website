@@ -60,10 +60,10 @@ const BuyBids = () => {
                     <input type='number' placeholder='number of bids' className='w-full p-2 rounded-md outline-none border border-yellow' ref={inputRef} />
                     <button onClick={() => {
                         if (!inputRef.current.value) {
-                            return toast.error('please input number of bids first')
+                            return //toast.error('please input number of bids first')
                         }
                         if (inputRef.current.value > 99999) {
-                            return toast.error(`you cant buy more then 99999 bids at once`)
+                            return //toast.error(`you cant buy more then 99999 bids at once`)
                         }
                         setAmount(Number(inputRef.current.value * 10 / 100).toFixed(2))
                         navigate(`/bid-payment?amount=${Number(inputRef.current.value * 10 / 100).toFixed(2)}`)

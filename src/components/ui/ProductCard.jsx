@@ -47,28 +47,28 @@ const ProductCard = ({ product }) => {
 
   const handleAddToBookmark = (id) => {
     if (!localStorage.getItem('token')) {
-      return toast.error('Please login first');
+      return //toast.error('Please login first');
     }
     addToBookmark({ auctionId: id }).unwrap()
       .then((payload) => {
-        toast.success(payload?.message);
+        //toast.success(payload?.message);
       })
       .catch((error) => {
-        toast.error(error?.data?.message);
+        //toast.error(error?.data?.message);
       });
   };
 
   const handleRemoveBookmark = (id) => {
     if (!id) return;
     if (!localStorage.getItem('token')) {
-      return toast.error('Please login first');
+      return //toast.error('Please login first');
     }
     remove(id).unwrap()
       .then((payload) => {
-        toast.success(payload?.message);
+        //toast.success(payload?.message);
       })
       .catch((error) => {
-        toast.error(error?.data?.message);
+        //toast.error(error?.data?.message);
       });
   };
   return (

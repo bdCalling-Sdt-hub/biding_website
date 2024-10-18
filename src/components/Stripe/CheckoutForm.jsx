@@ -45,7 +45,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
                 // console.log('res?.data', res?.data);
                 setClientSecret(res?.data?.clientSecret);
             }).catch((err) => {
-                toast.error(err?.data?.message || 'something went wrong')
+                //toast.error(err?.data?.message || 'something went wrong')
             });
     }, [data]);
 
@@ -55,13 +55,13 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
 
         if (!stripe || !elements || !clientSecret) {
             setLoading(false);
-            return toast.error('something went wrong');
+            return //toast.error('something went wrong');
         }
 
         const cardElement = elements.getElement(CardNumberElement);
         if (!cardElement) {
             setLoading(false);
-            return toast.error('something went wrong');
+            return //toast.error('something went wrong');
         }
 
         const payload = await stripe.confirmCardPayment(clientSecret, {
@@ -85,7 +85,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
             setErrorMessage(null);
             onPaymentSuccess(payload);
             event.target.reset();
-            toast.success('Your Payment has been successful.')
+            //toast.success('Your Payment has been successful.')
             setLoading(false);
         }
         setLoading(false);

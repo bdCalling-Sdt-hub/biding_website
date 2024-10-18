@@ -37,10 +37,10 @@ const Payment = () => {
             paymentId: data?.paymentIntent?.id
         }
         confirmPayment(formateData).unwrap().then((res) => {
-            toast.success(res.data?.message || 'order Confirmed')
+            //toast.success(res.data?.message || 'order Confirmed')
             navigate(`/my-profile/${payWithFinance ? 'financial-payment' : 'my-order'}`)//
         }).catch((err) => {
-            toast.error(err?.message || 'something went wrong')
+            //toast.error(err?.message || 'something went wrong')
         })
     }
     const items = [
@@ -87,10 +87,10 @@ const Payment = () => {
         value.item = singleAuctions?.data?.name
         financePayment(value).unwrap().then(res => {
             navigate(`/my-profile/financial-payment`)
-            toast.success(res?.message)
+            //toast.success(res?.message)
         }).catch(err => {
             console.log(err)
-            toast.error(err?.data?.message)
+            //toast.error(err?.data?.message)
         })
 
     }
