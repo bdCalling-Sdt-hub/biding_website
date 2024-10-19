@@ -8,6 +8,7 @@ const ChangePassword = () => {
   const [form] = Form.useForm()
   const [Change] = useChangePasswordMutation()
   const onFinish = (values) => {
+    return 
     Change(values).unwrap().then((payload) => {
       //toast.success(payload?.message || "Password changed successfully")
     })

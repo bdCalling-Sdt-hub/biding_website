@@ -41,24 +41,37 @@ const NavBar = () => {
               </div>
               {
                 profile?.data?.email ? <div className='flex items-center gap-4 mt-2'>
+                  <Badge className='' count={newNotifications || 0}>
+                    <Link onClick={() => readNotification()} to='/notification'  >
+                      <IoIosNotificationsOutline size={22} className='text-yellow' />
+                    </Link>
+
+                  </Badge>
+                  <div className='bg-[#FEF6e7] rounded-full p-2'>
+                    <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
+                  </div>
+
+                </div> :
+                  <div className='flex items-center gap-4 mt-2'>
                     <Badge className='' count={newNotifications || 0}>
                       <Link onClick={() => readNotification()} to='/notification'  >
                         <IoIosNotificationsOutline size={22} className='text-yellow' />
                       </Link>
 
                     </Badge>
-                  <div className='bg-[#FEF6e7] rounded-full p-2'>
-                    <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
-                  </div>
+                    <div className='bg-[#FEF6e7] rounded-full p-2'>
+                      <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
+                    </div>
 
-                </div> : <div className='flex justify-center items-center mt-2 gap-5'>
-                  <Link to={`/register`} className='border-yellow hover:text-yellow border text-yellow px-4 py-1 rounded-md'>
-                    Get Started
-                  </Link>
-                  <Link to={`/login`} className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>
-                    Sign in
-                  </Link>
-                </div>
+                  </div>
+                //  <div className='flex justify-center items-center mt-2 gap-5'>
+                //   <Link to={`/register`} className='border-yellow hover:text-yellow border text-yellow px-4 py-1 rounded-md'>
+                //     Get Started
+                //   </Link>
+                //   <Link to={`/login`} className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>
+                //     Sign in
+                //   </Link>
+                // </div>
               }
             </div>
             <Button className="menuButton" type="text" onClick={showDrawer}>

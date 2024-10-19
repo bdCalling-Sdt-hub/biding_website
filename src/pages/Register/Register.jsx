@@ -12,6 +12,7 @@ const Register = () => {
     const [registerUser] = useRegisterMutation()
     // Register form value handle function
     const onFinish = (values) => {
+        return navigate('/')
         registerUser(values).unwrap()
             .then((payload) => {
                 // (payload)

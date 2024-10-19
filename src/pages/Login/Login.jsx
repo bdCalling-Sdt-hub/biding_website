@@ -2,14 +2,16 @@ import React from 'react'
 import img from '../../assets/login.png'
 import { Button, Checkbox, Form, Input, Spin } from 'antd'
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/authApis';
 import { toast } from 'sonner';
 import GoogleAuthLogin from '../../components/ui/GoogleAuthLogin';
 const Login = () => {
+    const navigate = useNavigate()
     const [loginUser, { isLoading }] = useLoginMutation()
     // login form value handle function
     const onFinish = (values) => {
+        return navigate('/')
         loginUser(values).unwrap()
             .then((payload) => {
                 if (payload?.data?.accessToken) {

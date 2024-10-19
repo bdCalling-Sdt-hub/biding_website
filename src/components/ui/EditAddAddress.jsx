@@ -12,6 +12,7 @@ const EditAddAddress = () => {
     const [addressId, setAddressId] = useState(null)
     const [update] = useUpdateAddressMutation()
     const onFinish = (values) => {
+        return navigate (-1)
         update({ id: addressId, data: values }).unwrap()
             .then((res) => {
                 navigate(-1)
