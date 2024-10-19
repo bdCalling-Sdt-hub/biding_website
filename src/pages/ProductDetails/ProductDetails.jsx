@@ -49,7 +49,7 @@ const ProductDetails = () => {
     const [numberOfBids, setNumberOfBids] = useState(0);
     const [time, setTime] = useState(new URLSearchParams(window.location.search).get('time') || 9);
     const [bidBuddyUser, setBidBuddyUser] = useState({});
-
+    // console.log('auction', auction)
     // Get auction and similar product data
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
@@ -163,11 +163,24 @@ const ProductDetails = () => {
                             <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>
                             <div className='flex justify-between py-5'>
                                 <p>Current BID:</p>
-                                <p className='text-[#338BFF] text-[26px] font-semibold'>
+                                <p className='text-[#338BFF] text-[26px] font-semibold'>{auction?.financeAvailable ? <span style={{
+                                    color: '#000000'
+                                }} className='text-base font-normal -mt-2 mr-3 inline-block'>(finance available)</span> : ''}
                                     ${auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 'N/A'}
                                 </p>
                             </div>
+
+                            {
+                                auction?.financeAvailable && <div style={{
+                                    background: 'black',
+                                    color: '#FFFFFF'
+                                }} className='flex justify-between items-center gap-2 p-2 rounded-md mb-4'>
+                                    <p>Total Months For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
+                                    <p>Per Months : <span className='text-yellow'>${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0 / auction?.totalMonthForFinance).toFixed(2)}</span></p>
+                                </div>
+                            }
                             <p>Current Highest Bidder</p>
+
                             {auction?.bidHistory?.length < 1 ? (
                                 <p>No bid yet!</p>
                             ) : (
@@ -203,7 +216,7 @@ const ProductDetails = () => {
                             ) : (
                                 <div>
                                     <div className='text-center mt-5'>
-                                        <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:0{Math.ceil(time)}</h1>
+                                        <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:09</h1>
                                         <p>Time Left</p>
                                     </div>
 
@@ -226,7 +239,7 @@ const ProductDetails = () => {
                                         </div>
                                     ) : (
                                         <div className='lg:px-10 mt-5'>
-                                            <Button onClick={handleBid} className='py-2'>Bid</Button>
+                                            <Button  className='py-2'>Bid</Button>
                                         </div>
                                     )}
 
@@ -237,8 +250,9 @@ const ProductDetails = () => {
                                             placeholder='Number of bids'
                                             className='border py-3 border-[#9F9F9F] rounded-lg w-full'
                                         />
-                                        <Button
+                                        <Button 
                                             onClick={() => {
+                                                return
                                                 if (!numberOfBids) {
                                                     return //toast.error('Please input number of bids');
                                                 }
@@ -249,7 +263,7 @@ const ProductDetails = () => {
                                                 }
                                             }}
                                         >
-                                            {bidBuddyUser?.isActive ? 'Add Bids' : 'Book BidBuddy'}
+                                            {bidBuddyUser?.isActive ? 'Add Bids' : 'Auto Bid'}
                                         </Button>
                                     </div>
                                 </div>
