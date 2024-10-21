@@ -5,8 +5,10 @@ import { Spin } from 'antd';
 import { toast } from 'sonner';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
 import { useGetProfileQuery } from '../../redux/api/authApis';
+import { useNavigate } from 'react-router-dom';
 const UpcommingProduct = ({ product, type, BookmarkId }) => {
     const { data: profile } = useGetProfileQuery();
+    const navigate = useNavigate()
     // states 
     const combinedDateTime = new Date(`${product?.startingDate?.split("T")[0]}T${product?.startingTime?.split(" ")[0]}`);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
@@ -87,7 +89,9 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                 <p className='text-[#338BFF] font-medium '>{product?.startingDate?.split("T")[0]} at {product?.startingTime}</p>
                 <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
                 <p className='text-[#585858] font-semibold text-[ 24px]'>00:06:56</p>
-                <div className='px-2 md:px-5'><button disabled={!formatTimeLeft(timeLeft)?.startsWith('-')} className='bg-yellow px-14 text-white disabled:bg-gray rounded-md py-2 w-full'> {formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button></div>
+                <div className='px-2 md:px-5'><button onClick={() => navigate(`/product-details/${product?._id}`)}
+                    // disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
+                    className={` px-14 text-white ${!formatTimeLeft(timeLeft)?.startsWith('-') ? 'bg-gray ' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}> {formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon '}</button></div>
             </div>
             {
                 product?.isBookmark || (type && type === 'bookmark') ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} /> : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
@@ -108,7 +112,7 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
 
                 </span>
             }
-        </div>
+        </div >
     )
 
 }

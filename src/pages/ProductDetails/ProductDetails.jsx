@@ -88,6 +88,7 @@ const ProductDetails = () => {
 
     // Manual bid handler
     const handleBid = () => {
+        // return
         if (!socket) {
             return;
         }
@@ -143,12 +144,17 @@ const ProductDetails = () => {
                             <div>
                                 <img src={auction?.images?.[0] ?? 'default_image_url'} className='w-full rounded-md' alt="" />
                             </div>
-                            <div className='flex justify-between items-center mt-5'>
-                                {[1, 2, 3].map((i) => (
+                            <div className='flex justify-between items-center mt-5 gap-[.5%]'>
+                                {/* {[1, 2, 3].map((i) => (
                                     <div className='h-[80px] w-full' key={i}>
-                                        <img src={auction?.images?.[i] ?? 'default_image_url'} className='rounded-md h-[120px]' alt="" />
+                                        <img src={auction?.images?.[i] ?? 'default_image_url'} className='rounded-md h-[120px] object-contain' alt="" />
                                     </div>
-                                ))}
+                                ))} */}
+                                {
+                                    auction?.images?.slice(1, 4)?.map(item => <div className='flex justify-center items-center w-[33%] h-[120px]'>
+                                        <img src={item} className='h-full w-full object-contain' />
+                                    </div>)
+                                }
                             </div>
                             <div className='bg-white rounded-md mt-14 py-2'>
                                 <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
@@ -238,8 +244,8 @@ const ProductDetails = () => {
                                             </p>
                                         </div>
                                     ) : (
-                                        <div className='lg:px-10 mt-5'>
-                                            <Button  className='py-2'>Bid</Button>
+                                        <div onClick={handleBid} className='lg:px-10 mt-5'>
+                                            <Button className='py-2'>Bid</Button>
                                         </div>
                                     )}
 
@@ -250,7 +256,7 @@ const ProductDetails = () => {
                                             placeholder='Number of bids'
                                             className='border py-3 border-[#9F9F9F] rounded-lg w-full'
                                         />
-                                        <Button 
+                                        <Button
                                             onClick={() => {
                                                 return
                                                 if (!numberOfBids) {
