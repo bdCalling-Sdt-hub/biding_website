@@ -93,8 +93,8 @@ const ProductCard = ({ product }) => {
       </div>
       <div className='p-2 md:p-5'>
         <button onClick={() => navigate(`/product-details/${product?._id}?time=${Math.floor(time)}`)}
-          disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
-          className='bg-yellow md:px-14  text-white disabled:bg-gray rounded-md py-2 w-full'>
+          // disabled={!formatTimeLeft(timeLeft)?.startsWith('-')}
+          className={` md:px-14  text-white ${!formatTimeLeft(timeLeft)?.startsWith('-') ? 'bg-gray ' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}>
           {product?.status === 'COMPLETED' ? 'Sold' : formatTimeLeft(timeLeft)?.startsWith('-') ? 'Bid' : 'Starting Soon'}
         </button>
       </div>
@@ -102,6 +102,22 @@ const ProductCard = ({ product }) => {
         product?.isBookmark
           ? <FaStar onClick={() => handleRemoveBookmark(product?._id)} className='absolute top-3 right-3 text-yellow cursor-pointer' size={22} />
           : <FaRegStar onClick={() => handleAddToBookmark(product?._id)} size={22} className='absolute top-3 right-3 text-yellow cursor-pointer' />
+      }
+      {
+        product?.financeAvailable && <span className='absolute top-3 left-3 text-yellow cursor-pointer'>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2434_7135)">
+              <path d="M12.014 4.77405C7.66164 4.77405 2.31165 11.5093 2.31165 16.9887C2.31165 19.0677 3.05147 20.7331 4.5114 21.9393C6.16717 23.3068 8.6912 24 12.0139 24C15.3245 24 17.8414 23.3013 19.4937 21.9226C20.95 20.7077 21.6884 19.0316 21.6884 16.9415C21.6884 11.4835 16.3541 4.77405 12.014 4.77405ZM12.388 14.1851C13.4988 14.7722 14.8815 15.5034 14.8815 16.9527C14.8815 18.2578 14.0006 19.3592 12.803 19.6997V20.0704C12.803 20.5007 12.4539 20.8498 12.0236 20.8498C11.5933 20.8498 11.2442 20.5007 11.2442 20.0704V19.6997C10.0466 19.3592 9.16567 18.2578 9.16567 16.9527C9.16567 16.5224 9.5148 16.1732 9.94511 16.1732C10.3754 16.1732 10.7246 16.5224 10.7246 16.9527C10.7246 17.6692 11.3071 18.2517 12.0236 18.2517C12.7401 18.2517 13.3227 17.6692 13.3227 16.9527C13.3227 16.4422 12.4772 15.9956 11.6592 15.5633C10.5484 14.9762 9.16567 14.245 9.16567 12.7957C9.16567 11.4905 10.0466 10.3892 11.2442 10.0487V9.67798C11.2442 9.24767 11.5933 8.89854 12.0236 8.89854C12.4539 8.89854 12.803 9.24767 12.803 9.67798V10.0487C14.0006 10.3892 14.8815 11.4905 14.8815 12.7957C14.8815 13.226 14.5324 13.5751 14.1021 13.5751C13.6718 13.5751 13.3227 13.226 13.3227 12.7957C13.3227 12.0792 12.7401 11.4966 12.0236 11.4966C11.3071 11.4966 10.7246 12.0792 10.7246 12.7957C10.7246 13.3062 11.5699 13.7527 12.388 14.1851Z" fill="#F3A211" />
+              <path d="M16.2674 0.963143C15.9071 0.778408 15.4646 0.899674 15.25 1.24327C14.9242 1.76546 14.47 1.89633 14.1463 1.9141C13.583 1.95418 13.0172 1.668 12.625 1.17272C12.0353 0.427266 11.1021 0 10.0654 0C9.0287 0 8.09551 0.427266 7.50582 1.17267C7.33022 1.39392 7.2886 1.69228 7.39622 1.95361C7.48336 2.16493 7.91143 3.15094 8.62205 4.13382C9.74288 3.54952 10.8949 3.21507 12.0139 3.21507C13.1328 3.21507 14.2848 3.54971 15.4052 4.13452C16.1163 3.15137 16.5446 2.16488 16.6317 1.95352C16.786 1.57866 16.6276 1.14835 16.2674 0.963143Z" fill="#F3A211" />
+            </g>
+            <defs>
+              <clipPath id="clip0_2434_7135">
+                <rect width="24" height="24" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+
+        </span>
       }
     </div>
   );
