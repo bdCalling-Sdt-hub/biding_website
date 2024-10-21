@@ -33,8 +33,11 @@ const ProductCard = ({ product }) => {
   }, [combinedDateTime]);
 
   useEffect(() => {
+    if (time === 0) {
+      return
+    }
     const countDownInterval = setInterval(() => {
-      setTime(prevTime => (Math.ceil(prevTime) === 1 ? 9 : prevTime - 0.1));
+      setTime(prevTime => (Math.ceil(prevTime) === 0 ? 9 : prevTime - 0.1));
     }, countDown);
     return () => clearInterval(countDownInterval);
   }, [countDown, time]);

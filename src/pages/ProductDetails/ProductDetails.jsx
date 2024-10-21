@@ -123,6 +123,9 @@ const ProductDetails = () => {
 
     // Timer logic for auction countdown
     useEffect(() => {
+        if (time === 0) {
+            return
+        }
         const interval = setInterval(() => {
             if (time > 0) {
                 setTime(prevTime => prevTime - 1);

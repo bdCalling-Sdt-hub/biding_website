@@ -1,13 +1,21 @@
+import { Form, Input } from 'antd';
 import img from '../../assets/login.png'
-import { Button, Checkbox, Form, Input } from 'antd'
-import { AiFillGoogleCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-
-
+import { useForgetPasswordMutation } from '../../redux/api/authApis';
+import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+// import { Button, Form, Input } from 'antd'
 const ForgetPassword = () => {
+    const navigate = useNavigate()
     // forget password form value handle function
+    const [forgetPass] = useForgetPasswordMutation()
     const onFinish = (values) => {
-        ('Success:', values);
+        forgetPass(values).unwrap().then(res => {
+            localStorage.setItem('email', JSON.stringify(values?.email))
+            toast.success(res?.message)
+            navigate('/otp')
+        }).catch(err => {
+            toast.error(err?.data?.message)
+        })
     };
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 justify-center  items-center'>
@@ -19,31 +27,27 @@ const ForgetPassword = () => {
                 <p className='mb-5 text-[#2E2E2E]'>Enter your email and we will send you a verification code</p>
                 <div className='md:max-w-[45%] mx-auto md:mx-0 max-w-[100%] '>
                     <Form
+                        layout='vertical'
                         onFinish={onFinish}
-                        layout="vertical"
                     >
                         <Form.Item
-                            label="Email"
-                            name="email"
-
+                            name={`email`}
+                            label='Email'
+                            rules={[
+                                {
+                                    message: 'Please Enter Your Email',
+                                    required: true
+                                }
+                            ]}
                         >
-                            <Input placeholder='Enter your email here' />
+                            <Input placeholder='please enter your email' type='email' className='h-[42px]' />
                         </Form.Item>
-                        
-                        <Form.Item
-
-                        >
-                            <Button type="primary" className='w-[100%] mt-4 bg-yellow  custom-button' htmlType="submit">
-                                Countinue
-                            </Button>
-                        </Form.Item>
+                        <button className='w-[100%] mt-4 bg-yellow  custom-button py-2 rounded-md'>
+                            Continue
+                        </button>
                     </Form>
-
-                   
                 </div>
             </div>
-
-
         </div>
     )
 }

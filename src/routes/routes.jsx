@@ -56,6 +56,7 @@ import PaypalSuccess from "../pages/Paypal/PaypalSuccess.jsx";
 import BIdPayment from "../pages/BuyBids/BIdPayment.jsx";
 import FinancialPayment from "../pages/MyAccountPages/FinancialPayment.jsx";
 import DuePayment from "../pages/DuePayment/DuePayment.jsx";
+import VerifyCode from "../pages/VerificationCode/VerifyCode.jsx";
 
 const router = createBrowserRouter([
     {
@@ -288,6 +289,10 @@ const router = createBrowserRouter([
     {
         path: '/verification-code',
         element: <VerificationCode />
+    },
+    {
+        path: '/otp',
+        element: <VerifyCode />
     },
     {
         path: '/reset-password',
