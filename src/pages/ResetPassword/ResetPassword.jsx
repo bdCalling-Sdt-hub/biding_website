@@ -9,6 +9,7 @@ const ResetPassword = () => {
     const [reset] = useResetPasswordMutation()
     /** handle reset password functionlity */
     const onFinish = (values) => {
+        return
         console.log(values); //
         values.email = JSON.parse(localStorage.getItem("email"))
         reset(values).unwrap().then(res => {
