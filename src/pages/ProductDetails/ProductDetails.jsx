@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import BackButton from '../../components/ui/BackButton';
 import ProductCard from '../../components/ui/ProductCard';
-import { IoLocationOutline } from 'react-icons/io5';
+import { IoArrowBackSharp, IoLocationOutline } from 'react-icons/io5';
 import { Input, Table } from 'antd';
 import Button from '../../components/ui/Button';
 import { useSocketContext } from '../../Providers/SocketProviders';
@@ -131,7 +131,7 @@ const ProductDetails = () => {
         socket.emit('joinAuction', id);
 
         socket.on("bidHistory", (updatedBidHistory) => {
-            console.log('updatedBidHistory',updatedBidHistory)
+            console.log('updatedBidHistory', updatedBidHistory)
             if (updatedBidHistory?.updatedAuction?._id === id) {
                 setAuction(updatedBidHistory?.updatedAuction);
                 setTime(updatedBidHistory?.updatedAuction?.countdownTime)
@@ -159,7 +159,10 @@ const ProductDetails = () => {
 
     return (
         <div>
-            <BackButton pageName={"Product Details"} />
+            <div className='py-3 flex items-center gap-2'>
+                <Link to={'/'}><IoArrowBackSharp className='text-yellow' /></Link>
+                <p>Home / Product Details </p>
+            </div>
             <div className='grid grid-cols-12 gap-5'>
                 <div className='col-span-12 lg:col-span-10 mx-5 lg:mx-0'>
                     <div className='flex flex-col lg:flex-row justify-between gap-10'>
