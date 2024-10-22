@@ -10,6 +10,14 @@ const authApis = baseApi.injectEndpoints({
                 body: data
             })
         }),
+        // forget password
+        forgetPassword: builder.mutation({
+            query: (data) => ({
+                url: '/user/auth/forgot-password',
+                method: 'POST',
+                body: data
+            })
+        }),
         // register function
         register: builder.mutation({
             query: (values) => {
@@ -31,10 +39,27 @@ const authApis = baseApi.injectEndpoints({
                 }
             }
         }),
+        verifyCode: builder.mutation({
+            query: (data) => {
+                return {
+                    url: 'user/auth/verify-otp-forgot-password',
+                    method: 'POST',
+                    body: data
+                }
+            },
+            invalidatesTags: ['auth']
+        }),
         // change password
         changePassword: builder.mutation({
             query: (data) => ({
                 url: '/user/auth/change-password',
+                method: 'PATCH',
+                body: data
+            })
+        }),
+        resetPassword: builder.mutation({
+            query: (data) => ({
+                url: 'user/auth/reset-password',
                 method: 'PATCH',
                 body: data
             })
@@ -90,5 +115,8 @@ export const {
     // update profile,
     useUpdateProfileMutation,
     // change password
-    useChangePasswordMutation
+    useChangePasswordMutation,
+    useForgetPasswordMutation,
+    useVerifyCodeMutation,
+    useResetPasswordMutation
 } = authApis
