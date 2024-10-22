@@ -49,7 +49,7 @@ const ProductDetails = () => {
     const [auction, setAuction] = useState({});
     const [numberOfBids, setNumberOfBids] = useState(0);
     const [bidBuddyUser, setBidBuddyUser] = useState({});
-    const [time, setTime] = useState(9)
+    const [time, setTime] = useState(new URLSearchParams(window.location.search).get('time') || 9)
     // Get auction and similar product data
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
@@ -58,7 +58,7 @@ const ProductDetails = () => {
     const { data: profile } = useGetProfileQuery();
     useEffect(() => {
         setAuction(getSingleAuction?.data);
-        setTime(getSingleAuction?.data?.countdownTime)
+        // setTime(getSingleAuction?.data?.countdownTime)
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
         setBidBuddyUser(filterBidUser?.[0]);
     }, [getSingleAuction?.data, profile]);
@@ -84,6 +84,9 @@ const ProductDetails = () => {
         }
         const interval = setInterval(() => {
             setTime(prev => prev - 1);
+            const params = new URLSearchParams(window.location.search);
+            params.set('time', time - 1);
+            window.history.pushState(null, "", `?${params.toString()}`);
         }, 1000);
         return () => clearInterval(interval);
     }, [auction?.status, time]);
@@ -128,11 +131,12 @@ const ProductDetails = () => {
         socket.emit('joinAuction', id);
 
         socket.on("bidHistory", (updatedBidHistory) => {
-            // console.log('updatedBidHistory',updatedBidHistory)
+            console.log('updatedBidHistory',updatedBidHistory)
             if (updatedBidHistory?.updatedAuction?._id === id) {
                 setAuction(updatedBidHistory?.updatedAuction);
                 setTime(updatedBidHistory?.updatedAuction?.countdownTime)
                 const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
+                // console.log('updatedBidHistory',filterBidUser?.[0])
                 setBidBuddyUser(filterBidUser?.[0]);
             }
         });
@@ -205,8 +209,8 @@ const ProductDetails = () => {
                             {/* Top bidder table */}
                             <Table columns={columns} dataSource={heightBidderDataFormat?.reverse()} size="middle" pagination={false} />
 
-                            {getSingleAuction?.data?.status === 'COMPLETED' ? (
-                                profile?.data?._id === getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user ? (
+                            {auction?.status === 'COMPLETED' ? (
+                                profile?.data?._id === auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user ? (
                                     <div className='text-center'>
                                         <p className='font-semibold text-4xl mt-3' style={{ color: '#338BFF' }}>Congratulations</p>
                                         <p>You Are the Winning Bidder!</p>
