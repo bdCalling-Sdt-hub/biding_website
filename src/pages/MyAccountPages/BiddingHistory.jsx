@@ -2,15 +2,16 @@ import React from 'react'
 import img from '../../assets/mob.png'
 import { useGetBiddingHistoryQuery } from '../../redux/api/auctionsApis'
 import { useGetProfileQuery } from '../../redux/api/authApis'
+import { useNavigate } from 'react-router-dom'
 const BiddingHistory = () => {
+  const navigate = useNavigate()
   const { data } = useGetBiddingHistoryQuery()
   const { data: profile } = useGetProfileQuery()
-  console.log('history', data)
   return (
     <div className='h-screen overflow-y-scroll'>
       <h1 className='text-yellow font-medium'>Bidding History</h1>
       {
-        data?.data?.map(item => <div className='mt-5 bg-[#F9F9F9] p-5 rounded-md flex flex-wrap items-center justify-between'>
+        data?.data?.map(item => <div onClick={() => navigate(`/product-details/${item?._id}`)} className={`mt-5 p-5 rounded-md flex flex-wrap items-center cursor-pointer justify-between ${profile?.data?._id === item?.winnerId ? 'bg-[#F5EFDC]' : 'bg-[#F9F9F9]'}`}>
           {/* Image and details */}
           <div className='flex items-center gap-2'>
             <img src={item?.image} className='w-20' alt="" />
@@ -26,7 +27,7 @@ const BiddingHistory = () => {
           </div>
           <div className='text-center space-y-2'>
             <p>Winner</p>
-            <p className='font-medium'>{profile?.data?.name === item?.winningBidderName ? "You" : item?.winningBidderName}</p>
+            <p className='font-medium'>{profile?.data?._id === item?.winnerId ? "You" : item?.winningBidderName}</p>
           </div>
           <div className='text-center space-y-2'>
             <p>Your Final Bids</p>
