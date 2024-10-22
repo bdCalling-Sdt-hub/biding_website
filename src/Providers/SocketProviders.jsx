@@ -34,10 +34,10 @@ const SocketProviders = ({ children }) => {
                 setNotifications(prev => [...notification?.notifications])
             });
             socketConnect.on("allAuction", (data) => {
-                ('data', data)
+                // ('data', data)
             });
             socketConnect.on("bidHistory", (updatedBidHistory) => {
-                ('updatedBidHistory', updatedBidHistory)
+                // ('updatedBidHistory', updatedBidHistory)
             })
             return () => socketConnect.close();
         } else {

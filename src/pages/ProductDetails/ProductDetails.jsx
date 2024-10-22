@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
 import UpcommingProduct from '../../components/ui/UpcommingProduct';
+import { useMemo } from 'react';
 
 // Table columns definition
 const columns = [
@@ -47,9 +48,8 @@ const ProductDetails = () => {
     const navigate = useNavigate();
     const [auction, setAuction] = useState({});
     const [numberOfBids, setNumberOfBids] = useState(0);
-    const [time, setTime] = useState(new URLSearchParams(window.location.search).get('time') || 9);
     const [bidBuddyUser, setBidBuddyUser] = useState({});
-
+    const [time, setTime] = useState(9)
     // Get auction and similar product data
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
@@ -58,9 +58,35 @@ const ProductDetails = () => {
     const { data: profile } = useGetProfileQuery();
     useEffect(() => {
         setAuction(getSingleAuction?.data);
+        setTime(getSingleAuction?.data?.countdownTime)
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
         setBidBuddyUser(filterBidUser?.[0]);
     }, [getSingleAuction?.data, profile]);
+    const combinedDateTime = useMemo(() => new Date(`${auction?.activateTime}`), [auction?.activateTime]);
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
+
+    const formatTimeLeft = (time) => {
+        return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
+    };
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const updatedTimeLeft = calculateTimeLeft(combinedDateTime);
+            setTimeLeft(updatedTimeLeft);
+            if (updatedTimeLeft.total <= 0) {
+                clearInterval(interval);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [combinedDateTime, formatTimeLeft(timeLeft)]);
+    useEffect(() => {
+        if (auction?.status !== 'ACTIVE' || time === 0) {
+            return;
+        }
+        const interval = setInterval(() => {
+            setTime(prev => prev - 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [auction?.status, time]);
 
     /** Get unique bidder profile image */
     const unniqueUser = auction?.bidHistory?.filter((user, index, self) =>
@@ -102,9 +128,10 @@ const ProductDetails = () => {
         socket.emit('joinAuction', id);
 
         socket.on("bidHistory", (updatedBidHistory) => {
+            // console.log('updatedBidHistory',updatedBidHistory)
             if (updatedBidHistory?.updatedAuction?._id === id) {
-                console.log('id matched')
                 setAuction(updatedBidHistory?.updatedAuction);
+                setTime(updatedBidHistory?.updatedAuction?.countdownTime)
                 const filterBidUser = updatedBidHistory?.updatedAuction?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
                 setBidBuddyUser(filterBidUser?.[0]);
             }
@@ -122,20 +149,10 @@ const ProductDetails = () => {
     }, [socket, id, profile?.data?._id]);
 
     // Timer logic for auction countdown
-    useEffect(() => {
-        if (time === 0) {
-            return
-        }
-        const interval = setInterval(() => {
-            if (time > 0) {
-                setTime(prevTime => prevTime - 1);
-            }
-        }, 1000);
 
-        return () => clearInterval(interval);
-    }, [time]);
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
-    // console.log('auction',auction)
+    // console.log('auction',getSingleAuction?.data)
+
     return (
         <div>
             <BackButton pageName={"Product Details"} />
@@ -146,7 +163,7 @@ const ProductDetails = () => {
                             <div>
                                 <img src={auction?.images?.[0] ?? 'default_image_url'} className='w-full rounded-md' alt="" />
                             </div>
-                            <div className='flex justify-between items-center mt-5'>
+                            <div className='flex justify-between items-center mt-5 gap-4'>
                                 {[1, 2, 3].map((i) => (
                                     <div className='h-[80px] w-full' key={i}>
                                         <img src={auction?.images?.[i] ?? 'default_image_url'} className='rounded-md h-[120px]' alt="" />
@@ -206,7 +223,9 @@ const ProductDetails = () => {
                             ) : (
                                 <div>
                                     <div className='text-center mt-5'>
-                                        <h1 className='text-[36px] font-medium text-[#338BFF]'>00:00:0{Math.ceil(time)}</h1>
+                                        <h1 className='text-[36px] font-medium text-[#338BFF]'>
+                                            {auction?.status === 'ACTIVE' ? `00 :00:0${time}` :
+                                                formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</h1>
                                         <p>Time Left</p>
                                     </div>
 
@@ -229,7 +248,12 @@ const ProductDetails = () => {
                                         </div>
                                     ) : (
                                         <div className='lg:px-10 mt-5'>
-                                            <Button onClick={handleBid} className='py-2'>Bid</Button>
+                                            <Button onClick={() => {
+                                                // if (auction?.status !== 'ACTIVE') {
+                                                //     return toast.error('bid will be available last 9s')
+                                                // }
+                                                handleBid()
+                                            }} className='py-2'>Bid</Button>
                                         </div>
                                     )}
 
@@ -242,6 +266,9 @@ const ProductDetails = () => {
                                         />
                                         <Button
                                             onClick={() => {
+                                                // if (auction?.status !== 'ACTIVE') {
+                                                //     return toast.error('bid will be available last 9s')
+                                                // }
                                                 if (!numberOfBids) {
                                                     return toast.error('Please input number of bids');
                                                 }
@@ -285,3 +312,19 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+const calculateTimeLeft = (targetDateTime) => {
+    const now = new Date().getTime();
+    const timeLeft = targetDateTime - now;
+
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    return {
+        total: timeLeft,
+        hours,
+        minutes,
+        seconds,
+    };
+};
+
