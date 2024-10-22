@@ -105,8 +105,8 @@ const ProductCard = ({ product }) => {
       </div>
       <div className='p-2 md:p-5'>
         <button
-          onClick={() => navigate(`/product-details/${product?._id}`)}
-          className={`md:px-14 text-white ${Number(formatTimeLeft(timeLeft)?.split(":")[2]) > 10 ? 'bg-gray' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}
+          onClick={() => navigate(`/product-details/${product?._id}?${product?.status === 'ACTIVE' ? `time=${time}` : ''}`)}
+          className={`md:px-14 text-white ${product?.status === 'UPCOMING' ? 'bg-gray' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}
         >
           {product?.status === 'COMPLETED' ? 'Sold' : Number(formatTimeLeft(timeLeft)?.split(":")[2]) < 10 ? 'Bid' : 'Starting Soon'}
         </button>
