@@ -29,7 +29,7 @@ const BIdPayment = () => {
             toast.error(err?.data?.message || 'something went wrong')
         })
     }
-
+// 
     const items = [
         {
             key: '1',
