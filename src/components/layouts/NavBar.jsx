@@ -28,7 +28,7 @@ const NavBar = () => {
       <Layout className='max-w-screen-2xl mx-auto'>
         <Layout.Header className="nav-header">
           <Link to={`/`} className="logo hover:text-yellow">
-            <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Biding Website</h3>
+            <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Bidding Website</h3>
           </Link>
           <div className="navbar-menu">
             <div className="leftMenu flex justify-between items-center gap-5 w-full">
