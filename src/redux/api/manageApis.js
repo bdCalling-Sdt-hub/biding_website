@@ -50,7 +50,7 @@ const manageApis = baseApi.injectEndpoints({
         // get Contact 
         getContact: build.query({
             query: () => ({
-                url: '/manage/get-support-contact',
+                url: 'manage/get-contact-us',
                 method: 'GET',
             }),
         }),

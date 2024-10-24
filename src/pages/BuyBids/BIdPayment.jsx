@@ -18,16 +18,16 @@ const BIdPayment = () => {
     })
     const [confirmPayment] = useConfirmPaymentMutation()
     const onPaymentSuccess = (data) => {
-        navigate('/my-profile')
+        // navigate('/my-profile')
         const formateData = {
             paymentId: data?.paymentIntent?.id
         }
-        // confirmPayment(formateData).unwrap().then((res) => {
-        //     toast.success(res.data?.message || 'order Confirmed')
-        //     navigate('/my-profile')
-        // }).catch((err) => {
-        //     toast.error(err?.data?.message || 'something went wrong')
-        // })
+        confirmPayment(formateData).unwrap().then((res) => {
+            toast.success(res.data?.message || 'order Confirmed')
+            navigate('/my-profile')
+        }).catch((err) => {
+            toast.error(err?.data?.message || 'something went wrong')
+        })
     }
 
     const items = [
