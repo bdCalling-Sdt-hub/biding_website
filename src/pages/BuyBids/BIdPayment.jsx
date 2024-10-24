@@ -3,10 +3,13 @@ import { useConfirmPaymentMutation } from '../../redux/api/paymentApis'
 import PaymentComponent from '../../components/Stripe/PaymentComponent'
 import PaymentPayPal from '../../components/ui/PaymentPayPal'
 import { Tabs } from 'antd'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 const BIdPayment = () => {
     const [amount, setAmount] = useState(new URLSearchParams(window.location.search).get('amount') || null)
     // const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
+    const navigate = useNavigate()
     const [data, setData] = useState({
         "item": `${amount * 10} Bids`,
         "itemType": 'BID',
@@ -15,15 +18,16 @@ const BIdPayment = () => {
     })
     const [confirmPayment] = useConfirmPaymentMutation()
     const onPaymentSuccess = (data) => {
+        navigate('/my-profile')
         const formateData = {
             paymentId: data?.paymentIntent?.id
         }
-        confirmPayment(formateData).unwrap().then((res) => {
-            toast.success(res.data?.message || 'order Confirmed')
-            navigate('/my-profile')
-        }).catch((err) => {
-            toast.error(err?.message || 'something went wrong')
-        })
+        // confirmPayment(formateData).unwrap().then((res) => {
+        //     toast.success(res.data?.message || 'order Confirmed')
+        //     navigate('/my-profile')
+        // }).catch((err) => {
+        //     toast.error(err?.data?.message || 'something went wrong')
+        // })
     }
 
     const items = [

@@ -14,7 +14,7 @@ createRoot(document.getElementById('root')).render(
         <SocketProviders>
           <RouterProvider router={router} />
         </SocketProviders>
-        <Toaster position="top-right" richColors />
+        <Toaster position="top-right" richColors toastOptions={{ duration: 1500 }} />
       </GoogleOAuthProvider>
     </Providers>
   </StrictMode>,
