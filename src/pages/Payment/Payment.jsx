@@ -92,7 +92,6 @@ const Payment = () => {
             console.log(err)
             toast.error(err?.data?.message)
         })
-
     }
     return (
         <div className='px-5 lg:px-0'>
@@ -214,7 +213,15 @@ const Payment = () => {
                                 <button className='bg-yellow text-white w-full py-2 rounded-md'>
                                     Apply For Financing
                                 </button>
-                            </Form> : <Tabs defaultActiveKey="1" items={items} />
+                            </Form> : <div onClick={() => {
+                                if (!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) {
+                                    toast.error('Please Add a Shipping Address For make Order')
+                                }
+                            }}>
+                                <div className={(!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) ? 'pointer-events-none' : ''}>
+                                    <Tabs defaultActiveKey="1" items={items} />
+                                </div>
+                            </div>
                         }
 
                     </div>

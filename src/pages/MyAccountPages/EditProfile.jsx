@@ -5,7 +5,9 @@ import { Form, Input, Spin } from 'antd';
 import Button from '../../components/ui/Button';
 import { useGetProfileQuery, useUpdateProfileMutation } from '../../redux/api/authApis';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 const EditProfile = () => {
+    const navigate = useNavigate()
     const [image, setImage] = useState();
     const [form] = Form.useForm()
     const { data } = useGetProfileQuery()
@@ -14,7 +16,6 @@ const EditProfile = () => {
     const handleChange = (e) => {
         const file = e.target.files[0];
         setImage(file)
-
     }
 
     const onEditProfile = (values) => {
@@ -25,7 +26,7 @@ const EditProfile = () => {
         }
         updateProfile(formData).unwrap()
             .then((payload) => {
-                (payload)
+                navigate('/my-profile')
                 toast.success(payload?.message || "Profile updated successfully")
             })
             .catch((error) => {
@@ -155,7 +156,7 @@ const EditProfile = () => {
                         justifyContent: "center"
                     }}
                 >
-                    <Button 
+                    <Button
                         type="primary"
                         htmlType="submit"
                         className={`p-5 bg-yellow rounded-md text-white ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}

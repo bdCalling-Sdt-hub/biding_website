@@ -8,7 +8,7 @@ const FinancialPayment = () => {
   const navigate = useNavigate()
   return (
     <div>
-      <h1 className='text-yellow font-medium'>My Order</h1>
+      <h1 className='text-yellow font-medium'>Finance Order</h1>
       {
         getFinancialPayment?.data?.result?.map(item =>
           <div className='bg-[#F9F9F9] rounded-md p-5 mt-5'>
@@ -48,7 +48,10 @@ const FinancialPayment = () => {
                   }}
                   className='bg-yellow disabled:bg-gray disabled:cursor-not-allowed text-white px-5 py-2 hover:bg-yellow rounded-md'
                 >
-                  Pay Now
+                  {
+                    item?.monthlyStatus === 'paid' ? 'Payment completed for this mony' : 'Pay Now'
+                  }
+
                 </button>
                 {/* <Link className='bg-yellow text-white px-5 py-2 hover:bg-yellow rounded-md' to={`/due-payment?id=${item?._id}`}>Pay Now</Link> */}
               </div>

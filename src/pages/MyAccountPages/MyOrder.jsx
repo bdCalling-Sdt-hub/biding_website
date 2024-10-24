@@ -7,7 +7,6 @@ import { useMyOrderQuery } from '../../redux/api/paymentApis'
 const MyOrder = () => {
   // const {data : getOrder}=
   const { data: getAllOrders } = useMyOrderQuery()
-
   return (
     <div>
       <h1 className='text-yellow font-medium'>My Order</h1>
@@ -30,13 +29,16 @@ const MyOrder = () => {
               <div className='space-y-2 text-end '>
                 <p>Winning Bids: <span className='font-medium'>${item?.winingBid
                 }</span></p>
-                <p className='pb-5'>Paid by Credit Card</p>
+                <p className='pb-5'>Paid by {item?.paidBy}</p>
                 <Link to={`/my-profile/track-order/${item?._id}`}><Button >Track Order</Button></Link>
               </div>
             </div>
 
           </div>
         )
+      }
+      {
+        getAllOrders?.data?.result?.length <= 0 && <p>You have no order</p>
       }
     </div>
   )

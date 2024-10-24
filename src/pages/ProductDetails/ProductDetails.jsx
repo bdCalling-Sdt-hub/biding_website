@@ -58,7 +58,7 @@ const ProductDetails = () => {
     const { data: profile } = useGetProfileQuery();
     useEffect(() => {
         setAuction(getSingleAuction?.data);
-        // setTime(getSingleAuction?.data?.countdownTime)
+        // setTime(getSingleAuction?.data?.countdownTime) uniqueBidders
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
         setBidBuddyUser(filterBidUser?.[0]);
     }, [getSingleAuction?.data, profile]);
@@ -92,10 +92,6 @@ const ProductDetails = () => {
     }, [auction?.status, time]);
 
     /** Get unique bidder profile image */
-    const unniqueUser = auction?.bidHistory?.filter((user, index, self) =>
-        index === self.findIndex((u) => u?.user === user?.user)
-    );
-
     /** Current highest bidder table data format */
     const heightBidderDataFormat = auction?.bidHistory?.slice(-2)?.map((bidder, i) => {
         const formattedTime = new Date(bidder?.time).toLocaleTimeString('en-US', {
@@ -131,7 +127,7 @@ const ProductDetails = () => {
         socket.emit('joinAuction', id);
 
         socket.on("bidHistory", (updatedBidHistory) => {
-            console.log('updatedBidHistory', updatedBidHistory)
+            // console.log('updatedBidHistory', updatedBidHistory)
             if (updatedBidHistory?.updatedAuction?._id === id) {
                 setAuction(updatedBidHistory?.updatedAuction);
                 setTime(updatedBidHistory?.updatedAuction?.countdownTime)
@@ -156,7 +152,6 @@ const ProductDetails = () => {
 
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
     // console.log('auction',getSingleAuction?.data)
-
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -180,7 +175,7 @@ const ProductDetails = () => {
                             <div className='bg-white rounded-md mt-14 py-2'>
                                 <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
                                 <div className='flex flex-wrap items-center gap-5 ml-2'>
-                                    {unniqueUser?.slice(0, 14).map((user, index) => (
+                                    {auction?.uniqueBidders?.slice(0, 14).map((user, index) => (
                                         <img key={index} src={user?.profile_image} className='rounded-full w-[80px] h-[80px]' alt="" />
                                     ))}
                                 </div>
@@ -190,10 +185,21 @@ const ProductDetails = () => {
                             <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>
                             <div className='flex justify-between py-5'>
                                 <p>Current BID:</p>
-                                <p className='text-[#338BFF] text-[26px] font-semibold'>
-                                    ${auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 'N/A'}
+                                <p className='text-[#338BFF] text-[26px] font-semibold'>{auction?.financeAvailable ? <span style={{
+                                    color: '#000000'
+                                }} className='text-base font-normal -mt-2 mr-3 inline-block'>(finance available)</span> : ''}
+                                    ${auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? '0'}
                                 </p>
                             </div>
+                            {
+                                auction?.financeAvailable && <div style={{
+                                    background: 'black',
+                                    color: '#FFFFFF'
+                                }} className='flex justify-between items-center gap-2 p-2 rounded-md mb-4'>
+                                    <p>Total Months For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
+                                    <p>Per Months : <span className='text-yellow'>${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0 / auction?.totalMonthForFinance).toFixed(2)}</span></p>
+                                </div>
+                            }
                             <p>Current Highest Bidder</p>
                             {auction?.bidHistory?.length < 1 ? (
                                 <p>No bid yet!</p>
@@ -217,7 +223,7 @@ const ProductDetails = () => {
                                     <div className='text-center'>
                                         <p className='font-semibold text-4xl mt-3' style={{ color: '#338BFF' }}>Congratulations</p>
                                         <p>You Are the Winning Bidder!</p>
-                                        <div onClick={() => navigate(`/payment?id=${id}`)} className='lg:px-10 mt-5'>
+                                        <div onClick={() => { navigate(`/payment?id=${id}`); window.location.reload() }} className='lg:px-10 mt-5'>
                                             <Button className='py-2'>Proceed to Pay</Button>
                                         </div>
                                     </div>
@@ -323,15 +329,16 @@ const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
 
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const totalHours = Math.floor(timeLeft / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
     return {
         total: timeLeft,
-        hours,
+        hours: totalHours,
         minutes,
         seconds,
     };
 };
+
 

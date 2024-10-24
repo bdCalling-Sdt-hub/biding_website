@@ -2,11 +2,12 @@ import React from 'react'
 import img from '../../assets/login.png'
 import { Button, Checkbox, Form, Input, Spin } from 'antd'
 import { AiFillGoogleCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../redux/api/authApis';
 import { toast } from 'sonner';
 import GoogleAuthLogin from '../../components/ui/GoogleAuthLogin';
 const Login = () => {
+    const navigate = useNavigate()
     const [loginUser, { isLoading }] = useLoginMutation()
     
     // login form value handle function
@@ -16,8 +17,7 @@ const Login = () => {
                 if (payload?.data?.accessToken) {
                     toast.success(payload?.message)
                     localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
-
-
+                    navigate('/')
                 } else {
                     toast.error(payload?.message || 'something went wrong')
                     localStorage.removeItem('token')

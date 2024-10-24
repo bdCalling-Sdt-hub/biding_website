@@ -134,22 +134,21 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
         </div>
     );
 };
+export default UpcommingProduct;
 
 // Helper function to calculate the remaining time
-export const calculateTimeLeft = (targetDateTime) => {
+const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
 
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const totalHours = Math.floor(timeLeft / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
     return {
         total: timeLeft,
-        hours,
+        hours: totalHours,
         minutes,
         seconds,
     };
 };
-
-export default UpcommingProduct;

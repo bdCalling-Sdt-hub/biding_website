@@ -6,7 +6,7 @@ const auctionsApis = baseApi.injectEndpoints({
         getAuctions: builder.query({
             query: ({ category, searchTerm, financeAvailable }) => {
                 return {
-                    url: `/auction${category ? `?category=${category}` : ''}${searchTerm ? `${category ? "&" : "?"}searchTerm=${searchTerm}` : ''}${financeAvailable ? `${category || searchTerm ? "&" : "?"}financeAvailable=${financeAvailable}` : ''}`,
+                    url: `/auction?limit=999999999${category ? `&category=${category}` : ''}${searchTerm ? `&searchTerm=${searchTerm}` : ''}${financeAvailable ? `&financeAvailable=${financeAvailable}` : ''}`,
                     method: 'GET'
                 }
             },

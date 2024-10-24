@@ -7,6 +7,7 @@ const BiddingHistory = () => {
   const navigate = useNavigate()
   const { data } = useGetBiddingHistoryQuery()
   const { data: profile } = useGetProfileQuery()
+  console.log(data)
   return (
     <div className='h-screen overflow-y-scroll'>
       <h1 className='text-yellow font-medium'>Bidding History</h1>
@@ -23,7 +24,7 @@ const BiddingHistory = () => {
 
           <div className='text-center space-y-2'>
             <p>Bids Placed</p>
-            <p className='font-medium'>48</p>
+            <p className='font-medium'>{item?.bidPlace}</p>
           </div>
           <div className='text-center space-y-2'>
             <p>Winner</p>
