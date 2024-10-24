@@ -17,6 +17,8 @@ const Winner = () => {
   const [page, setPage] = useState(1)
   const { data, isFetching, isError } = useGetWinnerQuery({ status: "COMPLETED", page })//UPCOMING
   const { data: upcomingData } = useGetWinnerQuery({ status: "UPCOMING", page })//UPCOMING
+
+  console.log(data);
   return (
     <div>
       <BackButton pageName={'winner'} />
@@ -46,11 +48,11 @@ const Winner = () => {
                       <p className=' font-medium'>{product?.bidHistory?.length}</p>
                     </div>
                   </div>
-                  <div className='flex items-center gap-2 pl-2'>
-                    <p>Winner:</p>
+                  <div className='flex items-center justify-between  w-full gap-2 pl-5'>
+                    <p className='font-bold'>Winner:</p>
                     <div className='flex flex-col items-center'>
                       <img src={product?.bidHistory[product?.bidHistory?.length - 1]?.user?.profile_image} className='h-[50px] w-[50px]' alt="" />
-                      <p>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name}</p>
+                      <p className='text-sm'>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name}</p>
                     </div>
                   </div>
                 </div>

@@ -16,7 +16,7 @@ const SocketProviders = ({ children }) => {
     const [newNotifications, setNewNotification] = useState(0)
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            const socketConnect = io(`http://103.161.9.133:6050`, {
+            const socketConnect = io(`http://192.168.10.153:6050`, {
                 auth: {
                     token: JSON.parse(localStorage.getItem("token")),
                 }
