@@ -86,7 +86,7 @@ const authApis = baseApi.injectEndpoints({
                 url: '/user/get-my-profile',
                 method: 'GET',
             }),
-            providesTags: ['auth']
+            providesTags: ['auth', 'profile']
         }),
         // update profile
         updateProfile: builder.mutation({

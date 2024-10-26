@@ -19,7 +19,8 @@ const paymentApis = baseApi.injectEndpoints({
                 url: '/payment/execute-payment-with-credit',
                 method: 'POST',
                 body: data
-            })
+            }),
+            invalidatesTags: ['profile']
         }),
         // create finance payment 
         financePayment: builder.mutation({

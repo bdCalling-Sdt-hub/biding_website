@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import BackButton from '../../components/ui/BackButton';
 import ProductCard from '../../components/ui/ProductCard';
 import { IoArrowBackSharp, IoLocationOutline } from 'react-icons/io5';
@@ -15,11 +15,11 @@ import { useMemo } from 'react';
 
 // Table columns definition
 const columns = [
-    {
-        title: 'Bid',
-        dataIndex: 'bid',
-        key: 'bid',
-    },
+    // {
+    //     title: 'Bid',
+    //     dataIndex: 'bid',
+    //     key: 'bid',
+    // },
     {
         title: 'User',
         dataIndex: 'user',
@@ -44,6 +44,7 @@ const columns = [
 
 const ProductDetails = () => {
     const { socket } = useSocketContext();
+    const location = useLocation()
     const { id, } = useParams();
     const navigate = useNavigate();
     const [auction, setAuction] = useState({});
@@ -55,7 +56,10 @@ const ProductDetails = () => {
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
 
     // Get profile data
-    const { data: profile } = useGetProfileQuery();
+    const { data: profile, isLoading, isFetching } = useGetProfileQuery();
+    if (!localStorage.getItem('token')) {
+        return navigate('/login', { state: location?.pathname })
+    }
     useEffect(() => {
         setAuction(getSingleAuction?.data);
         // setTime(getSingleAuction?.data?.countdownTime) uniqueBidders
@@ -63,11 +67,18 @@ const ProductDetails = () => {
         setBidBuddyUser(filterBidUser?.[0]);
     }, [getSingleAuction?.data, profile]);
     const combinedDateTime = useMemo(() => new Date(`${auction?.activateTime}`), [auction?.activateTime]);
+    const startingDateTime = useMemo(() => new Date(`${auction?.startingDateTime}`), [auction?.startingDateTime]);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
+    const [startTime, setStartTime] = useState(calculateTimeLeft(startingDateTime));
 
     const formatTimeLeft = (time) => {
-        return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
+        if (time.days > 0) {
+            return `${time.days} day ${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
+        } else {
+            return `${String(time.hours).padStart(2, '0')}:${String(time.minutes).padStart(2, '0')}:${String(time.seconds).padStart(2, '0')}`;
+        }
     };
+
     useEffect(() => {
         const interval = setInterval(() => {
             const updatedTimeLeft = calculateTimeLeft(combinedDateTime);
@@ -77,7 +88,19 @@ const ProductDetails = () => {
             }
         }, 1000);
         return () => clearInterval(interval);
-    }, [combinedDateTime, formatTimeLeft(timeLeft)]);
+    }, [combinedDateTime, formatTimeLeft(startTime)]);
+
+    useEffect(() => {
+        const interval2 = setInterval(() => {
+            const updatedTimeLeft = calculateTimeLeft(startingDateTime);
+            setStartTime(updatedTimeLeft);
+            if (updatedTimeLeft.total <= 0) {
+                clearInterval(interval2);
+            }
+        }, 1000);
+        return () => clearInterval(interval2);
+    }, [startingDateTime, formatTimeLeft(startTime)]);
+
     useEffect(() => {
         if (auction?.status !== 'ACTIVE' || time === 0) {
             return;
@@ -148,10 +171,10 @@ const ProductDetails = () => {
         };
     }, [socket, id, profile?.data?._id]);
 
-    // Timer logic for auction countdown
+    // Timer logic for auction countdown activateTime startingDateTime
 
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
-    // console.log('auction',getSingleAuction?.data)
+    // console.log(timeLeft)
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -197,7 +220,7 @@ const ProductDetails = () => {
                                     color: '#FFFFFF'
                                 }} className='flex justify-between items-center gap-2 p-2 rounded-md mb-4'>
                                     <p>Total Months For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
-                                    <p>Per Months : <span className='text-yellow'>${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0 / auction?.totalMonthForFinance).toFixed(2)}</span></p>
+                                    <p>Per Months : <span className='text-yellow'>${Number((auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0) / auction?.totalMonthForFinance).toFixed(2)}</span></p>
                                 </div>
                             }
                             <p>Current Highest Bidder</p>
@@ -237,9 +260,11 @@ const ProductDetails = () => {
                                 <div>
                                     <div className='text-center mt-5'>
                                         <h1 className='text-[36px] font-medium text-[#338BFF]'>
-                                            {auction?.status === 'ACTIVE' ? `00 :00:0${time}` :
-                                                formatTimeLeft(timeLeft)?.startsWith('-') ? '00:00:00' : formatTimeLeft(timeLeft)}</h1>
-                                        <p>Time Left</p>
+                                            {auction?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) :
+                                                formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}</h1>
+                                        <p>
+                                            {auction?.status === 'ACTIVE' ? 'Time Left' : 'Time Left to start the auction'}
+                                        </p>
                                     </div>
 
                                     {bidBuddyUser?.isActive ? (
@@ -307,20 +332,21 @@ const ProductDetails = () => {
                     {/* Description */}
                     <div className='bg-white mt-5 p-5 rounded-md'>
                         <h1 className='font-semibold text-[20px]'>Description: </h1>
-                        <p className='text-[#2E2E2E] mt-5'>{auction?.description}</p>
+                        <div dangerouslySetInnerHTML={{ __html: auction?.description }}>
+                        </div>
                     </div>
                 </div>
-
+                {/* UpcommingProduct */}
                 <div className='col-span-12 lg:col-span-2 px-5 lg:px-0'>
                     <p className='font-medium text-[18px] pb-5'>Similar Products:</p>
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4'>
                         {similarProduct?.data?.result?.slice(0, 5)?.map((item, i) => (
-                            <UpcommingProduct key={i} product={item} />
+                            <ProductCard key={i} product={item} />
                         ))}
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
@@ -329,16 +355,30 @@ const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
 
-    const totalHours = Math.floor(timeLeft / (1000 * 60 * 60));
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
     return {
         total: timeLeft,
-        hours: totalHours,
+        days,
+        hours,
         minutes,
         seconds,
     };
 };
+
+export function isLessThanTenSeconds(timeStr) {
+    const parts = timeStr.split(':').map(Number);
+    let hours, minutes, seconds;
+    if (parts.length === 3) {
+        [hours, minutes, seconds] = parts;
+    } else if (parts.length === 4) {
+        const days = parts[0];
+        [hours, minutes, seconds] = parts.slice(1);
+        if (days > 0) return false;
+    }
+    return hours <= 0 && minutes <= 0 && seconds < 10;
+}
 
 

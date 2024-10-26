@@ -32,7 +32,8 @@ const Winner = () => {
                   <img src={product?.images[0]} alt={product?.name} className='w-[50px] h-[50px]' />
                   <div>
                     <p className='font-medium'>{product?.name}</p>
-                    <p className=''>{product?.description}</p>
+                    <div dangerouslySetInnerHTML={{ __html: product?.description }}>
+                    </div>
                   </div>
                 </div>
                 <div className='flex  justify-between  w-full items-center'>
@@ -46,11 +47,11 @@ const Winner = () => {
                       <p className=' font-medium'>{product?.bidHistory?.length}</p>
                     </div>
                   </div>
-                  <div className='flex items-center gap-2 pl-2'>
-                    <p>Winner:</p>
-                    <div className='flex flex-col items-center'>
-                      <img src={product?.bidHistory[product?.bidHistory?.length - 1]?.user?.profile_image} className='h-[50px] w-[50px]' alt="" />
-                      <p>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name}</p>
+                  <div className='flex items-center justify-between flex-col gap-2 pl-2'>
+                    <p className='font-medium'>Winner</p>
+                    <div className='flex  items-center gap-2'>
+                      <img src={product?.bidHistory[product?.bidHistory?.length - 1]?.user?.profile_image} className='h-[40px] w-[40px]' alt="" />
+                      <p className='w-[140px] text-sm'>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name}</p>
                     </div>
                   </div>
                 </div>

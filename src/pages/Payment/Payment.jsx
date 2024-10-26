@@ -43,19 +43,7 @@ const Payment = () => {
             toast.error(err?.message || 'something went wrong')
         })
     }
-    const items = [
-        {
-            key: '1',
-            label: 'Credit Card',
-            children: <PaymentComponent data={data} onPaymentSuccess={onPaymentSuccess} />,
-        },
-        {
-            key: '2',
-            label: 'PayPal',
-            children: <PaymentPayPal data={data} />,
-        },
-        ,
-    ];
+
     /**Handle change location  */
     const onFinish = (values) => {
         update({ id: address?._id, data: values }).unwrap().then((res) => {
@@ -76,9 +64,9 @@ const Payment = () => {
             "itemType": 'PRODUCT',
             "product": singleAuctions?.data?._id,
             "winingBid": singleAuctions?.data?.currentPrice,
-            "totalAmount": payWithFinance ? Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2) : singleAuctions?.data?.currentPrice,
-            "orderType": payWithFinance ? "FINANCE" : "NORMAL",
-            "paymentType": payWithFinance ? "INSTALLMENT" : "FULL_PAYMENT"
+            "totalAmount": Number(singleAuctions?.data?.currentPrice),//payWithFinance ? Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2) : singleAuctions?.data?.currentPrice,
+            "orderType": 'NORMAL',//payWithFinance ? "FINANCE" : "NORMAL",
+            "paymentType": 'FULL_PAYMENT'//payWithFinance ? "INSTALLMENT" : "FULL_PAYMENT"
         })
     }, [address, singleAuctions?.data, payWithFinance])
     const onFiancePayment = (value) => {
@@ -93,6 +81,81 @@ const Payment = () => {
             toast.error(err?.data?.message)
         })
     }
+    const items = [
+        singleAuctions?.data?.financeAvailable && {
+            key: '1',
+            label: 'Finance',
+            children: <>
+                <Form className='mx-auto max-w-[500px]'
+                    onFinish={onFiancePayment}
+                    layout='vertical'
+                >
+                    <p className='text-2xl text-center'>Pay with Financing</p>
+                    <Form.Item
+                        name={`customerName`}
+                        label='Name'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Name is Required'
+                            }
+                        ]}
+                    >
+                        <Input placeholder='name' />
+                    </Form.Item>
+                    <Form.Item
+                        name={`customerEmail`}
+                        label='Email'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Email is Required'
+                            }
+                        ]}
+                    >
+                        <Input type='email' placeholder='email' />
+                    </Form.Item>
+                    <Form.Item
+                        name={`customerPhoneNum`}
+                        label='Phone Number'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Phone Number is Required'
+                            }
+                        ]}
+                    >
+                        <Input placeholder='Phone Number' />
+                    </Form.Item>
+                    <Form.Item
+                        name={`customerAddress`}
+                        label='Address'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Address is Required'
+                            }
+                        ]}
+                    >
+                        <Input placeholder='Address' />
+                    </Form.Item>
+                    <button className='bg-yellow text-white w-full py-2 rounded-md'>
+                        Apply For Financing
+                    </button>
+                </Form>
+            </>,
+        },
+        {
+            key: '2',
+            label: 'PayPal',
+            children: <PaymentPayPal data={data} />,
+        },
+        {
+            key: '3',
+            label: 'Credit Card',
+            children: <PaymentComponent data={data} onPaymentSuccess={onPaymentSuccess} />,
+        },
+    ];
     return (
         <div className='px-5 lg:px-0'>
             <BackButton pageName={'Payment'} />
@@ -112,30 +175,25 @@ const Payment = () => {
                         </div>
                         {
                             singleAuctions?.data?.financeAvailable && <div className=' mb-4'>
-                                <div className='flex justify-between items-center'>
-                                    <p>Monthly Financing</p>
-                                    <Switch defaultChecked={false} onChange={(value) => setPayWithFinance(value)} />
-                                </div>
-                                {
-                                    payWithFinance && <div className='w-full my-2'>
-                                        <div className='flex justify-between items-center pb-3'>
-                                            <p>Total Month</p>
-                                            <p className='font-semibold'>{singleAuctions?.data?.totalMonthForFinance}</p>
-                                        </div>
-                                        <div className='flex justify-between items-center pb-3'>
-                                            <p>Per Month</p>
-                                            <p className='font-semibold'>${Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2)}</p>
-                                        </div>
-                                    </div>
-                                }
 
+                                <p>Monthly Financing Available</p>
+                                <div className='w-full my-2'>
+                                    <div className='flex justify-between items-center pb-3'>
+                                        <p>Total Month</p>
+                                        <p className='font-semibold'>{singleAuctions?.data?.totalMonthForFinance}</p>
+                                    </div>
+                                    <div className='flex justify-between items-center pb-3'>
+                                        <p>Per Month</p>
+                                        <p className='font-semibold'>${Number(singleAuctions?.data?.currentPrice / singleAuctions?.data?.totalMonthForFinance).toFixed(2)}</p>
+                                    </div>
+                                </div>
                             </div>
                         }
 
-                        <div className='flex justify-between items-center '>
+                        {/* <div className='flex justify-between items-center '>
                             <p>Pay</p>
                             <p className='font-semibold'>${data?.totalAmount}</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div>
@@ -156,74 +214,15 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className='bg-white p-8 rounded-md'>
-                        {
-                            payWithFinance ? <Form className='mx-auto max-w-[500px]'
-                                onFinish={onFiancePayment}
-                                layout='vertical'
-                            >
-                                <p className='text-2xl text-center'>Pay with Financing</p>
-                                <Form.Item
-                                    name={`customerName`}
-                                    label='Name'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Name is Required'
-                                        }
-                                    ]}
-                                >
-                                    <Input placeholder='name' />
-                                </Form.Item>
-                                <Form.Item
-                                    name={`customerEmail`}
-                                    label='Email'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Email is Required'
-                                        }
-                                    ]}
-                                >
-                                    <Input type='email' placeholder='email' />
-                                </Form.Item>
-                                <Form.Item
-                                    name={`customerPhoneNum`}
-                                    label='Phone Number'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Phone Number is Required'
-                                        }
-                                    ]}
-                                >
-                                    <Input placeholder='Phone Number' />
-                                </Form.Item>
-                                <Form.Item
-                                    name={`customerAddress`}
-                                    label='Address'
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Address is Required'
-                                        }
-                                    ]}
-                                >
-                                    <Input placeholder='Address' />
-                                </Form.Item>
-                                <button className='bg-yellow text-white w-full py-2 rounded-md'>
-                                    Apply For Financing
-                                </button>
-                            </Form> : <div onClick={() => {
-                                if (!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) {
-                                    toast.error('Please Add a Shipping Address For make Order')
-                                }
-                            }}>
-                                <div className={(!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) ? 'pointer-events-none' : ''}>
-                                    <Tabs defaultActiveKey="1" items={items} />
-                                </div>
+                        <div onClick={() => {
+                            if (!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) {
+                                toast.error('Please Add a Shipping Address For make Order')
+                            }
+                        }}>
+                            <div className={(!addressDetails?.data?.[0]?.user_name || !addressDetails?.data?.[0]?.city || !addressDetails?.data?.[0]?.email || !addressDetails?.data?.[0]?.phone_number || !addressDetails?.data?.[0]?.state || !addressDetails?.data?.[0]?.streetAddress || !addressDetails?.data?.[0]?.zipCode) ? 'pointer-events-none' : ''}>
+                                <Tabs defaultActiveKey="1" items={items} />
                             </div>
-                        }
-
+                        </div>
                     </div>
                 </div>
             </div>
