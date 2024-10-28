@@ -259,11 +259,14 @@ const ProductDetails = () => {
                             ) : (
                                 <div>
                                     <div className='text-center mt-5'>
-                                        <h1 className='text-[36px] font-medium text-[#338BFF]'>
-                                            {auction?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) :
-                                                formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}</h1>
+                                        {
+                                            auction?.status !== 'COMPLETED' && <h1 className='text-[36px] font-medium text-[#338BFF]'>
+                                                {auction?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) :
+                                                    formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}</h1>
+                                        }
+
                                         <p>
-                                            {auction?.status === 'ACTIVE' ? 'Time Left' : 'Time Left to start the auction'}
+                                            {auction?.status === 'ACTIVE' || isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? 'Time Left' : 'Time Left to start the auction'}
                                         </p>
                                     </div>
 

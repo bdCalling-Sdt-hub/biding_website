@@ -7,6 +7,9 @@ const winnerApi = baseApi.injectEndpoints({
             query: ({ status, page, category }) => ({
                 url: `/auction?page=${page || 1}&limit=999999999${status ? `&status=${status}` : ''}${category ? `&category=${category}` : ""}`,//?last24Hours=true
                 method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache'
+                }
             }),
             providesTags: ['winner'],
         }),

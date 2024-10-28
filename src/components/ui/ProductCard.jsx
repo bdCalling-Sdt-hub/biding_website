@@ -271,8 +271,8 @@ const ProductCard = ({ product }) => {
           </p>
           {product?.status !== 'COMPLETED' && (
             <p className='text-[#585858] font-semibold text-[24px]'>
-              {product?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) :
-                formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}
+              {product?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) :
+                formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}
             </p>
           )}
         </div>
