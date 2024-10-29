@@ -8,7 +8,7 @@ import { IoMenuOutline } from 'react-icons/io5';
 import { useSocketContext } from '../../Providers/SocketProviders';
 import { useReadNotificationMutation } from '../../redux/api/manageApis';
 import { useGetProfileQuery } from '../../redux/api/authApis';
-
+import logo from '../../assets/logo.png'
 const NavBar = () => {
   const { data } = useGetProfileQuery()
   const { data: profile } = useGetProfileQuery();
@@ -28,7 +28,8 @@ const NavBar = () => {
       <Layout className='max-w-screen-2xl mx-auto'>
         <Layout.Header className="nav-header">
           <Link to={`/`} className="logo hover:text-yellow">
-            <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Bidding Website</h3>
+            {/* <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Bidding Website</h3> */}
+            <img src={logo} alt="" />
           </Link>
           <div className="navbar-menu">
             <div className="leftMenu flex justify-between items-center gap-5 w-full">
@@ -41,12 +42,12 @@ const NavBar = () => {
               </div>
               {
                 profile?.data?.email ? <div className='flex items-center gap-4 mt-2'>
-                    <Badge className='' count={newNotifications || 0}>
-                      <Link onClick={() => readNotification()} to='/notification'  >
-                        <IoIosNotificationsOutline size={22} className='text-yellow' />
-                      </Link>
+                  <Badge className='' count={newNotifications || 0}>
+                    <Link onClick={() => readNotification()} to='/notification'  >
+                      <IoIosNotificationsOutline size={22} className='text-yellow' />
+                    </Link>
 
-                    </Badge>
+                  </Badge>
                   <div className='bg-[#FEF6e7] rounded-full p-2'>
                     <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                   </div>
