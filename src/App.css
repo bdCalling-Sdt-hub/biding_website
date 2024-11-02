@@ -123,7 +123,7 @@
   }
 }
 
-:where(.css-dev-only-do-not-override-qnu6hi).ant-layout-header{
+.ant-layout-header{
   height: 60px;
   padding: 0 0px;
   line-height: 30px;
