@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://103.161.9.133:6050',
+    baseUrl: 'http://198.211.109.64:5000',
     prepareHeaders: (headers) => {
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
@@ -19,4 +19,4 @@ export const baseApi = createApi({
 });
 
 
-export const imageUrl = 'http://103.161.9.133:6050'
+export const imageUrl = 'http://198.211.109.64:5000'

@@ -354,10 +354,28 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-const calculateTimeLeft = (targetDateTime) => {
-    const now = new Date().getTime();
-    const timeLeft = targetDateTime - now;
+// const calculateTimeLeft = (targetDateTime) => {
+//     // console.log(`targetDateTime`,targetDateTime)
+//     const ukTime = targetDateTime.toLocaleString("en-GB", { timeZone: "Europe/London" });
+//     const now = new Date().getTime();
+//     const timeLeft = targetDateTime - now;
 
+//     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+//     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+//     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+//     return {
+//         total: timeLeft,
+//         days,
+//         hours,
+//         minutes,
+//         seconds,
+//     };
+// };
+const calculateTimeLeft = (targetDateTime) => {
+    const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const now = new Date().getTime();
+    const timeLeft = usTime - now;
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -383,5 +401,4 @@ export function isLessThanTenSeconds(timeStr) {
     }
     return hours <= 0 && minutes <= 0 && seconds < 10;
 }
-
 

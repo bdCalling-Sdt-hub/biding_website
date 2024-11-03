@@ -1,3 +1,9 @@
+
+
+
+
+
+
 // import React, { useEffect, useState } from 'react';
 // import { FaRegStar, FaStar } from 'react-icons/fa';
 // import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
@@ -152,6 +158,7 @@
 //     };
 // };
 
+
 import React, { useEffect, useMemo, useState } from 'react';
 import { FaRegStar, FaStar } from 'react-icons/fa';
 import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
@@ -160,6 +167,7 @@ import { toast } from 'sonner';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
 import { useGetProfileQuery } from '../../redux/api/authApis';
 import { useNavigate } from 'react-router-dom';
+import { isLessThanTenSeconds } from '../../pages/ProductDetails/ProductDetails';
 
 const UpcommingProduct = ({ product, type, BookmarkId }) => {
     // const { data, isLoading } = useGetAuctionsQuery({ category, searchTerm, financeAvailable: financeAvailable === 'true' ? true : false })//{ status: 'ACTIVE' }
@@ -249,7 +257,10 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                 </p>
                 <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
                 <p className='text-[#585858] font-semibold text-[24px]'>
-                    {product?.status === 'ACTIVE' ? formatTimeLeft(startTime) : '00:00:00'}
+                    <p className='text-[#585858] font-semibold text-[24px]'>
+                        {product?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) :
+                            formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}
+                    </p>
                 </p>
                 <div className='px-2 md:px-5'>
                     <button
@@ -284,16 +295,14 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
 };
 export default UpcommingProduct;
 
-// Helper function to calculate the remaining time
 const calculateTimeLeft = (targetDateTime) => {
+    const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
     const now = new Date().getTime();
-    const timeLeft = targetDateTime - now;
-
+    const timeLeft = usTime - now;
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
     return {
         total: timeLeft,
         days,

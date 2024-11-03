@@ -6,6 +6,7 @@ import ProductCard from '../../components/ui/ProductCard'
 import { useGetWinnerQuery } from '../../redux/api/winnerApi'
 import { Spin } from 'antd'
 import { useParams } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const Auctions = () => {
     const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)

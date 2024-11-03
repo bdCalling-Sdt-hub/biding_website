@@ -303,20 +303,38 @@ const ProductCard = ({ product }) => {
 
 export default ProductCard;
 
-const calculateTimeLeft = (targetDateTime) => {
-  const now = new Date().getTime();
-  const timeLeft = targetDateTime - now;
+// const calculateTimeLeft = (targetDateTime) => {
+//   const now = new Date().getTime();
+//   const timeLeft = targetDateTime - now;
 
+//   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+//   const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+//   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+//   return {
+//     total: timeLeft,
+//     days,
+//     hours,
+//     minutes,
+//     seconds,
+//   };
+// };
+const calculateTimeLeft = (targetDateTime) => {
+  const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
+  // console.log('targetDateTime',targetDateTime)
+  // console.log(targetDateTime,usTime)
+  const now = new Date().getTime();
+  const timeLeft = usTime - now;
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
   return {
-    total: timeLeft,
-    days,
-    hours,
-    minutes,
-    seconds,
+      total: timeLeft,
+      days,
+      hours,
+      minutes,
+      seconds,
   };
 };
