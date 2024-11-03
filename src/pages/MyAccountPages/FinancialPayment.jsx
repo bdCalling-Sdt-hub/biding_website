@@ -35,7 +35,8 @@ const FinancialPayment = () => {
                 <p>Number of month : <span className='font-semibold'> {item?.totalMonth}</span></p>
                 <p>Paid Installment :<span className='font-semibold'> {item?.paidInstallment}</span> </p>
                 <p>Installment Left:<span className='font-semibold'> {item?.installmentLeft}</span> </p>
-                <p className='pb-5'>Paid by Credit Card</p>
+                <p>Status : <span className='font-semibold'>{!item?.isApproved ? 'Waiting for admin approval' : item?.status}</span> </p>
+                {/* <p className='pb-5'>Paid by Credit Card</p> */}
                 <button
                   disabled={item?.monthlyStatus === 'paid' || !item?.paymentLink}
                   onClick={() => {
