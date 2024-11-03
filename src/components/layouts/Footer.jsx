@@ -13,8 +13,7 @@ const Footer = () => {
         <div className='flex items-center justify-center '>
           <div>
             <div className='flex items-center gap-2 mb-[18px]'>
-              <img src={logo} className='h-[35px] w-[35px]' alt="" />
-              <h1 className='text-[#2E2E2E] text-[28px] font-bold'>Biding Website</h1>
+              <img src={logo} className='w-[150px]' alt="" />
             </div>
             <p className='leading-7 w-[100%] md:w-[70%] text-[18px] font-normal text-[#585858]'>Your Ultimate Destination for Online Auctions – Engage in the Art of Bidding, and Secure Unmatched Deals with Every Win.</p>
             <div className='mt-5 flex items-center gap-5 text-yellow'>

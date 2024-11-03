@@ -1,15 +1,16 @@
 import { Badge, Button, Drawer, Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
 import LeftMenu from '../ui/LeftMenu';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useSocketContext } from '../../Providers/SocketProviders';
 import { useReadNotificationMutation } from '../../redux/api/manageApis';
 import { useGetProfileQuery } from '../../redux/api/authApis';
-
+import logo from '../../assets/logo.png'
 const NavBar = () => {
+  const navigate = useNavigate()
   const { data } = useGetProfileQuery()
   const { data: profile } = useGetProfileQuery();
   const { newNotifications } = useSocketContext()
@@ -28,7 +29,8 @@ const NavBar = () => {
       <Layout className='max-w-screen-2xl mx-auto'>
         <Layout.Header className="nav-header">
           <Link to={`/`} className="logo hover:text-yellow">
-            <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Bidding Website</h3>
+            {/* <h3 className="brand-font font-bold text-[25px] mt-3 pl-1 md:pl-0 ">Bidding Website</h3> */}
+            <img src={logo} alt="" />
           </Link>
           <div className="navbar-menu">
             <div className="leftMenu flex justify-between items-center gap-5 w-full">
@@ -41,24 +43,34 @@ const NavBar = () => {
               </div>
               {
                 profile?.data?.email ? <div className='flex items-center gap-4 mt-2'>
-                    <Badge className='' count={newNotifications || 0}>
-                      <Link onClick={() => readNotification()} to='/notification'  >
-                        <IoIosNotificationsOutline size={22} className='text-yellow' />
-                      </Link>
+                  <Badge className='' count={newNotifications || 0}>
+                    <Link onClick={() => readNotification()} to='/notification'  >
+                      <IoIosNotificationsOutline size={22} className='text-yellow' />
+                    </Link>
 
-                    </Badge>
+                  </Badge>
                   <div className='bg-[#FEF6e7] rounded-full p-2'>
                     <Link to='/my-profile'><LuUserCircle2 size={22} className='text-yellow' /></Link>
                   </div>
 
-                </div> : <div className='flex justify-center items-center mt-2 gap-5'>
-                  <Link to={`/register`} className='border-yellow hover:text-yellow border text-yellow px-4 py-1 rounded-md'>
-                    Get Started
-                  </Link>
-                  <Link to={`/login`} className='bg-yellow border-yellow border text-white px-4 py-1 rounded-md'>
-                    Sign in
-                  </Link>
-                </div>
+                </div> : <>
+                  <div className='flex justify-center items-center mt-2 gap-5'>
+                    <button style={{
+                      padding: '5px 20px'
+                    }} onClick={() => {
+                      navigate('/register')
+                    }} className='border-yellow hover:text-yellow border text-yellow  rounded-md'>
+                      Get Started
+                    </button>
+                    <button style={{
+                      padding: '5px 20px'
+                    }} onClick={() => {
+                      navigate('/login')
+                    }} className='bg-yellow border-yellow border text-white rounded-md'>
+                      Sign in
+                    </button>
+                  </div>
+                </>
               }
             </div>
             <Button className="menuButton" type="text" onClick={showDrawer}>
