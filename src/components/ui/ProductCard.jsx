@@ -321,11 +321,12 @@ export default ProductCard;
 //   };
 // };
 const calculateTimeLeft = (targetDateTime) => {
-  const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
-  // console.log('targetDateTime',targetDateTime)
-  // console.log(targetDateTime,usTime)
+  // const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const usTime = new Date(targetDateTime);
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const localTime = new Date(usTime.toLocaleString('en-US', { timeZone: userTimeZone }));
   const now = new Date().getTime();
-  const timeLeft = usTime - now;
+  const timeLeft = localTime - now;
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
