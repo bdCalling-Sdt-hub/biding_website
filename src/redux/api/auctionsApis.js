@@ -7,7 +7,10 @@ const auctionsApis = baseApi.injectEndpoints({
             query: ({ category, searchTerm, financeAvailable }) => {
                 return {
                     url: `/auction?limit=999999999${category ? `&category=${category}` : ''}${searchTerm ? `&searchTerm=${searchTerm}` : ''}${financeAvailable ? `&financeAvailable=${financeAvailable}` : ''}`,
-                    method: 'GET'
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache'
+                    }
                 }
             },
             providesTags: ['auctions']

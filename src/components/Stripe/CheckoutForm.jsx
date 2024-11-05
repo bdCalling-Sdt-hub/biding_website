@@ -47,7 +47,7 @@ const CheckoutForm = ({ onPaymentSuccess, data }) => {
             }).catch((err) => {
                 toast.error(err?.data?.message || 'something went wrong')
             });
-    }, [data?.totalAmount]);
+    }, [data]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

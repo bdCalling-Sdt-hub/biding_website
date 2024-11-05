@@ -67,7 +67,7 @@ const TrackOrder = () => {
 
                 <div className='mt-8'>
                     <Steps
-                        current={progressItem?.length - 1}
+                        current={progressItem?.length}
                         progressDot={customDot}
                         items={ENUM_DELIVERY_STATUS}
                     />
