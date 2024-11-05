@@ -61,7 +61,7 @@ const NavBar = () => {
                       navigate('/register')
                     }} className='border-yellow hover:text-yellow border text-yellow  rounded-md'>
                       Get Started
-                    </button>
+                    </button>       
                     <button style={{
                       padding: '5px 20px'
                     }} onClick={() => {

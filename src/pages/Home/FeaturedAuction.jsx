@@ -6,6 +6,7 @@ import { useGetAuctionsQuery } from '../../redux/api/auctionsApis'
 import ProductCard from '../../components/ui/ProductCard'
 import { Link } from 'react-router-dom'
 import { Spin } from 'antd'
+import { toast } from 'sonner'
 
 const FeaturedAuction = () => {
     const { socket } = useSocketContext()

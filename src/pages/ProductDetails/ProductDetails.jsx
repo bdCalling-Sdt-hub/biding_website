@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import BackButton from '../../components/ui/BackButton';
-import ProductCard from '../../components/ui/ProductCard';
 import { IoArrowBackSharp, IoLocationOutline } from 'react-icons/io5';
 import { Input, Table } from 'antd';
 import Button from '../../components/ui/Button';
@@ -62,7 +60,10 @@ const ProductDetails = () => {
         const filterBidUser = getSingleAuction?.data?.bidBuddyUsers?.filter(item => profile?.data?._id === item?.user);
         setBidBuddyUser(filterBidUser?.[0]);
     }, [getSingleAuction?.data, profile]);
-    const combinedDateTime = useMemo(() => new Date(`${auction?.activateTime}`), [auction?.activateTime]);
+    const combinedDateTime = useMemo(() => {
+        console.log(auction?.activateTime)
+        return new Date(`${auction?.activateTime}`)
+    }, [auction?.activateTime]);
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
 
     const formatTimeLeft = (time) => {
@@ -328,7 +329,6 @@ export default ProductDetails;
 const calculateTimeLeft = (targetDateTime) => {
     const now = new Date().getTime();
     const timeLeft = targetDateTime - now;
-
     const totalHours = Math.floor(timeLeft / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
