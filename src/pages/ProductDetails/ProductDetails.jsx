@@ -12,7 +12,6 @@ import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
 import UpcommingProduct from '../../components/ui/UpcommingProduct';
 import { useMemo } from 'react';
-
 // Table columns definition
 const columns = [
     // {
@@ -54,7 +53,6 @@ const ProductDetails = () => {
     // Get auction and similar product data
     const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
-
     // Get profile data
     const { data: profile, isLoading, isFetching } = useGetProfileQuery();
     if (!localStorage.getItem('token')) {
@@ -175,6 +173,18 @@ const ProductDetails = () => {
 
     // console.log(getSingleAuction?.data?.status, profile?.data?._id, getSingleAuction?.data?.bidHistory?.[auction?.bidHistory?.length - 1]?.user)
     // console.log(timeLeft)
+
+    useEffect(() => {
+        const handlePopState = () => {
+            navigate('/');
+        };
+
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [navigate]);
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -287,7 +297,7 @@ const ProductDetails = () => {
                                                 Bids Left: <span style={{ color: '#338BFF' }}>{bidBuddyUser?.availableBids}</span>
                                             </p>
                                         </div>
-                                    ) : (
+                                    ) : auction?.status === 'ACTIVE' && (
                                         <div className='lg:px-10 mt-5'>
                                             <Button onClick={() => {
                                                 // if (auction?.status !== 'ACTIVE') {
@@ -297,32 +307,34 @@ const ProductDetails = () => {
                                             }} className='py-2'>Bid</Button>
                                         </div>
                                     )}
+                                    {
+                                        auction?.status === 'ACTIVE' && <div className='flex gap-5 justify-between mt-5 lg:px-10'>
+                                            <Input
+                                                type='number'
+                                                onChange={(e) => setNumberOfBids(e.target.value)}
+                                                placeholder='Number of bids'
+                                                className='border py-3 border-[#9F9F9F] rounded-lg w-full'
+                                            />
+                                            <Button
+                                                onClick={() => {
+                                                    // if (auction?.status !== 'ACTIVE') {
+                                                    //     return toast.error('bid will be available last 9s')
+                                                    // }
+                                                    if (!numberOfBids) {
+                                                        return toast.error('Please input number of bids');
+                                                    }
+                                                    if (bidBuddyUser?.isActive) {
+                                                        socket.emit('add-bids', { auctionId: id, userId: profile?.data?._id, bids: Number(numberOfBids) });
+                                                    } else {
+                                                        socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) });
+                                                    }
+                                                }}
+                                            >
+                                                {bidBuddyUser?.isActive ? 'Add Bids' : 'Auto Bid'}
+                                            </Button>
+                                        </div>
+                                    }
 
-                                    <div className='flex gap-5 justify-between mt-5 lg:px-10'>
-                                        <Input
-                                            type='number'
-                                            onChange={(e) => setNumberOfBids(e.target.value)}
-                                            placeholder='Number of bids'
-                                            className='border py-3 border-[#9F9F9F] rounded-lg w-full'
-                                        />
-                                        <Button
-                                            onClick={() => {
-                                                // if (auction?.status !== 'ACTIVE') {
-                                                //     return toast.error('bid will be available last 9s')
-                                                // }
-                                                if (!numberOfBids) {
-                                                    return toast.error('Please input number of bids');
-                                                }
-                                                if (bidBuddyUser?.isActive) {
-                                                    socket.emit('add-bids', { auctionId: id, userId: profile?.data?._id, bids: Number(numberOfBids) });
-                                                } else {
-                                                    socket.emit('activateBidBuddy', { auctionId: id, userId: profile?.data?._id, totalBids: Number(numberOfBids) });
-                                                }
-                                            }}
-                                        >
-                                            {bidBuddyUser?.isActive ? 'Add Bids' : 'Book BidBuddy'}
-                                        </Button>
-                                    </div>
                                 </div>
                             )}
 

@@ -9,7 +9,7 @@ import GoogleAuthLogin from '../../components/ui/GoogleAuthLogin';
 const Login = () => {
     const navigate = useNavigate()
     const [loginUser, { isLoading }] = useLoginMutation()
-    
+
     // login form value handle function
     const onFinish = (values) => {
         loginUser(values).unwrap()
@@ -18,6 +18,7 @@ const Login = () => {
                     toast.success(payload?.message)
                     localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
                     navigate('/')
+                    window.location.reload()
                 } else {
                     toast.error(payload?.message || 'something went wrong')
                     localStorage.removeItem('token')
@@ -79,8 +80,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
-
         </div>
     )
 }
