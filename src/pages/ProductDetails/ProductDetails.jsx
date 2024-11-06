@@ -134,6 +134,9 @@ const ProductDetails = () => {
 
     // Manual bid handler
     const handleBid = () => {
+        if (!profile?.data?._id) {
+            return toast.error('please login first')
+        }
         if (!socket) {
             return;
         }
@@ -297,7 +300,7 @@ const ProductDetails = () => {
                                                 Bids Left: <span style={{ color: '#338BFF' }}>{bidBuddyUser?.availableBids}</span>
                                             </p>
                                         </div>
-                                    ) : auction?.status === 'ACTIVE' && (
+                                    ) : (
                                         <div className='lg:px-10 mt-5'>
                                             <Button onClick={() => {
                                                 // if (auction?.status !== 'ACTIVE') {
@@ -320,6 +323,9 @@ const ProductDetails = () => {
                                                     // if (auction?.status !== 'ACTIVE') {
                                                     //     return toast.error('bid will be available last 9s')
                                                     // }
+                                                    if (!profile?.data?._id) {
+                                                        return toast.error('please login first')
+                                                    }
                                                     if (!numberOfBids) {
                                                         return toast.error('Please input number of bids');
                                                     }
