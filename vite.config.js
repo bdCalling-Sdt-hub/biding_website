@@ -8,6 +8,6 @@ export default defineConfig({
     host: "159.203.183.245",
     // host: "192.168.10.25",
     // host: "localhost",
-    port: "3030",
+    port: "3000",
   },
 })
