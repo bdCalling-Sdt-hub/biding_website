@@ -30,7 +30,7 @@ const Footer = () => {
         <div className='flex flex-col'>
           <p className='text-[20px] font-semibold  mb-[24px]'>Company</p>
           <Link to='/about' className='mb-2 text-[#585858]'>About</Link>
-          <Link to='/terms-and-condition' className=' mb-2 text-[#585858]'>Terms and Constitions</Link>
+          <Link to='/terms-and-condition' className=' mb-2 text-[#585858]'>Terms and Conditions</Link>
           <Link to='/privacy-policy' className=' mb-2 text-[#585858]'>Privacy Policy</Link>
         </div>
         <div className='flex flex-col'>

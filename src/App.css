@@ -301,3 +301,21 @@ body {
   display: none;
 }
 
+@media screen and (max-width:500px) {
+  .swiper-button-prev, .swiper-button-next {
+    color: #ffa200 !important;
+    background-color:  transparent;
+    border-radius: 100%;
+  }
+  .swiper-button-prev:after, .swiper-button-next:after {
+    font-size: 10px !important;
+  }
+  .swiper-button-prev, .swiper-button-next {
+    width: 20px !important;
+    height: 20px !important;
+    top: 60% !important;
+  }
+  .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal{
+    display: none;
+  }
+}

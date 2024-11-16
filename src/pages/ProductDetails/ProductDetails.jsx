@@ -10,7 +10,6 @@ import { useGetProfileQuery } from '../../redux/api/authApis';
 import { toast } from 'sonner';
 import { useGetSingleAuctionQuery } from '../../redux/api/auctionsApis';
 import { useGetWinnerQuery } from '../../redux/api/winnerApi';
-import UpcommingProduct from '../../components/ui/UpcommingProduct';
 import { useMemo } from 'react';
 // Table columns definition
 const columns = [
@@ -58,6 +57,7 @@ const ProductDetails = () => {
     if (!localStorage.getItem('token')) {
         return navigate('/login', { state: location?.pathname })
     }
+    // console.log(auction?.activateTime)
     useEffect(() => {
         setAuction(getSingleAuction?.data);
         // setTime(getSingleAuction?.data?.countdownTime) uniqueBidders
@@ -224,7 +224,7 @@ const ProductDetails = () => {
                                 <p className='text-[#338BFF] text-[26px] font-semibold'>{auction?.financeAvailable ? <span style={{
                                     color: '#000000'
                                 }} className='text-base font-normal -mt-2 mr-3 inline-block'>(finance available)</span> : ''}
-                                    ${auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? '0'}
+                                    ${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount).toFixed(2) ?? '0'}
                                 </p>
                             </div>
                             {
@@ -390,13 +390,17 @@ export default ProductDetails;
 //         seconds,
 //     };
 // };
+
+
+
+
 const calculateTimeLeft = (targetDateTime) => {
     // const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
-    const usTime = new Date(targetDateTime);
-    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const localTime = new Date(usTime.toLocaleString('en-US', { timeZone: userTimeZone }));
+    // const usTime = new Date(targetDateTime);
+    // const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    // const localTime = new Date(usTime.toLocaleString('en-US', { timeZone: userTimeZone }));
     const now = new Date().getTime();
-    const timeLeft = localTime - now;
+    const timeLeft = targetDateTime - now;
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
@@ -422,4 +426,38 @@ export function isLessThanTenSeconds(timeStr) {
     }
     return hours <= 0 && minutes <= 0 && seconds < 10;
 }
+
+
+// const calculateTimeLeft = (targetDateTime) => {
+//     // const usTime = new Date(targetDateTime.toLocaleString("en-US", { timeZone: "America/New_York" }));
+//     const usTime = new Date(targetDateTime);
+//     const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+//     const localTime = new Date(usTime.toLocaleString('en-US', { timeZone: userTimeZone }));
+//     const now = new Date().getTime();
+//     const timeLeft = localTime - now;
+//     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+//     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+//     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+//     return {
+//         total: timeLeft,
+//         days,
+//         hours,
+//         minutes,
+//         seconds,
+//     };
+// };
+
+// export function isLessThanTenSeconds(timeStr) {
+//     const parts = timeStr.split(':').map(Number);
+//     let hours, minutes, seconds;
+//     if (parts.length === 3) {
+//         [hours, minutes, seconds] = parts;
+//     } else if (parts.length === 4) {
+//         const days = parts[0];
+//         [hours, minutes, seconds] = parts.slice(1);
+//         if (days > 0) return false;
+//     }
+//     return hours <= 0 && minutes <= 0 && seconds < 10;
+// }
 

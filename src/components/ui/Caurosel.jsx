@@ -18,10 +18,10 @@ const Caurosel = () => {
     <Swiper
       spaceBetween={30}
       centeredSlides={true}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
+      // autoplay={{
+      //   delay: 2500,
+      //   disableOnInteraction: false,
+      // }}
       pagination={{
         clickable: true,
       }}
@@ -30,10 +30,10 @@ const Caurosel = () => {
       className="mySwiper"
     >
       {
-        getBanners?.data?.map((banner) =><SwiperSlide   key={banner?._id}>
-          <img  style={{ height: '50vh'  }} src={banner?.url} className=' object-contain rounded-md' alt="" />
-      </SwiperSlide>
-      )
+        getBanners?.data?.map((banner) => <SwiperSlide key={banner?._id}>
+          <img src={banner?.url} className='h-[50vh] object-contain rounded-md w-full' alt="" />
+        </SwiperSlide>
+        )
       }
 
 
