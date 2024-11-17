@@ -263,7 +263,7 @@ const ProductCard = ({ product }) => {
           <p className='font-medium'>{product?.name}</p>
           <p className='text-[#338BFF] font-medium'>
             {formatTimeLeft(timeLeft)?.startsWith('-') || Number(formatTimeLeft(timeLeft).split(':')[2]) < 10
-              ? `$${product?.currentPrice}`
+              ? `$${Number(product?.currentPrice || 0).toFixed(2)}`
               : `${product?.startingDate?.split("T")[0]} at ${product?.startingTime}`}
           </p>
           <p className='text-[#2E2E2E]'>

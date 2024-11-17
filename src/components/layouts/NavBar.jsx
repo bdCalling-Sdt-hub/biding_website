@@ -61,7 +61,7 @@ const NavBar = () => {
                       navigate('/register')
                     }} className='border-yellow hover:text-yellow border text-yellow  rounded-md'>
                       Get Started
-                    </button>       
+                    </button>
                     <button style={{
                       padding: '5px 20px'
                     }} onClick={() => {
@@ -97,7 +97,7 @@ const NavBar = () => {
                   </div>
                 </div>
                 <div className='flex items-center justify-center gap-4 mt-5'>
-                  <p className='text-[#338BFF] bg-[#F9F9F9] px-4 py-2'>{data?.data?.availableBid} Bids</p>
+                  <p className='text-[#338BFF] bg-[#F9F9F9] px-4 py-2'>{Number(data?.data?.availableBid || 0).toFixed(2)} Bids</p>
                   <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
                 </div>
               </div>
