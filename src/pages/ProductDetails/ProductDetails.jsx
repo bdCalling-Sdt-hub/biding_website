@@ -236,7 +236,7 @@ const ProductDetails = () => {
                                     color: '#FFFFFF'
                                 }} className='flex justify-between items-center gap-2 p-2 rounded-md mb-4'>
                                     <p>Total Month For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
-                                    <p>Per Months : <span className='text-yellow'>${Number((auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0) / auction?.totalMonthForFinance).toFixed(2)}</span></p>
+                                    <p>Per Month : <span className='text-yellow'>${Number((auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0) / auction?.totalMonthForFinance).toFixed(2)}</span></p>
                                 </div>
                             }
                             <p>Current Highest Bidder</p>
