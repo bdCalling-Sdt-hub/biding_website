@@ -47,7 +47,7 @@ const TrackOrder = () => {
                 {/* Product and Address Info */}
                 <div className="flex flex-wrap items-center justify-between mt-5">
                     <div className="flex items-center gap-5 mt-5">
-                        <img className='rounded-md' src={getSingleOrder?.data?.item?.images?.[0]} alt="product" />
+                        <img className='rounded-md max-w-20' src={getSingleOrder?.data?.item?.images?.[0]} alt="product" />
                         <div>
                             <h1 className="text-[22px] font-medium">{getSingleOrder?.data?.item?.name}</h1>
                             <p className="flex items-center gap-1">
