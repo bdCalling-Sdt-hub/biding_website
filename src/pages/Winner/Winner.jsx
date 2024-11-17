@@ -40,7 +40,7 @@ const Winner = () => {
                   <div className='flex gap-2  md:gap-20 border-r border-[#DCDCDC] pr-5'>
                     <div className=''>
                       <p>Final Bid</p>
-                      <p className='text-[#338BFF] font-medium'>{product?.bidHistory[product?.bidHistory?.length - 1]?.bidAmount}</p>
+                      <p className='text-[#338BFF] font-medium'>{Number(product?.bidHistory[product?.bidHistory?.length - 1]?.bidAmount || 0).toFixed(2)}</p>
                     </div>
                     <div className=''>
                       <p className=''>Bid Place</p>

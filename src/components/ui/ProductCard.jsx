@@ -280,7 +280,7 @@ const ProductCard = ({ product }) => {
       <div className='p-2 md:p-5'>
         <button
           onClick={() => navigate(`/product-details/${product?._id}?${product?.status === 'ACTIVE' ? `time=${time}` : ''}`)}
-          className={`md:px-14 text-white ${product?.status !== 'ACTIVE' ? 'bg-gray' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}
+          className={`md:px-14 text-white ${product?.status == 'ACTIVE' ? ' bg-yellow' : product?.status == 'COMPLETED' ? 'bg-[#FC8F54]' : 'bg-gray'} rounded-md py-2 w-full whitespace-nowrap`}
         >
           {product?.status === 'COMPLETED' ? 'Sold' : product?.status === 'ACTIVE' ? 'Bid' : 'Starting Soon'}
         </button>
@@ -332,10 +332,10 @@ const calculateTimeLeft = (targetDateTime) => {
   const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
   return {
-      total: timeLeft,
-      days,
-      hours,
-      minutes,
-      seconds,
+    total: timeLeft,
+    days,
+    hours,
+    minutes,
+    seconds,
   };
 };

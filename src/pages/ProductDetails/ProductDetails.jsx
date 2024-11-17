@@ -188,6 +188,7 @@ const ProductDetails = () => {
             window.removeEventListener('popstate', handlePopState);
         };
     }, [navigate]);
+    console.log(auction?.bidHistory)
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -220,19 +221,21 @@ const ProductDetails = () => {
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
                             <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>
                             <div className='flex justify-between py-5'>
-                                <p>Current BID:</p>
-                                <p className='text-[#338BFF] text-[26px] font-semibold'>{auction?.financeAvailable ? <span style={{
+                                <p className='font-semibold text-2xl'>Current Bid:</p>
+                                <div className='text-[#338BFF] text-[26px] font-semibold flex justify-end items-center'>{auction?.financeAvailable ? 
+                                    <p style={{
                                     color: '#000000'
-                                }} className='text-base font-normal -mt-2 mr-3 inline-block'>(finance available)</span> : ''}
+                                }} className='text-base font-normal mr-3 inline-block'>(finance available)</p>
+                                 : ''}
                                     ${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount).toFixed(2) ?? '0'}
-                                </p>
+                                </div>
                             </div>
                             {
                                 auction?.financeAvailable && <div style={{
                                     background: 'black',
                                     color: '#FFFFFF'
                                 }} className='flex justify-between items-center gap-2 p-2 rounded-md mb-4'>
-                                    <p>Total Months For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
+                                    <p>Total Month For Financing: <span className='text-yellow'>{auction?.totalMonthForFinance}</span></p>
                                     <p>Per Months : <span className='text-yellow'>${Number((auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount ?? 0) / auction?.totalMonthForFinance).toFixed(2)}</span></p>
                                 </div>
                             }
@@ -241,9 +244,9 @@ const ProductDetails = () => {
                                 <p>No bid yet!</p>
                             ) : (
                                 <div className='flex items-center gap-5 mt-5 mb-5'>
-                                    <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.profile_image ?? 'default_profile_image_url'} className='rounded-full h-[150px] w-[150px]' alt="" />
+                                    {/* <img src={auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.profile_image ?? 'default_profile_image_url'} className='rounded-full h-[150px] w-[150px]' alt="" /> */}
                                     <div>
-                                        <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.user?.name}</p>
+                                        <p className='font-semibold text-[20px]'>{auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.name || 'name'}</p>
                                         <p className='flex items-center gap-2'>
                                             <IoLocationOutline className='text-yellow' /> {auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.location || 'Location Not Available'}
                                         </p>
@@ -336,7 +339,7 @@ const ProductDetails = () => {
                                                     }
                                                 }}
                                             >
-                                                {bidBuddyUser?.isActive ? 'Add Bids' : 'Auto Bid'}
+                                                {bidBuddyUser?.isActive ? 'Add Bids' : 'Auto Bid Tool'}
                                             </Button>
                                         </div>
                                     }
