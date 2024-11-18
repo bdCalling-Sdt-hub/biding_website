@@ -27,7 +27,7 @@ const MyOrder = () => {
                 </div>
               </div>
               <div className='space-y-2 text-end '>
-                <p>Winning Bids: <span className='font-medium'>${item?.winingBid
+                <p>Winning Bids: <span className='font-medium'>${Number(item?.winingBid || 0).toFixed(2)
                 }</span></p>
                 <p className='pb-5'>Paid by {item?.paidBy}</p>
                 <Link to={`/my-profile/track-order/${item?._id}`}><Button >Track Order</Button></Link>
