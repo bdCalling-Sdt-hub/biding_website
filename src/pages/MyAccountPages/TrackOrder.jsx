@@ -58,7 +58,7 @@ const TrackOrder = () => {
                     </div>
                     <div className="space-y-2 text-end">
                         <p>
-                            Winning Bids: <span className="font-medium">${getSingleOrder?.data?.item?.currentPrice}</span>
+                            Winning Bids: <span className="font-medium">${Number(getSingleOrder?.data?.item?.currentPrice || 0).toFixed(2)}</span>
                         </p>
                         <p>Paid by Credit Card</p>
                     </div>
