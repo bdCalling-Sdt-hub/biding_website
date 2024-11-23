@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useGetProfileQuery } from '../../redux/api/authApis';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const Search = () => {
     const [searchText, setSearchText] = useState('');
     const { data } = useGetProfileQuery()
@@ -10,10 +10,11 @@ const Search = () => {
     const handleSearch = (e) => {
         setSearchText(e.target.value);
     }
+    const location = useLocation()
     return (
         <div className='md:flex gap-2  items-center justify-between  my-4'>
             <div></div>
-            <div className=' px-2 md:px-0 flex items-center justify-center '>
+            <div className={`px-2 md:px-0 items-center justify-center ${location?.pathname == '/'?'flex':'hidden'}`}>
                 <Input
                     className=''
                     placeholder="What are you looking for?"
@@ -24,11 +25,9 @@ const Search = () => {
                 />
             </div>
             <div className=' hidden  md:flex  items-center gap-2 text-white border border-[#A1CAFF] p-[2px] rounded-md'>
-                <div className='text-[#338BFF] bg-white p-2 rounded-md'>{Number(data?.data?.availableBid || 0).toFixed()} Bids</div>
+                <div className='text-[#338BFF] bg-white p-2 rounded-md'>{Number(data?.data?.availableBid || 0).toFixed()} </div>
                 <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
             </div>
-
-
         </div>
     )
 }

@@ -21,7 +21,7 @@ const TopCategory = () => {
     const nextRef = useRef(null);
     return (
         <div>
-            <div className='flex justify-between items-center -mb-16'>
+            <div className='flex justify-between items-center -mb-16 mt-10'>
                 <HomeContentHeading title={'Top Categories'} />
             </div>
             <div className='my-5 category'>

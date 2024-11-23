@@ -10,10 +10,9 @@ const Home = () => {
   
   return (
     <div className=''>
-      <Search/>
       <Caurosel />
-      <FeaturedAuction/>
       <TopCategory/>
+      <FeaturedAuction/>
       <UpComingAuction/>
       <AvailableFinancing/>
       <WhyChooseUs/>
