@@ -12,9 +12,9 @@ const Search = () => {
     }
     const location = useLocation()
     return (
-        <div className='md:flex gap-2  items-center justify-between  my-4'>
+        <div className='md:flex gap-2  items-center justify-center  my-4'>
             <div></div>
-            <div className={`px-2 md:px-0 items-center justify-center ${location?.pathname == '/'?'flex':'hidden'}`}>
+            <div className={`px-2 md:px-0 items-center justify-center ${location?.pathname == '/' ? 'flex' : 'hidden'}`}>
                 <Input
                     className=''
                     placeholder="What are you looking for?"
@@ -24,10 +24,7 @@ const Search = () => {
                     style={{ width: 400 }}
                 />
             </div>
-            <div className=' hidden  md:flex  items-center gap-2 text-white border border-[#A1CAFF] p-[2px] rounded-md'>
-                <div className='text-[#338BFF] bg-white p-2 rounded-md'>{Number(data?.data?.availableBid || 0).toFixed()} </div>
-                <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
-            </div>
+       
         </div>
     )
 }

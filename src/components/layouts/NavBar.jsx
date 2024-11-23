@@ -43,8 +43,13 @@ const NavBar = () => {
                   <Link className={`${location === '/contact' ? "text-yellow border-b" : ""} hover:text-yellow `} to='/contact'>Contact</Link>
 
                 </div>
+
                 {
                   profile?.data?.email ? <div className='flex items-center gap-4 mt-2'>
+                    <div className=' hidden  md:flex  items-center gap-2 text-white border border-[#A1CAFF] p-[2px] rounded-md'>
+                      <div className='text-[#338BFF] bg-white p-2 rounded-md'>{Number(data?.data?.availableBid || 0).toFixed()} </div>
+                      <Link to={`/buy-bids`} className='bg-yellow p-2 rounded-md'>Buy Credits</Link>
+                    </div>
                     <Badge className='' count={newNotifications || 0}>
                       <Link onClick={() => readNotification()} to='/notification'  >
                         <IoIosNotificationsOutline size={22} className='text-yellow' />
