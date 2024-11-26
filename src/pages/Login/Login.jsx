@@ -17,7 +17,7 @@ const Login = () => {
                 if (payload?.data?.accessToken) {
                     toast.success(payload?.message)
                     localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
-                    navigate('/')
+                    window.location.href = '/'
                     window.location.reload()
                 } else {
                     toast.error(payload?.message || 'something went wrong')

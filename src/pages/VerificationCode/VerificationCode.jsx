@@ -10,7 +10,6 @@ const VerificationCode = () => {
     const [otp, setOtp] = useState("");
     const [activeCode, { isLoading }] = useActiveCodeMutation()
     const [resendCode, { isLoading: isResending }] = useResendCodeMutation()
-    const navigate = useNavigate()
     const handleVerifyOtp = () => {
         if (!otp) {
             toast.error("Please enter OTP")
@@ -22,7 +21,7 @@ const VerificationCode = () => {
                 localStorage.setItem("token", JSON.stringify(payload?.data?.accessToken))
                 localStorage.removeItem("email")
                 toast.success(payload?.message || "Verified successfully")
-                navigate("/")
+                window.location.href = '/'
             }
         }).catch((error) => {
             toast.error(error?.data?.message || "Something went wrong")

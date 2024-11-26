@@ -25,8 +25,8 @@ const columns = [
         render: (user) => (
             <div className="flex items-center">
                 <img
-                    src={user.image}
-                    alt={user.name}
+                    src={user?.image}
+                    alt={user?.name}
                     style={{ width: 40, height: 40, borderRadius: '50%', marginRight: 10 }}
                 />
                 <span>{user.name}</span>
@@ -125,7 +125,7 @@ const ProductDetails = () => {
             key: i + 1,
             bid: bidder?.bidAmount,
             user: {
-                name: bidder?.name,
+                name: bidder?.username,
                 image: bidder?.profile_image,
             },
             time: formattedTime,
@@ -188,7 +188,7 @@ const ProductDetails = () => {
             window.removeEventListener('popstate', handlePopState);
         };
     }, [navigate]);
-    console.log(auction?.bidHistory)
+    // console.log(auction?.bidHistory)
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -222,11 +222,11 @@ const ProductDetails = () => {
                             <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>
                             <div className='flex justify-between py-5'>
                                 <p className='font-semibold text-2xl'>Current Bid:</p>
-                                <div className='text-[#338BFF] text-[26px] font-semibold flex justify-end items-center'>{auction?.financeAvailable ? 
+                                <div className='text-[#338BFF] text-[26px] font-semibold flex justify-end items-center'>{auction?.financeAvailable ?
                                     <p style={{
-                                    color: '#000000'
-                                }} className='text-base font-normal mr-3 inline-block'>(finance available)</p>
-                                 : ''}
+                                        color: '#000000'
+                                    }} className='text-base font-normal mr-3 inline-block'>(finance available)</p>
+                                    : ''}
                                     ${Number(auction?.bidHistory?.[auction?.bidHistory?.length - 1]?.bidAmount).toFixed(2) ?? '0'}
                                 </div>
                             </div>

@@ -56,6 +56,19 @@ const Register = () => {
                             <Input placeholder='Enter your email here' />
                         </Form.Item>
                         <Form.Item
+                            label="User Name"
+                            name="username"
+                            rules={[
+                                {
+                                    message: 'Please enter your user name',
+                                    required: true,
+                                }
+                            ]}
+
+                        >
+                            <Input placeholder='Enter your email here' />
+                        </Form.Item>
+                        <Form.Item
                             label="Email"
                             name="email"
                             rules={[
