@@ -348,7 +348,7 @@ const ProductDetails = () => {
                             )}
 
                             <p className='text-[#585858] pt-5 px-10'>
-                                BidBuddy is your Automatic Bidding Tool. Book any number of bids. Each bid will be placed for you before the timer reaches zero. The first bid will be placed immediately.
+                                The Auto Bid Tool makes bidding easy by automating the process for you. Enter the number of bids you want, and the tool will place them on your behalf until your set limit is reached or the timer runs out. The first bid is placed instantly, so you can stay in the auction without constantly keeping track.
                             </p>
                         </div>
                     </div>
