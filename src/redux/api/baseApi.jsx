@@ -21,4 +21,4 @@ export const baseApi = createApi({
 
 
 export const imageUrl = 'https://api.sellaze.com'
-// export const imageUrl = 'http://192.168.10.11:5000'
+// export const imageUrl = 'http://192.168.10.11:5000' 
