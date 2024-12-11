@@ -266,7 +266,7 @@ const ProductCard = ({ product }) => {
           </p>
           <p className='text-[#2E2E2E]'>
             {product?.bidHistory?.length > 0 && <p>Current Bid Price : </p>}
-            {product?.bidHistory?.length > 0 && `${product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name} ( $${product?.currentPrice} )` || 'No bid yet'}
+            {product?.bidHistory?.length > 0 && `${product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name} ( $${product?.currentPrice?.toFixed(2)} )` || 'No bid yet'}
           </p>
           {product?.status !== 'COMPLETED' && (
             <p className='text-[#585858] font-semibold text-[24px]'>
