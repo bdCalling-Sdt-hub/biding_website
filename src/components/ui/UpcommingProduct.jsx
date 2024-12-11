@@ -252,9 +252,9 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
             <img src={product?.images?.[0]} className='w-full h-[180px] object-contain shadow-sm rounded-md p-1' alt={product?.name} />
             <div className='text-center space-y-1 py-2'>
                 <p className='font-medium'>{product?.name}</p>
-                <p className='text-[#338BFF] font-medium'>
+                {/* <p className='text-[#338BFF] font-medium'>
                     {product?.startingDate?.split("T")[0]} at {product?.startingTime}
-                </p>
+                </p> */}
                 {/* <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p> */}
                 <p className='text-[#585858] font-semibold text-[24px]'>
                     <p className='text-[#585858] font-semibold text-[24px]'>

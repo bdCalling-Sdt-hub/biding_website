@@ -51,7 +51,7 @@ const Winner = () => {
                     <p className='font-medium'>Winner</p>
                     <div className='flex  items-center gap-2'>
                       <img src={product?.bidHistory[product?.bidHistory?.length - 1]?.user?.profile_image} className='h-[40px] w-[40px]' alt="" />
-                      <p className='w-[140px] text-sm'>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name}</p>
+                      <p className='w-[140px] text-sm'>{product?.bidHistory[product?.bidHistory?.length - 1]?.user?.username}</p>
                     </div>
                   </div>
                 </div>

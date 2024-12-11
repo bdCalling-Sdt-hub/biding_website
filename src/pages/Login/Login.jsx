@@ -18,7 +18,6 @@ const Login = () => {
                     toast.success(payload?.message)
                     localStorage.setItem('token', JSON.stringify(payload?.data?.accessToken))
                     window.location.href = '/'
-                    window.location.reload()
                 } else {
                     toast.error(payload?.message || 'something went wrong')
                     localStorage.removeItem('token')
@@ -45,11 +44,11 @@ const Login = () => {
                         layout="vertical"
                     >
                         <Form.Item
-                            label="Email"
-                            name="email"
+                            label="Email Or Username  "
+                            name="emailOrUsername"
 
                         >
-                            <Input placeholder='Enter your email here' />
+                            <Input placeholder='Enter your Email Or Username' />
                         </Form.Item>
                         <Form.Item
                             label="Password"

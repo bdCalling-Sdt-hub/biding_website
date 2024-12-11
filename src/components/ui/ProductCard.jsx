@@ -161,7 +161,6 @@ import { toast } from 'sonner';
 import { isLessThanTenSeconds } from '../../pages/ProductDetails/ProductDetails';
 
 const ProductCard = ({ product }) => {
-  const { data: profile } = useGetProfileQuery();
   const navigate = useNavigate();
   const combinedDateTime = useMemo(() => new Date(`${product?.activateTime}`), [product?.activateTime]);
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(combinedDateTime));
@@ -251,7 +250,6 @@ const ProductCard = ({ product }) => {
         toast.error(error?.data?.message);
       });
   };
-
   return (
     <div className='rounded-lg bg-white shadow-sm my-4 relative flex flex-col justify-between'>
       <div>
@@ -267,7 +265,8 @@ const ProductCard = ({ product }) => {
               : `${product?.startingDate?.split("T")[0]} at ${product?.startingTime}`}
           </p>
           <p className='text-[#2E2E2E]'>
-            {product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name || 'No bid yet'}
+            {product?.bidHistory?.length > 0 && <p>Current Bid Price : </p>}
+            {product?.bidHistory?.length > 0 && `${product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name} ( $${product?.currentPrice} )` || 'No bid yet'}
           </p>
           {product?.status !== 'COMPLETED' && (
             <p className='text-[#585858] font-semibold text-[24px]'>
