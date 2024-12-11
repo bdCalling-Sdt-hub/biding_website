@@ -16,22 +16,22 @@ const BuyBids = () => {
     const [amount, setAmount] = useState()
     const packages = [
         {
-            title: '50 Bids',
+            title: '50 Credits',
             amount: 5,
             total: 50
         },
         {
-            title: '100 Bids',
+            title: '100 Credits',
             amount: 10,
             total: 100
         },
         {
-            title: '200 Bids',
+            title: '200 Credits',
             amount: 20,
             total: 200
         },
         {
-            title: '300 Bids',
+            title: '300 Credits',
             amount: 30,
             total: 300
         },
@@ -44,7 +44,7 @@ const BuyBids = () => {
             <BackButton pageName={'Payment'} />
             {/* <div className='grid grid-cols-1 md:grid-cols-2  gap-5 items-center'> */}
             <div className='bg-white p-8 rounded-md my-5 '>
-                <p className='text-end font-medium mb-6'>1 bid/credit = 10 cent</p>
+                <p className='text-end font-medium mb-6'>1 Credit = 10 cent</p>
                 {
                     packages?.map((item, i) => <div key={i} onClick={() => {
                         setAmount(item?.amount)
@@ -57,13 +57,13 @@ const BuyBids = () => {
                     </div>)
                 }
                 <div className={`flex justify-between bg-[#F9F9F9] p-8 py-5 rounded-md mb-4 gap-2 items-center`}>
-                    <input type='number' placeholder='number of bids' className='w-full p-2 rounded-md outline-none border border-yellow' ref={inputRef} />
+                    <input type='number' placeholder='number of Credits' className='w-full p-2 rounded-md outline-none border border-yellow' ref={inputRef} />
                     <button onClick={() => {
                         if (!inputRef.current.value) {
-                            return toast.error('please input number of bids first')
+                            return toast.error('please input number of Credits first')
                         }
                         if (inputRef.current.value > 99999) {
-                            return toast.error(`you cant buy more then 99999 bids at once`)
+                            return toast.error(`you cant buy more then 99999 Credits at once`)
                         }
                         setAmount(Number(inputRef.current.value * 10 / 100).toFixed(2))
                         navigate(`/bid-payment?amount=${Number(inputRef.current.value * 10 / 100).toFixed(2)}`)

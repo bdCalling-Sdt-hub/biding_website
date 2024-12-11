@@ -255,7 +255,7 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                 <p className='text-[#338BFF] font-medium'>
                     {product?.startingDate?.split("T")[0]} at {product?.startingTime}
                 </p>
-                <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p>
+                {/* <p className='text-[#2E2E2E]'>Bid during last 9 seconds</p> */}
                 <p className='text-[#585858] font-semibold text-[24px]'>
                     <p className='text-[#585858] font-semibold text-[24px]'>
                         {product?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) :
