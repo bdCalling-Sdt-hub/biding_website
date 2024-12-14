@@ -158,7 +158,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAddBookmarkMutation, useDeleteBookmarkMutation } from '../../redux/api/bookmarkApis';
 import { useGetProfileQuery } from '../../redux/api/authApis';
 import { toast } from 'sonner';
-import { isLessThanTenSeconds } from '../../pages/ProductDetails/ProductDetails';
+import { isLessThanTenMinute, isLessThanTenSeconds } from '../../pages/ProductDetails/ProductDetails';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
