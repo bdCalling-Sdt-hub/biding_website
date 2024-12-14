@@ -269,7 +269,7 @@ const ProductCard = ({ product }) => {
             {product?.bidHistory?.length > 0 && `${product?.bidHistory[product?.bidHistory?.length - 1]?.user?.name} ( $${product?.currentPrice?.toFixed(2)} )` || 'No bid yet'}
           </p>
           {product?.status !== 'COMPLETED' && (
-            <p className='text-[#585858] font-semibold text-[24px]'>
+            <p className={` font-semibold text-[24px] $${isLessThanTenMinute(formatTimeLeft(timeLeft)) ? 'font-bold text-[#FF0000]' : 'text-[#585858]'}`}>
               {product?.status === 'ACTIVE' ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) :
                 formatTimeLeft(startTime)?.startsWith('-') ? isLessThanTenSeconds(formatTimeLeft(timeLeft)) ? `00:00:0${time <= 0 ? '0' : time}` : formatTimeLeft(timeLeft) : formatTimeLeft(startTime)}
             </p>

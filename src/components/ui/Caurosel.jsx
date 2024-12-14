@@ -31,7 +31,7 @@ const Caurosel = () => {
     >
       {
         getBanners?.data?.map((banner) => <SwiperSlide key={banner?._id}>
-          <img src={banner?.url} className='h-[50vh] object-contain rounded-md w-full' alt="" />
+          <img src={banner?.url} className='lg:h-[50vh] h-[60vh]: object-contain rounded-md w-full' alt="" />
         </SwiperSlide>
         )
       }

@@ -41,6 +41,7 @@ const columns = [
 ];
 
 const ProductDetails = () => {
+    const [imageIndex, setImageIndex] = useState(0)
     const { socket } = useSocketContext();
     const location = useLocation()
     const { id, } = useParams();
@@ -200,11 +201,11 @@ const ProductDetails = () => {
                     <div className='flex flex-col lg:flex-row justify-between gap-10'>
                         <div className='w-full'>
                             <div>
-                                <img src={auction?.images?.[0] ?? 'default_image_url'} className='w-full rounded-md' alt="" />
+                                <img src={auction?.images?.[imageIndex] ?? 'default_image_url'} className='w-full rounded-md' alt="" />
                             </div>
                             <div className='flex justify-between items-center mt-5 gap-4'>
-                                {[1, 2, 3].map((i) => (
-                                    <div className='h-[80px] w-full' key={i}>
+                                {[0, 1, 2, 3].map((i) => (
+                                    <div onClick={()=>setImageIndex(i)} className='h-[80px] w-full cursor-pointer' key={i}>
                                         <img src={auction?.images?.[i] ?? 'default_image_url'} className='rounded-md h-[120px]' alt="" />
                                     </div>
                                 ))}
@@ -428,6 +429,18 @@ export function isLessThanTenSeconds(timeStr) {
         if (days > 0) return false;
     }
     return hours <= 0 && minutes <= 0 && seconds < 10;
+}
+export function isLessThanTenMinute(timeStr) {
+    const parts = timeStr.split(':').map(Number);
+    let hours, minutes, seconds;
+    if (parts.length === 3) {
+        [hours, minutes, seconds] = parts;
+    } else if (parts.length === 4) {
+        const days = parts[0];
+        [hours, minutes, seconds] = parts.slice(1);
+        if (days > 0) return false;
+    }
+    return hours <= 0 && minutes <= 9 && seconds < 60;
 }
 
 

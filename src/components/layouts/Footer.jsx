@@ -36,7 +36,7 @@ const Footer = () => {
         <div className='flex flex-col'>
           <p className='text-[20px] font-semibold  mb-[24px]'>Support</p>
           <Link to='/faqs' className=' mb-2 text-[#585858]'>FAQ</Link>
-          <Link to='/tips-and-tricks' className=' mb-2 text-[#585858]'>Tips & tricks</Link>
+          {/* <Link to='/tips-and-tricks' className=' mb-2 text-[#585858]'>Tips & tricks</Link> */}
           <Link to='/accessibility' className=' mb-2 text-[#585858]'>Accessibility</Link>
         </div>
         <div className='yellow'>
