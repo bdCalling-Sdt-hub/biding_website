@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 
 const Auctions = () => {
     const [categoryName, setCategoryName] = useState(new URLSearchParams(window.location.search).get('categoryName') || null)
-    const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
+    const category = new URLSearchParams(window.location.search).get('category') || null
     const financeAvailable = new URLSearchParams(window.location.search).get('financeAvailable') || false
     const [searchTerm, setSearchTerm] = useState(new URLSearchParams(window.location.search).get('searchTerm') || null)
     const { socket } = useSocketContext()

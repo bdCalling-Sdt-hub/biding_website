@@ -55,9 +55,9 @@ const ProductDetails = () => {
     const { data: similarProduct } = useGetWinnerQuery({ category: getSingleAuction?.data?.category || null });
     // Get profile data
     const { data: profile, isLoading, isFetching } = useGetProfileQuery();
-    if (!localStorage.getItem('token')) {
-        return navigate('/login', { state: location?.pathname })
-    }
+    // if (!localStorage.getItem('token')) {
+    //     return navigate('/login', { state: location?.pathname })
+    // }
     // console.log(auction?.activateTime)
     useEffect(() => {
         setAuction(getSingleAuction?.data);
