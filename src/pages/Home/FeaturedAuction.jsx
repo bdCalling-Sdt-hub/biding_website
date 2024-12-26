@@ -15,7 +15,7 @@ const FeaturedAuction = () => {
         updatedCount: 0
     })
 
-    const { data, isLoading } = useGetAuctionsQuery({ category: null })
+    const { data, isLoading } = useGetAuctionsQuery({ category: null ,notComplete:true})
     const [socketData, setSocketData] = useState([])
     useEffect(() => {
         if (!data?.data?.result) {
@@ -35,7 +35,18 @@ const FeaturedAuction = () => {
             return
         }
         socket.on("updated-auction", (updatedBidHistory) => {
-            Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) : setSocketData([...socketData, updatedBidHistory?.updatedAuction])
+            const updatedAuctions = {
+                ...updatedBidHistory?.updatedAuction,
+                bidHistory: updatedBidHistory?.updatedAuction?.bidHistory.map(item=>{
+                    return {
+                        user:{
+                            ...item
+                        }
+                    }
+                })
+            }
+            // Array.isArray(updatedBidHistory?.updatedAuction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) :
+            setSocketData([...socketData, updatedAuctions])
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
@@ -67,7 +78,7 @@ const FeaturedAuction = () => {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-4 gap-5 mx-2 md:mx-0'>
                 {
-                    isLoading ? <div className='flex items-center justify-center w-full  col-span-2 md:col-span-4'><Spin size='large' /></div> : auctionsData?.data?.map(item => <ProductCard key={item?.key} product={item} />)
+                    isLoading ? <div className='flex items-center justify-center w-full  col-span-2 md:col-span-4'><Spin size='large' /></div> : auctionsData?.data?.filter(p=>p.status !=='COMPLETED')?.map(item => <ProductCard key={item?.key} product={item} />)
                 }
             </div>
         </div>

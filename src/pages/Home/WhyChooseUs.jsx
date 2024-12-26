@@ -23,7 +23,7 @@ const WhyChooseUs = () => {
                         <FaTruckFast className='text-white' size={25} />
                     </div>
                     <p className='text-[24px] font-medium'>Free Shipping</p>
-                    <p>Treat yourself to the joy of shopping. Start exploring now and experience the freedom of free shipping. Happy bidding! With Bidding website, also there are no surprise costs.</p>
+                    <p>Treat yourself to the joy of shopping. Start exploring now and experience the freedom of free shipping. Happy bidding! With Sellaze, also there are no surprise costs.</p>
                 </div>
                 <div className='bg-white p-8 rounded-md space-y-2'>
                     <div className='bg-[#338BFF] p-2 rounded-md w-10'>

@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 
 const Auctions = () => {
+    const [categoryName, setCategoryName] = useState(new URLSearchParams(window.location.search).get('categoryName') || null)
     const [category, setCategory] = useState(new URLSearchParams(window.location.search).get('category') || null)
     const financeAvailable = new URLSearchParams(window.location.search).get('financeAvailable') || false
     const [searchTerm, setSearchTerm] = useState(new URLSearchParams(window.location.search).get('searchTerm') || null)
@@ -38,8 +39,17 @@ const Auctions = () => {
             return
         }
         socket.on("updated-auction", (updatedBidHistory) => {
-            // ('updatedBidHistory', updatedBidHistory)
-            Array.isArray(updatedBidHistory?.auction) ? setSocketData([...socketData, ...updatedBidHistory?.updatedAuction]) : setSocketData([...socketData, updatedBidHistory?.updatedAuction])
+            const updatedAuctions = {
+                ...updatedBidHistory?.updatedAuction,
+                bidHistory: updatedBidHistory?.updatedAuction?.bidHistory.map(item => {
+                    return {
+                        user: {
+                            ...item
+                        }
+                    }
+                })
+            }
+            setSocketData([...socketData, updatedAuctions])
         })
         socket.on('socket-error', (error) => {
             toast.error(error?.errorMessage || 'something went wrong')
@@ -66,7 +76,7 @@ const Auctions = () => {
     return (
         <div className='py-10'>
             <div className='flex justify-between items-center'>
-                <BackButton pageName={`Auctions ${category ? `/ ${category}` : ''}`} />
+                <BackButton pageName={`Auctions ${categoryName ? `/ ${categoryName}` : ''}`} />
                 {/* <Link to={`/auctions`} className='text-yellow flex items-center gap-1 font-medium cursor-pointer'>See More <IoIosArrowForward /></Link> */}
             </div>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-5 mx-2 md:mx-0'>

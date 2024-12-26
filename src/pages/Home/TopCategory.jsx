@@ -58,7 +58,7 @@ const TopCategory = () => {
                     className="mySwiper"
                 >
                     {
-                        data?.data?.map((cat, i) => <SwiperSlide className='cursor-pointer' onClick={() => navigate(`/auctions?category=${cat?.name}`)} >
+                        data?.data?.map((cat, i) => <SwiperSlide className='cursor-pointer' onClick={() => navigate(`/auctions?categoryName=${cat?.name}&category=${cat?._id}`)} >
                             <div className='flex flex-col items-center'>
                                 <div className="flex flex-col justify-center items-center h-36 w-36">
                                     <img src={cat?.image} className='object-contain rounded-full ' alt="Image 1" />

@@ -16,9 +16,9 @@ const SocketProviders = ({ children }) => {
     const [newNotifications, setNewNotification] = useState(0)
     useEffect(() => {
         if (localStorage.getItem("token")) {
-            // const socketConnect = io(`https://api.sellaze.com`, {
+            const socketConnect = io(`https://api.sellaze.com`, {
                 // const socketConnect = io(`http://192.168.10.11:5000`, {
-                const socketConnect = io(`http://192.241.137.164:5000`, {
+                // const socketConnect = io(`http://167.71.20.155:5000`, {
                 auth: {
                     token: JSON.parse(localStorage.getItem("token")),
                 }
@@ -36,7 +36,6 @@ const SocketProviders = ({ children }) => {
                 setNotifications(prev => [...notification?.notifications])
             });
             socketConnect.on("allAuction", (data) => {
-                // ('data', data)
             });
             socketConnect.on("bidHistory", (updatedBidHistory) => {
                 // ('updatedBidHistory', updatedBidHistory)
@@ -50,7 +49,7 @@ const SocketProviders = ({ children }) => {
         }
     }, [localStorage.getItem("token")]);
     useEffect(() => {
-        console.log('notificationsData?.data?.result', notificationsData?.data?.result)
+        // console.log('notificationsData?.data?.result', notificationsData?.data?.result)
         if (notificationsData?.data?.result) {
             setNotifications([...notificationsData?.data?.result])
         }

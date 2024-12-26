@@ -190,6 +190,11 @@ const ProductDetails = () => {
         };
     }, [navigate]);
     // console.log(auction?.bidHistory)
+    useEffect(() => {
+        if (isLessThanTenSeconds(formatTimeLeft(timeLeft)) && time === 0) {
+            setTime(9)
+        }
+    }, [formatTimeLeft(timeLeft)])
     return (
         <div>
             <div className='py-3 flex items-center gap-2'>
@@ -205,19 +210,19 @@ const ProductDetails = () => {
                             </div>
                             <div className='flex justify-between items-center mt-5 gap-4'>
                                 {[0, 1, 2, 3].map((i) => (
-                                    <div onClick={()=>setImageIndex(i)} className='h-[80px] w-full cursor-pointer' key={i}>
+                                    <div onClick={() => setImageIndex(i)} className='h-[80px] w-full cursor-pointer' key={i}>
                                         <img src={auction?.images?.[i] ?? 'default_image_url'} className='rounded-md h-[120px]' alt="" />
                                     </div>
                                 ))}
                             </div>
-                            <div className='bg-white rounded-md mt-14 py-2'>
+                            {/* <div className='bg-white rounded-md mt-14 py-2'>
                                 <h1 className='text-[#2E2E2E] pb-2 font-medium mt-5'>Other bidders in this auction</h1>
                                 <div className='flex flex-wrap items-center gap-5 ml-2'>
                                     {auction?.uniqueBidders?.slice(0, 14).map((user, index) => (
                                         <img key={index} src={user?.profile_image} className='rounded-full w-[80px] h-[80px]' alt="" />
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className='bg-white py-5 px-8 w-full rounded-md'>
                             <h1 className='text-[26px] font-semibold'>{auction?.name}</h1>

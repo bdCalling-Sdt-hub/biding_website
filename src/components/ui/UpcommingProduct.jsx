@@ -249,7 +249,10 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                     <Spin />
                 </div>
             )}
-            <img src={product?.images?.[0]} className='w-full h-[180px] object-contain shadow-sm rounded-md p-1' alt={product?.name} />
+            <img onClick={() => {
+          navigate(`/product-details/${product?._id}?${product?.status === 'ACTIVE' ? `time=${time}` : ''}`)
+          window.scrollTo(0,0)
+        }}  src={product?.images?.[0]} className='w-full h-[180px] object-contain shadow-sm rounded-md p-1 cursor-pointer' alt={product?.name} />
             <div className='text-center space-y-1 py-2'>
                 <p className='font-medium'>{product?.name}</p>
                 {/* <p className='text-[#338BFF] font-medium'>
@@ -263,8 +266,8 @@ const UpcommingProduct = ({ product, type, BookmarkId }) => {
                     </p>
                 </p>
                 <div className='px-2 md:px-5'>
-                    <button
-                        onClick={() => navigate(`/product-details/${product?._id}?${product?.status === 'ACTIVE' ? `time=${time}` : ''}`)}
+                    <button disabled={product?.status !== 'ACTIVE'}
+                        // onClick={() => navigate(`/product-details/${product?._id}?${product?.status === 'ACTIVE' ? `time=${time}` : ''}`)}
                         className={`md:px-14 text-white ${product?.status !== 'ACTIVE' ? 'bg-gray' : 'bg-yellow'} rounded-md py-2 w-full whitespace-nowrap`}
                     >
                         {product?.status === 'COMPLETED' ? 'Sold' : product?.status === 'ACTIVE' ? 'Bid' : 'Starting Soon'}
