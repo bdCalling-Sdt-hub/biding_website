@@ -58,8 +58,9 @@ const ProductDetails = () => {
     new URLSearchParams(window.location.search).get("time") || 9
   );
   // Get auction and similar product data
-  const { data: getSingleAuction } = useGetSingleAuctionQuery(id);
-  const { data: similarProduct } = useGetWinnerQuery({
+  const { data: getSingleAuction, refetch: refetchAuction } =
+    useGetSingleAuctionQuery(id);
+  const { data: similarProduct, refetch: refetchWin } = useGetWinnerQuery({
     category: getSingleAuction?.data?.category || null,
   });
   // Get profile data
@@ -187,6 +188,8 @@ const ProductDetails = () => {
     socket.on("bidHistory", (updatedBidHistory) => {
       // console.log('updatedBidHistory', updatedBidHistory)
       refetch();
+      refetchWin();
+      refetchAuction();
       if (updatedBidHistory?.updatedAuction?._id === id) {
         setAuction(updatedBidHistory?.updatedAuction);
         setTime(updatedBidHistory?.updatedAuction?.countdownTime);
